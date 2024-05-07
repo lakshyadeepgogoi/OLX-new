@@ -119,10 +119,8 @@ function MobilesForm({nextStep, previousStep,selectedCategory }) {
         const storageRef = ref(storage, `AdImages/${file.name}`);
         
         try {
-            // Upload image to Firebase Storage
             await uploadBytes(storageRef, file);
             
-            // Update images state with the selected image
             setImages(prevImages => {
                 const newImages = [...prevImages];
                 newImages[index] = URL.createObjectURL(file);
@@ -130,7 +128,6 @@ function MobilesForm({nextStep, previousStep,selectedCategory }) {
             });
         } catch (error) {
             console.error('Error uploading image:', error);
-            // Handle error
         }
     };
 
@@ -153,29 +150,27 @@ function MobilesForm({nextStep, previousStep,selectedCategory }) {
     
             setIsSubmitting(true);
     
-            const userId = auth.currentUser
+            const userId = auth.currentUser.uid
             if (!userId) {
                 throw new Error('User ID not found.');
             }
     
-            const categoryCollection = collection(db, 'category');
-    
-            const expirationTime = new Date();
-            expirationTime.setMinutes(expirationTime.getMinutes() + 5); 
-    
-            const mobileDocRef = await setDoc(doc(categoryCollection, selectedCategory), {
-                // userId, 
-                subcategory,
-                brand,
-                model,
-                adName,
-                tags,
-                description,
-                price,
-                negotiable,
-                timestamp: serverTimestamp(),
-            });
-    
+            const categoryRef = doc(db, 'categories', selectedCategory);
+const adsCollectionRef = collection(categoryRef, 'ads');
+
+const mobileDocRef = await addDoc(adsCollectionRef, {
+    userId, 
+    subcategory,
+    brand,
+    model,
+    adName,
+    tags,
+    description,
+    price,
+    negotiable,
+    images: images.filter(image => image !== null),
+    timestamp: serverTimestamp(),
+});
             setIsSubmitting(false);
             setError('');
             console.log("Form data submitted successfully:");
