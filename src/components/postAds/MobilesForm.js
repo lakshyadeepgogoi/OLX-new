@@ -113,21 +113,15 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
         setAdName(adNameValue);
     };
 
-    const handleImageChange = async (e, index) => {
-        const file = e.target.files[0];
-        const storage = getStorage();
-        const storageRef = ref(storage, `AdImages/${file.name}`);
-
-        try {
-            await uploadBytes(storageRef, file);
-
+    const handleImageChange = (event, index) => {
+        const file = event.target.files[0];
+        if (file) {
+            const newImageUrl = URL.createObjectURL(file);
             setImages(prevImages => {
                 const newImages = [...prevImages];
-                newImages[index] = URL.createObjectURL(file);
+                newImages[index] = newImageUrl;
                 return newImages;
             });
-        } catch (error) {
-            console.error('Error uploading image:', error);
         }
     };
 
@@ -385,9 +379,12 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
                             <input
                                 type="file"
                                 accept="image/*"
-                                onChange={(e) => handleImageChange(e, index)} // You need to define handleImageChange function
+                                onChange={(e) => handleImageChange(e, index)}
                                 className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
                             />
+                            {images[index] && (
+                                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover"/>
+                            )}
                         </label>
                     ))}
                 </div>
