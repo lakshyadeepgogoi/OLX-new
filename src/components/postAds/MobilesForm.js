@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getFirestore, getDocs, collection, addDoc, serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
-function MobilesForm({nextStep, previousStep}) {
+function MobilesForm({nextStep, previousStep,selectedCategory }) {
     const [subcategory, setSubcategory] = useState('');
     const [brandOptions, setBrandOptions] = useState([]);
     const [brand, setBrand] = useState('');
@@ -22,7 +22,6 @@ function MobilesForm({nextStep, previousStep}) {
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const [category, setCategory] = useState('');
     const [documentId, setDocumentId] = useState('');
     const [collectionId, setCollectionId] = useState('');
     const [images, setImages] = useState(Array(6).fill(null));
@@ -35,7 +34,7 @@ function MobilesForm({nextStep, previousStep}) {
         setSubcategory(selectedSubcategory);
         // Set brand options based on selected subcategory
         switch (selectedSubcategory) {
-            case 'Smart Phone':
+            case 'Phone':
                 setBrandOptions(['Apple', 'Google Pixel', 'Samsung', 'Redmi', 'Vivo', 'Oppo', 'Nokia']);
                 break;
             case 'Tablet':
@@ -139,17 +138,19 @@ function MobilesForm({nextStep, previousStep}) {
         previousStep();
     };
 
+    if (!selectedCategory) {
+        throw new Error('Category is required.');
+    }
+
     const handleNextClick = async (event) => {
         event.preventDefault();
     
         try {
-            // Form validation
             if (!subcategory || !brand || !model || !adName || !price || !negotiable || !description) {
                 setError('All fields are required.');
                 return;
             }
     
-            // Form submission
             setIsSubmitting(true);
     
             const userId = auth.currentUser
@@ -157,16 +158,13 @@ function MobilesForm({nextStep, previousStep}) {
                 throw new Error('User ID not found.');
             }
     
-            // Define the collection name as "Category"
-            const categoryCollection = collection(db, category);
+            const categoryCollection = collection(db, 'category');
     
-            // Set expiration time to 5 minutes from now
             const expirationTime = new Date();
-            expirationTime.setMinutes(expirationTime.getMinutes() + 5); // Add 5 minutes
+            expirationTime.setMinutes(expirationTime.getMinutes() + 5); 
     
-            // Add the document to the "Category" collection with the document ID as "mobile"
-            const mobileDocRef = await setDoc(doc(categoryCollection, "mobile"), {
-                userId, // Record user ID
+            const mobileDocRef = await setDoc(doc(categoryCollection, selectedCategory), {
+                // userId, 
                 subcategory,
                 brand,
                 model,
@@ -176,16 +174,14 @@ function MobilesForm({nextStep, previousStep}) {
                 price,
                 negotiable,
                 timestamp: serverTimestamp(),
-                expirationTimestamp: expirationTime, // Set expiration timestamp
             });
     
             setIsSubmitting(false);
             setError('');
-            console.log("Form data submitted successfully:", mobileDocRef.id);
+            console.log("Form data submitted successfully:");
     
-            // Update the collection ID and document ID state variables
-            const collectionId = category;
-            const docId = "mobile";
+            const collectionId = 'category';
+            const docId = selectedCategory;
             setCollectionId(collectionId);
             setDocumentId(docId);
     

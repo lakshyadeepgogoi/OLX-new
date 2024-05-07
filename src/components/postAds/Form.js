@@ -109,7 +109,7 @@ function Form() {
 
             {step === 2 && selectedCategory && (
                 <div>
-                    {categoryForms[selectedCategory] === MobilesForm && <MobilesForm nextStep={handleNextStep} previousStep={handlePreviousStep} />}
+                    {categoryForms[selectedCategory] === MobilesForm && <MobilesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory} />}
                     {categoryForms[selectedCategory] === ElectronicsForm && <ElectronicsForm nextStep={handleNextStep} />}
                     {categoryForms[selectedCategory] === VehiclesForm && <VehiclesForm nextStep={handleNextStep} />}
                     {categoryForms[selectedCategory] === PropertiesForm && <PropertiesForm nextStep={handleNextStep} />}
