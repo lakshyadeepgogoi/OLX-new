@@ -26,12 +26,16 @@ function Form() {
     const [collectionId, setCollectionId] = useState(null);
 
 
-    const handleNextStep = (collectionId, docId) => {
+    const handleNextStep = (selectedCategory, collectionId, docId) => {
         setDocId(docId);
         setCollectionId(collectionId);
         setStep(3); 
+        console.log('Selected Category:', selectedCategory); // Corrected log statement
+        console.log("docId:", docId);
+        console.log("collectionId:", collectionId);
     };
     
+
     const handlePreviousStep = () => {
         setStep(prevStep => prevStep - 1);
     };
@@ -117,7 +121,7 @@ function Form() {
                 </div>
             )}
             
-            {step === 3 && collectionId && <ContactUser collectionId={collectionId} docId={docId}  />}
+            {step === 3 && collectionId && <ContactUser collectionId={collectionId} docId={docId} selectedCategory={selectedCategory}  />}
         </div>
     );
 }

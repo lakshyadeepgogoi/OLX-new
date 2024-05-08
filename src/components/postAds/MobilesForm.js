@@ -5,6 +5,7 @@ import { auth, db } from '../../pages/firebase';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, getDocs, collection, addDoc, serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL } from 'firebase/storage';
 
 function MobilesForm({ nextStep, previousStep, selectedCategory }) {
     const [subcategory, setSubcategory] = useState('');
@@ -124,7 +125,7 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
             });
         }
     };
-
+    
     const handlePreviousClick = async (event) => {
         previousStep();
     };
@@ -175,7 +176,7 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
             setDocumentId(docId);
 
             // Proceed to the next step
-            nextStep(collectionId, docId);
+            nextStep(selectedCategory,collectionId, docId);
         } catch (error) {
             setIsSubmitting(false);
             console.error("Error adding form data to Firestore:", error);
