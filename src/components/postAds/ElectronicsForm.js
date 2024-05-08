@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react'
 import { Checkbox } from 'flowbite-react';
+import { useState } from 'react';
+import { auth, db } from '../../pages/firebase';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../pages/firebase';  // Make sure this path is correct for your Firebase setup
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, getDocs, collection, addDoc, serverTimestamp, doc, setDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL } from 'firebase/storage';
 
-function ElectronicsForm({ nextStep }) {
+function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
     const [subcategory, setSubcategory] = useState('');
     const [brandOptions, setBrandOptions] = useState([]);
     const [brand, setBrand] = useState('');
-    const [model, setModel] = useState('');
-    const [price, setPrice] = useState('');
     const [negotiable, setNegotiable] = useState('');
+    const [model, setModel] = useState('');
+    const [modelOptions, setModelOptions] = useState([]);
+    const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState('');
@@ -18,8 +22,10 @@ function ElectronicsForm({ nextStep }) {
 
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [collectionId, setCollectionId] = useState('');
+
     const [documentId, setDocumentId] = useState('');
+    const [collectionId, setCollectionId] = useState('');
+    const [images, setImages] = useState(Array(6).fill(null));
 
     const navigate = useNavigate();
 
@@ -27,28 +33,29 @@ function ElectronicsForm({ nextStep }) {
         const selectedSubcategory = event.target.value;
         setSubcategory(selectedSubcategory);
         switch (selectedSubcategory) {
-            
-                    
+
             case 'Television':
                 setBrandOptions(['LG', 'Sony', 'Samsung', 'Panasonic']);
                 break;
-                case 'Washing Machine':
+            case 'Washing Machine':
                 setBrandOptions(['LG', 'Whirpool', 'TATA', 'Samsung']);
                 break;
             case 'Refrigerator':
                 setBrandOptions(['LG', 'Whirpool', 'TATA', 'Samsung']);
                 break;
             case 'Mixer Grinder':
-                    setBrandOptions(['LG', 'Prestige', 'Bajaj', 'Pigeon']);
-                    break;
+                setBrandOptions(['LG', 'Prestige', 'Bajaj', 'Pigeon']);
+                break;
             case 'Camera':
-                    setBrandOptions(['Canon', 'Nikon', 'Sony', 'Panasonic']);
-                    break;
+                setBrandOptions(['Canon', 'Nikon', 'Sony', 'Panasonic']);
+                break;
             default:
                 setBrandOptions([]);
                 break;
         }
     };
+
+    
 
     const handleBrandChange = (event) => {
         const selectedBrand = event.target.value;
@@ -56,44 +63,88 @@ function ElectronicsForm({ nextStep }) {
     };
 
     const handlePriceChange = (event) => {
-        setPrice(event.target.value);
+        const priceValue = event.target.value;
+        setPrice(priceValue);
     };
 
     const handleNegotiableChange = (event) => {
-        setNegotiable(event.target.value);
+        const selectedNegotiable = event.target.value;
+        setNegotiable(selectedNegotiable);
     };
 
     const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
+        const descriptionValue = event.target.value;
+        setDescription(descriptionValue);
     };
 
-    const handleAdNameChange = (event) => {
-        setAdName(event.target.value);
+    const handleadNameChange = (event) => {
+        const adNameValue = event.target.value;
+        setAdName(adNameValue);
     };
 
     const handleAddTag = () => {
-        if (newTag && !tags.includes(newTag) && tags.length < 5) {
-            setTags([...tags, newTag]);
+        if (tags.length < 5 && newTag.trim() !== '') {
+            setTags(prevTags => [...prevTags, newTag.trim()]);
             setNewTag('');
         }
     };
 
     const handleRemoveTag = (tagToRemove) => {
-        setTags(tags.filter(tag => tag !== tagToRemove));
+        setTags(prevTags => prevTags.filter(tag => tag !== tagToRemove));
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!subcategory || !brand || !model || !adName || !price || !negotiable || !description) {
-            setError('All fields are required.');
-            return;
-        }
-
-        setIsSubmitting(true);
+    const handleImageChange = async (e, index) => {
+        const file = e.target.files[0];
+        const storage = getStorage();
+        const storageRef = ref(storage, `AdImages/${file.name}`);
 
         try {
-            const electronicsCollection = collection(db, "electronics");
-            const electronicsDocRef = await addDoc(electronicsCollection, {
+            // Upload image to Firebase Storage
+            await uploadBytes(storageRef, file);
+
+            // Get download URL of the uploaded image
+            const downloadURL = await getDownloadURL(storageRef);
+
+            // Update images state with the new URL
+            setImages(prevImages => {
+                const newImages = [...prevImages];
+                newImages[index] = downloadURL;
+                return newImages;
+            });
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    };
+    const handlePreviousClick = async (event) => {
+        previousStep();
+    };
+
+    if (!selectedCategory) {
+        throw new Error('Category is required.');
+    }
+
+    const handleNextClick = async (event) => {
+        event.preventDefault();
+
+        try {
+            if (!subcategory || !brand || !model || !adName || !price || !negotiable || !description) {
+                setError('All fields are required.');
+                return;
+            }
+
+            setIsSubmitting(true);
+            const userId = auth.currentUser.uid
+            if (!userId) {
+                throw new Error('User ID not found.');
+            }
+
+
+
+            const categoryRef = doc(db, 'categories', selectedCategory);
+            const adsCollectionRef = collection(categoryRef, 'ads');
+            const electronicsDocRef = await addDoc(adsCollectionRef, {
+                selectedCategory,
+                userId,
                 subcategory,
                 brand,
                 model,
@@ -102,33 +153,34 @@ function ElectronicsForm({ nextStep }) {
                 description,
                 price,
                 negotiable,
+                images: images.filter(image => image !== null),
                 timestamp: serverTimestamp(),
             });
 
             setIsSubmitting(false);
             setError('');
-            console.log("Form data submitted successfully :", electronicsDocRef.id);
-    
+            console.log("Form data submitted successfully:");
+
+            const collectionId = adsCollectionRef.id;
             const docId = electronicsDocRef.id;
-            const collectionId = electronicsCollection.id;
-    
             setCollectionId(collectionId);
             setDocumentId(docId);
-            
-            
-            nextStep(collectionId, docId);
+
+
+
+            nextStep(selectedCategory, collectionId, docId);
 
         } catch (error) {
             setIsSubmitting(false);
-            console.error("Error adding form data to Firestore: ", error);
+            console.error("Error adding form data to Firestore:", error);
             setError('Error submitting form. Please try again.');
         }
     };
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className="flex flex-col w-full gap-y-4 mt-6">
-               
+            <form onSubmit={''} className="flex flex-col w-full gap-y-4 mt-6">
+
                 <label className='w-full relative'>
                     <p className='text-sm text-gray-800 mb-1'>
                         Sub-Category <sup className='text-pink-200'>*</sup>
@@ -156,7 +208,7 @@ function ElectronicsForm({ nextStep }) {
                         required
                         type="text"
                         value={adName}
-                        onChange={handleAdNameChange}
+                        onChange={handleadNameChange}
                         placeholder="Enter Ad Name"
                         className='rounded-md bg-gray-100 text-gray-800 w-full px-4 py-2'
                     />
@@ -266,15 +318,37 @@ function ElectronicsForm({ nextStep }) {
                         </button>
                     </div>
                 </label>
+                <hr></hr>
+
+
+                <lable>Add Images</lable>
+                <div className="flex flex-wrap gap-4">
+                    {[...Array(6)].map((_, index) => (
+                        <label key={index} className="w-1/2 sm:w-1/3">
+                            <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageChange(e, index)}
+                                className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
+                            />
+                            {images[index] && (
+                                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover" />
+                            )}
+                        </label>
+                    ))}
+                </div>
+
+                <hr></hr>
 
                 <div className='flex flex-col-reverse sm:flex-row justify-between items-baseline'>
                     <p className='text-[#636A80]'> <Checkbox className='m-2'></Checkbox>Save my contact information for faster posting</p>
                     <div className='flex sm:flex-row gap-4'>
-                        <button type="button" className='border-4 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6'>
-                            Previous
+                        <button onClick={handlePreviousClick} className='border-4 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6'>
+                            previous
                         </button>
                         <button
-                            onClick={handleSubmit}
+                            onClick={handleNextClick}
                             className="border-4 bg-green-500 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6"
                         >
                             Next →

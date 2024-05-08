@@ -385,7 +385,7 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
 
                 <lable>Add Images</lable>
 
-                <div className="flex flex-wrap gap-4">
+                {/* <div className="flex flex-wrap gap-4">
                     {[...Array(6)].map((_, index) => (
                         <label key={index} className="w-1/2 sm:w-1/3">
                             <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
@@ -397,7 +397,24 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
                             />
                         </label>
                     ))}
+                </div> */}
+                <div className="flex flex-wrap gap-4">
+                    {[...Array(6)].map((_, index) => (
+                        <label key={index} className="w-1/2 sm:w-1/3">
+                            <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageChange(e, index)}
+                                className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
+                            />
+                            {images[index] && (
+                                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover"/>
+                            )}
+                        </label>
+                    ))}
                 </div>
+
                 <hr></hr>
 
 

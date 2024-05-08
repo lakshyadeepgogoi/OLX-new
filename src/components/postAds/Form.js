@@ -130,17 +130,17 @@ function Form() {
             {step === 2 && selectedCategory && (
                 <div>
                     {categoryForms[selectedCategory] === MobilesForm && <MobilesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory} />}
-                    {categoryForms[selectedCategory] === ElectronicsForm && <ElectronicsForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === VehiclesForm && <VehiclesForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === PropertiesForm && <PropertiesForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === SparepartsForm && <SparepartsForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === FurnituresForm && <FurnituresForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === FashionForm && <FashionForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === Books_stationaryForm && <Books_stationaryForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === SportsgymsForm && <SportsgymsForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === ServicesForm && <ServicesForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === VacanciesForm && <VacanciesForm nextStep={handleNextStep} />}
-                    {categoryForms[selectedCategory] === PetsForm && <PetsForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === ElectronicsForm && <ElectronicsForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === VehiclesForm && <VehiclesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === PropertiesForm && <PropertiesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === SparepartsForm && <SparepartsForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === FurnituresForm && <FurnituresForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === FashionForm && <FashionForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === Books_stationaryForm && <Books_stationaryForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === SportsgymsForm && <SportsgymsForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === ServicesForm && <ServicesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === VacanciesForm && <VacanciesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === PetsForm && <PetsForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
                     {/* Add more forms here */}
                 </div>
             )}
