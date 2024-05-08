@@ -57,7 +57,7 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
         }
     };
 
-    
+
 
     const handleBrandChange = (event) => {
         const selectedBrand = event.target.value;
@@ -122,14 +122,14 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
         const file = e.target.files[0];
         if (file) {
             setImageLoadings(prev => prev.map((loading, idx) => idx === index ? true : loading));
-            
+
             const storage = getStorage();
             const storageRef = ref(storage, `AdImages/${file.name}`);
-            
+
             try {
                 await uploadBytes(storageRef, file);
                 const downloadURL = await getDownloadURL(storageRef);
-    
+
                 setImages(prevImages => {
                     const newImages = [...prevImages];
                     newImages[index] = downloadURL;
@@ -142,7 +142,7 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
             }
         }
     };
-    
+
     const handlePreviousClick = async (event) => {
         previousStep();
     };
@@ -367,25 +367,25 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
                     ))}
                 </div> */}
 
-<div className="flex flex-wrap gap-4">
-    {[...Array(6)].map((_, index) => (
-        <label key={index} className="w-1/2 sm:w-1/3">
-            <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageChange(e, index)}
-                className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
-            />
-            {imageLoadings[index] && <div className="flex justify-center items-center">
-                <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
-            </div>}
-            {!imageLoadings[index] && images[index] && (
-                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover" />
-            )}
-        </label>
-    ))}
-</div>
+                <div className="flex flex-wrap gap-4">
+                    {[...Array(6)].map((_, index) => (
+                        <label key={index} className="w-1/2 sm:w-1/3">
+                            <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageChange(e, index)}
+                                className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
+                            />
+                            {imageLoadings[index] && <div className="flex justify-center items-center">
+                                <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
+                            </div>}
+                            {!imageLoadings[index] && images[index] && (
+                                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover" />
+                            )}
+                        </label>
+                    ))}
+                </div>
 
 
                 <hr></hr>
