@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc,addDoc } from 'firebase/firestore';
 import { db } from '../../pages/firebase';
 
-function ContactUser({ docId, collectionId }) {
+function ContactUser({ selectedCategory, docId, collectionId }) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [whatsappNumber, setWhatsappNumber] = useState('');
     const [email, setEmail] = useState('');
@@ -11,9 +11,15 @@ function ContactUser({ docId, collectionId }) {
     const history = useNavigate();
     const [error, setError] = useState('');
 
+    console.log("Received selectedCategory:", selectedCategory);
+
+    console.log("Received docId:", docId);
+    console.log("Received collectionId:", collectionId);
+    
+
     const handlePostAd = async () => {
         try {
-            const docRef = doc(db, collectionId, docId); // Use the dynamic collection ID
+            const docRef = doc(db, 'categories', selectedCategory, collectionId, docId); 
             await updateDoc(docRef, {
                 phoneNumber,
                 whatsappNumber,

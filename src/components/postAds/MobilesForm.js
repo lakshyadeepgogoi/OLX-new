@@ -5,6 +5,7 @@ import { auth, db } from '../../pages/firebase';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, getDocs, collection, addDoc, serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL } from 'firebase/storage';
 
 function MobilesForm({nextStep, previousStep,selectedCategory }) {
     const [subcategory, setSubcategory] = useState('');
@@ -119,18 +120,23 @@ function MobilesForm({nextStep, previousStep,selectedCategory }) {
         const storageRef = ref(storage, `AdImages/${file.name}`);
         
         try {
+            // Upload image to Firebase Storage
             await uploadBytes(storageRef, file);
             
+            // Get download URL of the uploaded image
+            const downloadURL = await getDownloadURL(storageRef);
+            
+            // Update images state with the new URL
             setImages(prevImages => {
                 const newImages = [...prevImages];
-                newImages[index] = URL.createObjectURL(file);
+                newImages[index] = downloadURL;
                 return newImages;
             });
         } catch (error) {
             console.error('Error uploading image:', error);
         }
     };
-
+    
     const handlePreviousClick = async (event) => {
         previousStep();
     };
@@ -159,6 +165,7 @@ function MobilesForm({nextStep, previousStep,selectedCategory }) {
 const adsCollectionRef = collection(categoryRef, 'ads');
 
 const mobileDocRef = await addDoc(adsCollectionRef, {
+    selectedCategory,
     userId, 
     subcategory,
     brand,
@@ -175,13 +182,13 @@ const mobileDocRef = await addDoc(adsCollectionRef, {
             setError('');
             console.log("Form data submitted successfully:");
     
-            const collectionId = 'category';
-            const docId = selectedCategory;
+            const collectionId = adsCollectionRef.id;
+            const docId = mobileDocRef.id;
             setCollectionId(collectionId);
             setDocumentId(docId);
     
             // Proceed to the next step
-            nextStep(collectionId, docId);
+            nextStep(selectedCategory,collectionId, docId);
         } catch (error) {
             setIsSubmitting(false);
             console.error("Error adding form data to Firestore:", error);
