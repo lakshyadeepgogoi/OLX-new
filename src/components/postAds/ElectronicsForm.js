@@ -26,6 +26,8 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
     const [documentId, setDocumentId] = useState('');
     const [collectionId, setCollectionId] = useState('');
     const [images, setImages] = useState(Array(6).fill(null));
+    const [imageLoadings, setImageLoadings] = useState(Array(6).fill(false));
+
 
     const navigate = useNavigate();
 
@@ -93,28 +95,54 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
         setTags(prevTags => prevTags.filter(tag => tag !== tagToRemove));
     };
 
+    // const handleImageChange = async (e, index) => {
+    //     const file = e.target.files[0];
+    //     const storage = getStorage();
+    //     const storageRef = ref(storage, `AdImages/${file.name}`);
+
+    //     try {
+    //         // Upload image to Firebase Storage
+    //         await uploadBytes(storageRef, file);
+
+    //         // Get download URL of the uploaded image
+    //         const downloadURL = await getDownloadURL(storageRef);
+
+    //         // Update images state with the new URL
+    //         setImages(prevImages => {
+    //             const newImages = [...prevImages];
+    //             newImages[index] = downloadURL;
+    //             return newImages;
+    //         });
+    //     } catch (error) {
+    //         console.error('Error uploading image:', error);
+    //     }
+    // };
+
     const handleImageChange = async (e, index) => {
         const file = e.target.files[0];
-        const storage = getStorage();
-        const storageRef = ref(storage, `AdImages/${file.name}`);
-
-        try {
-            // Upload image to Firebase Storage
-            await uploadBytes(storageRef, file);
-
-            // Get download URL of the uploaded image
-            const downloadURL = await getDownloadURL(storageRef);
-
-            // Update images state with the new URL
-            setImages(prevImages => {
-                const newImages = [...prevImages];
-                newImages[index] = downloadURL;
-                return newImages;
-            });
-        } catch (error) {
-            console.error('Error uploading image:', error);
+        if (file) {
+            setImageLoadings(prev => prev.map((loading, idx) => idx === index ? true : loading));
+            
+            const storage = getStorage();
+            const storageRef = ref(storage, `AdImages/${file.name}`);
+            
+            try {
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+    
+                setImages(prevImages => {
+                    const newImages = [...prevImages];
+                    newImages[index] = downloadURL;
+                    return newImages;
+                });
+                setImageLoadings(prev => prev.map((loading, idx) => idx === index ? false : loading));
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                setImageLoadings(prev => prev.map((loading, idx) => idx === index ? false : loading));
+            }
         }
     };
+    
     const handlePreviousClick = async (event) => {
         previousStep();
     };
@@ -322,7 +350,7 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
 
 
                 <lable>Add Images</lable>
-                <div className="flex flex-wrap gap-4">
+                {/* <div className="flex flex-wrap gap-4">
                     {[...Array(6)].map((_, index) => (
                         <label key={index} className="w-1/2 sm:w-1/3">
                             <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
@@ -337,7 +365,28 @@ function ElectronicsForm({ nextStep, previousStep, selectedCategory }) {
                             )}
                         </label>
                     ))}
-                </div>
+                </div> */}
+
+<div className="flex flex-wrap gap-4">
+    {[...Array(6)].map((_, index) => (
+        <label key={index} className="w-1/2 sm:w-1/3">
+            <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, index)}
+                className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
+            />
+            {imageLoadings[index] && <div className="flex justify-center items-center">
+                <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
+            </div>}
+            {!imageLoadings[index] && images[index] && (
+                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover" />
+            )}
+        </label>
+    ))}
+</div>
+
 
                 <hr></hr>
 
