@@ -17,6 +17,14 @@ import CategoryCard from "./CategoryCard"
 import ContactUser from './ContactUser';
 import { TbSofa } from 'react-icons/tb';
 import { MdOutlineSportsBaseball } from 'react-icons/md';
+import SparepartsForm from './SparepartsForm';
+import FurnituresForm from './FurnituresForm';
+import FashionForm from './FashionForm';
+import Books_stationaryForm from './Books_stationaryForm';
+import SportsgymsForm from './SportsgymsForm';
+import ServicesForm from './ServicesForm';
+import VacanciesForm from './VacanciesForm';
+import PetsForm from './PetsForm';
 
 function Form() {
     const [step, setStep] = useState(1);
@@ -45,6 +53,14 @@ function Form() {
         Electronics: ElectronicsForm,
         Vehicles: VehiclesForm,
         Properties: PropertiesForm,
+        Spare_Parts:SparepartsForm,
+        Furnitures:FurnituresForm,
+        Fashion:FashionForm,
+        Books_Stationary:Books_stationaryForm,
+        Sports_Gyms:SportsgymsForm,
+        Services:ServicesForm,
+        Vacancies:VacanciesForm,
+        Pets:PetsForm
         // Map other categories to their forms here
     };
 
@@ -93,15 +109,15 @@ function Form() {
                     <CategoryCard Icon={FaCarAlt} title="Vehicles" ads="69,580" onClick={() => handleCategoryClick('Vehicles')} />
                     <CategoryCard Icon={CiShop} title="Properties" ads="69,580" onClick={() => handleCategoryClick('Properties')} />
                     
-                    <CategoryCard Icon={HiOutlineWrenchScrewdriver} title="Spare Parts" ads="69,580" onClick={() => handleCategoryClick('Spare Parts')} />
+                    <CategoryCard Icon={HiOutlineWrenchScrewdriver} title="Spare Parts" ads="69,580" onClick={() => handleCategoryClick('Spare_Parts')} />
                     <CategoryCard Icon={TbSofa} title="Furnitures" ads="69,580" onClick={() => handleCategoryClick('Furnitures')} />
                     <CategoryCard Icon={PiPants} title="Fashion & Clothing" ads="69,580" onClick={() => handleCategoryClick('Fashion')} />
-                    <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('Books & Stationery')} />
+                    <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('Books_Stationery')} />
 
 
-                    <CategoryCard Icon={MdOutlineSportsBaseball} title="Sports & Gyms" ads="69,580" onClick={() => handleCategoryClick('Sports & Gyms')} />
+                    <CategoryCard Icon={MdOutlineSportsBaseball} title="Sports & Gyms" ads="69,580" onClick={() => handleCategoryClick('Sports_Gyms')} />
 
-                    <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('Books & Stationery')} />
+                    
 
                     <CategoryCard Icon={PiHandshake} title="Services" ads="69,580" onClick={() => handleCategoryClick('Services')} />
                     <CategoryCard Icon={PiGraduationCapDuotone} title="Vacancies" ads="69,580" onClick={() => handleCategoryClick('Vacancies')} />
@@ -117,6 +133,14 @@ function Form() {
                     {categoryForms[selectedCategory] === ElectronicsForm && <ElectronicsForm nextStep={handleNextStep} />}
                     {categoryForms[selectedCategory] === VehiclesForm && <VehiclesForm nextStep={handleNextStep} />}
                     {categoryForms[selectedCategory] === PropertiesForm && <PropertiesForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === SparepartsForm && <SparepartsForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === FurnituresForm && <FurnituresForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === FashionForm && <FashionForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === Books_stationaryForm && <Books_stationaryForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === SportsgymsForm && <SportsgymsForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === ServicesForm && <ServicesForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === VacanciesForm && <VacanciesForm nextStep={handleNextStep} />}
+                    {categoryForms[selectedCategory] === PetsForm && <PetsForm nextStep={handleNextStep} />}
                     {/* Add more forms here */}
                 </div>
             )}
