@@ -20,7 +20,7 @@ import { MdOutlineSportsBaseball } from 'react-icons/md';
 import SparepartsForm from './SparepartsForm';
 import FurnituresForm from './FurnituresForm';
 import FashionForm from './FashionForm';
-import Books_stationaryForm from './Books_stationaryForm';
+import BooksStatiForm from './BooksStatiForm';
 import SportsgymsForm from './SportsgymsForm';
 import ServicesForm from './ServicesForm';
 import VacanciesForm from './VacanciesForm';
@@ -56,7 +56,7 @@ function Form() {
         Spare_Parts:SparepartsForm,
         Furnitures:FurnituresForm,
         Fashion:FashionForm,
-        Books_Stationary:Books_stationaryForm,
+        BooksStati:BooksStatiForm,
         Sports_Gyms:SportsgymsForm,
         Services:ServicesForm,
         Vacancies:VacanciesForm,
@@ -112,7 +112,7 @@ function Form() {
                     <CategoryCard Icon={HiOutlineWrenchScrewdriver} title="Spare Parts" ads="69,580" onClick={() => handleCategoryClick('Spare_Parts')} />
                     <CategoryCard Icon={TbSofa} title="Furnitures" ads="69,580" onClick={() => handleCategoryClick('Furnitures')} />
                     <CategoryCard Icon={PiPants} title="Fashion & Clothing" ads="69,580" onClick={() => handleCategoryClick('Fashion')} />
-                    <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('Books_Stationery')} />
+                    <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('BooksStati')} />
 
 
                     <CategoryCard Icon={MdOutlineSportsBaseball} title="Sports & Gyms" ads="69,580" onClick={() => handleCategoryClick('Sports_Gyms')} />
@@ -136,7 +136,7 @@ function Form() {
                     {categoryForms[selectedCategory] === SparepartsForm && <SparepartsForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
                     {categoryForms[selectedCategory] === FurnituresForm && <FurnituresForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
                     {categoryForms[selectedCategory] === FashionForm && <FashionForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
-                    {categoryForms[selectedCategory] === Books_stationaryForm && <Books_stationaryForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
+                    {categoryForms[selectedCategory] === BooksStatiForm && <BooksStatiForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
                     {categoryForms[selectedCategory] === SportsgymsForm && <SportsgymsForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
                     {categoryForms[selectedCategory] === ServicesForm && <ServicesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
                     {categoryForms[selectedCategory] === VacanciesForm && <VacanciesForm nextStep={handleNextStep} previousStep={handlePreviousStep} selectedCategory={selectedCategory}/>}
