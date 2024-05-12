@@ -118,27 +118,33 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
     const handleImageChange = async (e, index) => {
         const file = e.target.files[0];
         if (file) {
-          setImageLoadings(prev => prev.map((loading, idx) => idx === index ? true : loading));
-    
-          const storage = getStorage();
-          const storageRef = ref(storage, `AdImages/${file.name}`);
-    
-          try {
-            await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(storageRef);
-    
-            setImages(prevImages => {
-              const newImages = [...prevImages];
-              newImages[index] = downloadURL;
-              return newImages;
-            });
-            setImageLoadings(prev => prev.map((loading, idx) => idx === index ? false : loading));
-          } catch (error) {
-            console.error('Error uploading image:', error);
-            setImageLoadings(prev => prev.map((loading, idx) => idx === index ? false : loading));
-          }
+            setImageLoadings(prev => prev.map((loading, idx) => idx === index ? true : loading));
+
+            const storage = getStorage();
+            const storageRef = ref(storage, `AdImages/${file.name}`);
+
+            try {
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+
+                setImages(prevImages => {
+                    const newImages = [...prevImages];
+                    newImages[index] = downloadURL;
+                    return newImages;
+                });
+                setImageLoadings(prev => prev.map((loading, idx) => idx === index ? false : loading));
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                setImageLoadings(prev => prev.map((loading, idx) => idx === index ? false : loading));
+            }
         }
-      };
+    };
+
+    const handleRemoveImage = (index) => {
+        const newImages = [...images];
+        newImages[index] = null;
+        setImages(newImages);
+    };
 
     const handlePreviousClick = async (event) => {
         previousStep();
@@ -277,33 +283,7 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
                             ))}
                         </select>
                     </label>
-                    {/* <label className='w-full'>
-                    <p className='text-sm text-gray-800 mb-1'>
-                    Conditions <sup className='text-pink-200'>*</sup>
-                    </p>
-                    <input
-                    required
-                    type={''}
-                    value={''}
-                    onChange={''}
-                    placeholder="Select"
-                    name="Conditions"
-                    className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'/>
-                </label>
-
-                <label className='w-full '>
-                    <p className='text-sm text-gray-800 mb-1'>
-                    Authenticityy <sup className='text-pink-200'>*</sup>
-                    </p>
-                    <input
-                    required
-                    type={''}
-                    value={''}
-                    onChange={''}
-                    placeholder="Select"
-                    name="Authenticity"
-                    className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'/>
-                </label> */}
+                    
                 </div>
 
                 <label className='w-full'>
@@ -401,25 +381,44 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
                         </label>
                     ))}
                 </div> */}
-                <div className="flex flex-wrap gap-4">
-          {[...Array(6)].map((_, index) => (
-            <label key={index} className="w-1/2 sm:w-1/3">
-              <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageChange(e, index)}
-                className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
-              />
-              {imageLoadings[index] && <div className="flex justify-center items-center">
-                <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
-              </div>}
-              {!imageLoadings[index] && images[index] && (
-                <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover" />
-              )}
-            </label>
-          ))}
-        </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+                {[...Array(6)].map((_, index) => (
+                    <div key={index} className="relative overflow-hidden bg-gray-100 rounded-md text-gray-800">
+                        <div className="h-40 aspect-w-1 aspect-h-1 relative">
+                            {images[index] && (
+                                <div>
+                                    <img src={images[index]} alt={`Preview ${index + 1}`} className="absolute inset-0 w-full h-full object-cover" />
+                                    <button onClick={() => handleRemoveImage(index)} className="absolute top-2 right-2 text-red-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            )}
+                            {!images[index] && (
+                                <>
+                                    <div className="flex justify-center items-center h-full">
+                                        <span className="text-5xl text-gray-400">+</span>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => handleImageChange(e, index)}
+                                        className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                                    />
+                                </>
+                            )}
+                            {imageLoadings[index] && (
+                                <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                                    <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+
                 <hr></hr>
 
 
@@ -428,7 +427,6 @@ function MobilesForm({ nextStep, previousStep, selectedCategory }) {
 
 
                 <div className='flex  flex-col-reverse sm:flex-row justify-between items-baseline'>
-                    <p className='text-[#636A80]'> <Checkbox className='m-2'></Checkbox>Save my contact information for faster posting</p>
                     <div className='flex sm:flex-row gap-4'>
                         <button onClick={handlePreviousClick} className='border-4 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6'>
                             previous
