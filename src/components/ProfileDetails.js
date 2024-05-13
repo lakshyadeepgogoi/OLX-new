@@ -5,7 +5,7 @@ import { auth } from '../pages/firebase'; // Assuming you have set up Firebase i
 import Cards from './Cards';
 import { CiPhone } from "react-icons/ci";
 import { CiMail } from "react-icons/ci";
-import { FaLocationDot, FaCheck  } from "react-icons/fa6"; // Import FaPencilAlt and FaCheck  icons
+import { FaLocationDot, FaCheck } from "react-icons/fa6"; // Import FaPencilAlt and FaCheck  icons
 import { FaRegEdit } from "react-icons/fa";
 
 function ProfileDetails() {
@@ -28,7 +28,7 @@ function ProfileDetails() {
   // Function to handle profile image upload
   const handleImageUpload = (event) => {
     const imageFile = event.target.files[0];
-   
+
     setProfileImageUrl(URL.createObjectURL(imageFile));
   };
 
@@ -47,7 +47,7 @@ function ProfileDetails() {
           <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
           {isEditing ? (
             <label htmlFor="profileImageUpload" className="absolute bottom-0 right-0 p-1 bg-white rounded-full cursor-pointer">
-              <FaCheck  className="text-gray-600" onClick={handleSave} />
+              <FaCheck className="text-gray-600" onClick={handleSave} />
             </label>
           ) : (
             <label htmlFor="profileImageUpload" className="absolute bottom-0 right-0 p-1 bg-white rounded-full cursor-pointer">
@@ -87,10 +87,44 @@ function ProfileDetails() {
       {/* Right Section - Ads with Tabs */}
       <div className="w-full p-4">
         {/* Your remaining code for displaying ads */}
-        
+        {/* Tabs for switching views */}
+        <div className="border-b-2 overflow-x-auto whitespace-nowrap">
+          <button
+            className="px-4 py-2 text-blue-700 hover:border-blue-700 "
+            onClick={() => { }}>
+            Recent Ads
+          </button>
+          <button
+            className="px-4 py-2 text-gray-600 bg-transparent  "
+            onClick={() => { }}>
+            Boosted Ads
+          </button>
+          <button
+            className="px-4 py-2  text-gray-600 bg-transparent  "
+            onClick={() => { }}>
+            Expired Ads
+          </button>
+        </div>
 
+        {/* Card Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4 ">
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+          <Cards />
+        </div>
       </div>
+
+
     </div>
+    
   );
 }
 
