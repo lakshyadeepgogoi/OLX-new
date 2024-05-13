@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function CategoryCard({ Icon, title, ads, onClick }) {
+function CategoryCard({ iconSrc, title, ads, onClick }) {
     const [hover, setHover] = useState(false);
 
     return (
@@ -9,7 +9,7 @@ function CategoryCard({ Icon, title, ads, onClick }) {
             onMouseLeave={() => setHover(false)}
             onClick={onClick}>
             <div className={`rounded-full bg-[#E8F7FF] ${hover ? 'bg-green-500 shadow-lg shadow-gray-600' : ''} p-4`}>
-                <Icon size={48} />
+            <img src={iconSrc} alt="Category Icon" className="w-12 h-12" />
             </div>
             <p className="mt-4 text-center text-lg font-medium text-gray-800">{title}</p>
             {hover ? <span className="text-center text-green-600">View Ads →</span> : <p className="text-center text-gray-600">{ads} Ads</p>}

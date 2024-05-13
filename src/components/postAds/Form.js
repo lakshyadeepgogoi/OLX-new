@@ -26,6 +26,20 @@ import ServicesForm from './ServicesForm';
 import VacanciesForm from './VacanciesForm';
 import PetsForm from './PetsForm';
 
+import mobileIcon from "../../assets/gadgets.png"
+import electronicIcon from "../../assets/electronics.png"
+import vehicleIcon from "../../assets/eco-car.png"
+import propertyIcon from "../../assets/assets.png"
+import sparepartsIcon from "../../assets/spare-parts.png"
+import furnitureIcon from "../../assets/furniture.png"
+import fashionIcon from "../../assets/fashion.png"
+import bookIcon from "../../assets/stationery.png"
+import sportsIcon from "../../assets/gym.png"
+import servicesIcon from "../../assets/customer-service.png"
+import jobForm from '../../assets/promotion.png'
+import petForm from "../../assets/dog.png"
+
+
 function Form() {
     const [step, setStep] = useState(1);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -104,24 +118,24 @@ function Form() {
 
             {step === 1 && (
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <CategoryCard Icon={CiMobile1} title="Phones & Gadgets" ads="69,580" onClick={() => handleCategoryClick('Mobiles')} />
-                    <CategoryCard Icon={CiMonitor} title="Electronics & Appliances" ads="69,580" onClick={() => handleCategoryClick('Electronics')} />
-                    <CategoryCard Icon={FaCarAlt} title="Vehicles" ads="69,580" onClick={() => handleCategoryClick('Vehicles')} />
-                    <CategoryCard Icon={CiShop} title="Properties" ads="69,580" onClick={() => handleCategoryClick('Properties')} />
+                    <CategoryCard iconSrc={mobileIcon}  title="Phones & Gadgets" ads="69,580" onClick={() => handleCategoryClick('Mobiles')} />
+                    <CategoryCard iconSrc={electronicIcon} title="Electronics & Appliances" ads="69,580" onClick={() => handleCategoryClick('Electronics')} />
+                    <CategoryCard iconSrc={vehicleIcon} title="Vehicles" ads="69,580" onClick={() => handleCategoryClick('Vehicles')} />
+                    <CategoryCard iconSrc={propertyIcon} title="Properties" ads="69,580" onClick={() => handleCategoryClick('Properties')} />
                     
-                    <CategoryCard Icon={HiOutlineWrenchScrewdriver} title="Spare Parts" ads="69,580" onClick={() => handleCategoryClick('Spare_Parts')} />
-                    <CategoryCard Icon={TbSofa} title="Furnitures" ads="69,580" onClick={() => handleCategoryClick('Furnitures')} />
-                    <CategoryCard Icon={PiPants} title="Fashion & Clothing" ads="69,580" onClick={() => handleCategoryClick('Fashion')} />
-                    <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('BooksStati')} />
+                    <CategoryCard iconSrc={sparepartsIcon} title="Spare Parts" ads="69,580" onClick={() => handleCategoryClick('Spare_Parts')} />
+                    <CategoryCard iconSrc={furnitureIcon} title="Furnitures" ads="69,580" onClick={() => handleCategoryClick('Furnitures')} />
+                    <CategoryCard iconSrc={fashionIcon} title="Fashion & Clothing" ads="69,580" onClick={() => handleCategoryClick('Fashion')} />
+                    <CategoryCard iconSrc={bookIcon} title="Books & Stationery" ads="69,580" onClick={() => handleCategoryClick('BooksStati')} />
 
 
-                    <CategoryCard Icon={MdOutlineSportsBaseball} title="Sports & Gyms" ads="69,580" onClick={() => handleCategoryClick('Sports_Gyms')} />
+                    <CategoryCard iconSrc={sportsIcon} title="Sports & Gyms" ads="69,580" onClick={() => handleCategoryClick('Sports_Gyms')} />
 
                     
 
-                    <CategoryCard Icon={PiHandshake} title="Services" ads="69,580" onClick={() => handleCategoryClick('Services')} />
-                    <CategoryCard Icon={PiGraduationCapDuotone} title="Vacancies" ads="69,580" onClick={() => handleCategoryClick('Vacancies')} />
-                    <CategoryCard Icon={PiDog} title="Pets" ads="69,580" onClick={() => handleCategoryClick('Pets')} />
+                    <CategoryCard iconSrc={servicesIcon} title="Services" ads="69,580" onClick={() => handleCategoryClick('Services')} />
+                    <CategoryCard iconSrc={jobForm} title="Vacancies" ads="69,580" onClick={() => handleCategoryClick('Vacancies')} />
+                    <CategoryCard iconSrc={petForm} title="Pets" ads="69,580" onClick={() => handleCategoryClick('Pets')} />
 
                 
                 </div>
