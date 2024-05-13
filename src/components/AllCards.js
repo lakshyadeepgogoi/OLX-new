@@ -3,7 +3,7 @@ import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../pages/firebase';
 import { Link } from 'react-router-dom'; // Import Link
 
-function MobileadsCard() {
+function AllCards() {
     const [ads, setAds] = useState([]);
 
     useEffect(() => {
@@ -70,4 +70,4 @@ function MobileadsCard() {
     );
 }
 
-export default MobileadsCard;
+export default AllCards;
