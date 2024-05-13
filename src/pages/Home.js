@@ -24,7 +24,7 @@ import phoneimg from "../assets/phoneimg.png"
 import { FaGooglePlay } from "react-icons/fa";
 import { GrApple } from "react-icons/gr";
 import { motion } from 'framer-motion';
-import AdsCard from '../components/MobileadsCard';
+import AllCards from '../components/AllCards';
 
 
 import mobileIcon from "../assets/gadgets.png"
@@ -115,7 +115,7 @@ const Home = ({ isLoggedIn }) => {
       <div className='mt-8 w-full px-4 md:w-6/12 lg:w-8/12 xl:w-10/12 mx-auto '>
 
         <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center">Fresh recommended Ads </h2>
-        <AdsCard />
+        <AllCards />
 
         <motion.a
           href="/all-ads"
