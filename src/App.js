@@ -18,7 +18,6 @@ import ContactUser from "./components/postAds/ContactUser";
 import FormSuccess from "./components/postAds/FormSuccess";
 import PhonesGadgets from "./pages/Phones&Gadgets";
 import ElectronicsAppliances from "./pages/Electronics&Appliances";
-import AdDetailPage from "./components/AdDetailPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -55,7 +54,7 @@ function App() {
 
 {/* Routes for Ads Detail */}
 
-        <Route path="/ad-details/:id"  element={ <AdDetailPage/>}/>
+        <Route path="/ad-details/:id"  element={ <AdsDetails/>}/>
 
         <Route path="/profile" element={
           <PrivateRoute isLoggedIn={isLoggedIn}>
