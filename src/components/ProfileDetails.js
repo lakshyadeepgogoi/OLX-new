@@ -87,6 +87,8 @@ function ProfileDetails() {
       {/* Right Section - Ads with Tabs */}
       <div className="w-full p-4">
         {/* Your remaining code for displaying ads */}
+        
+
       </div>
     </div>
   );

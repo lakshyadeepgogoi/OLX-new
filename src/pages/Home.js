@@ -25,8 +25,22 @@ import { FaGooglePlay } from "react-icons/fa";
 import { GrApple } from "react-icons/gr";
 import { motion } from 'framer-motion';
 
+
+import mobileIcon from "../assets/gadgets.png"
+import electronicIcon from "../assets/electronics.png"
+import vehicleIcon from "../assets/eco-car.png"
+import propertyIcon from "../assets/assets.png"
+import sparepartsIcon from "../assets/spare-parts.png"
+import furnitureIcon from "../assets/furniture.png"
+import fashionIcon from "../assets/fashion.png"
+import bookIcon from "../assets/stationery.png"
+import sportsIcon from "../assets/gym.png"
+import servicesIcon from "../assets/customer-service.png"
+import jobForm from '../assets/promotion.png'
+import petForm from "../assets/dog.png"
+
 // Reusable CategoryCard Component
-function CategoryCard({ Icon, title, ads }) {
+function CategoryCard({ iconSrc, title, ads }) {
   const [hover, setHover] = React.useState(false); // Local state for hover effect
 
   return (
@@ -34,7 +48,7 @@ function CategoryCard({ Icon, title, ads }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}>
       <div className={`rounded-full bg-[#E8F7FF] ${hover ? 'bg-green-600 shadow-lg shadow-gray-600' : ''} p-4`}>
-        <Icon size={48} />
+      <img src={iconSrc} alt="Category Icon" className="w-12 h-12" />
       </div>
       <p className="mt-4 text-center text-lg font-medium text-gray-800">{title}</p>
       {
@@ -126,20 +140,20 @@ const Home = ({ isLoggedIn }) => {
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center tracking-wide">Popular Categories</h2>
           {/* Categories */}
-          <CategoryCard Icon={CiMobile1} title="Phones & Gadgets" ads="69,580" />
-          <CategoryCard Icon={CiMonitor} title="Electronics & Appliances" ads="69,580" />
-          <CategoryCard Icon={FaCarAlt} title="Vehicles" ads="69,580" />
-          <CategoryCard Icon={CiShop} title="Properties" ads="69,580" />
-          <CategoryCard Icon={HiOutlineWrenchScrewdriver} title="Spare Parts" ads="69,580" />
-          <CategoryCard Icon={TbSofa} title="Furnitures" ads="69,580" />
-          <CategoryCard Icon={PiPants} title="Fashion & Clothings" ads="69,580" />
-          <CategoryCard Icon={PiBooksLight} title="Books & Stationery" ads="69,580" />
-          <CategoryCard Icon={MdOutlineSportsBaseball} title="Sports & Gyms" ads="69,580" />
+          <CategoryCard iconSrc={mobileIcon}  title="Phones & Gadgets" ads="69,580" />
+          <CategoryCard iconSrc={electronicIcon} title="Electronics & Appliances" ads="69,580" />
+          <CategoryCard iconSrc={vehicleIcon} title="Vehicles" ads="69,580" />
+          <CategoryCard iconSrc={propertyIcon} title="Properties" ads="69,580" />
+          <CategoryCard iconSrc={sparepartsIcon} title="Spare Parts" ads="69,580" />
+          <CategoryCard iconSrc={furnitureIcon} title="Furnitures" ads="69,580" />
+          <CategoryCard iconSrc={fashionIcon}  title="Fashion & Clothings" ads="69,580" />
+          <CategoryCard iconSrc={bookIcon} title="Books & Stationery" ads="69,580" />
+          <CategoryCard iconSrc={sportsIcon}  title="Sports & Gyms" ads="69,580" />
 
-          <CategoryCard Icon={PiHandshake} title="Services" ads="69,580" />
+          <CategoryCard iconSrc={servicesIcon}title="Services" ads="69,580" />
 
-          <CategoryCard Icon={PiGraduationCapDuotone} title="Vacancies" ads="69,580" />
-          <CategoryCard Icon={PiDog} title="Pets" ads="69,580" />
+          <CategoryCard iconSrc={jobForm} title="Vacancies" ads="69,580" />
+          <CategoryCard iconSrc={petForm} title="Pets" ads="69,580" />
 
           {/* Repeat similar divs for other categories */}
         </div>

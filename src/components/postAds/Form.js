@@ -1,12 +1,5 @@
 import React from 'react'
-import { CiMobile1 } from "react-icons/ci";
-import { CiMonitor } from "react-icons/ci";
-import { FaCarAlt } from "react-icons/fa";
-import { CiShop } from "react-icons/ci";
-import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
-import { FaHouse } from "react-icons/fa6";
-import { PiBooksLight, PiDog, PiHandshake, PiPants } from "react-icons/pi";
-import { PiGraduationCapDuotone } from "react-icons/pi";
+
 import { useState } from 'react';
 import MobilesForm from './MobilesForm';
 import ElectronicsForm from './ElectronicsForm';
