@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { CiShoppingTag, CiLocationOn } from "react-icons/ci";
 import { getDocs, collection, where, query } from 'firebase/firestore';
 import LazyLoad from 'react-lazyload';
-import './loader.css';
+// import './loader.css';
 
 function ProfileDetails() {
     const [user, loading, error] = useAuthState(auth);
