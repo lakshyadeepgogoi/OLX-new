@@ -10,6 +10,9 @@ import { FaHome, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../pages/firebase';
+import { db } from '../pages/firebase';
+import { getDocs, collection } from 'firebase/firestore';
+
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -18,6 +21,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [user, loading, error] = useAuthState(auth);
+  const [categories, setCategories] = useState([]);
 
 
   useEffect(() => {
@@ -72,6 +76,31 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const handlePost = () => {
     navigate("/Form");
   }
+
+  useEffect(() => {
+    if (user) {
+      setProfileImageUrl(user.photoURL);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchCategory =async () =>{
+
+    const categoryRef = collection(db,'categories');
+    const categorySnapshot =await getDocs(categoryRef);
+      const categoriesList = categorySnapshot.docs.map(doc => doc.id);
+      setCategories(categoriesList);
+    };
+  
+    fetchCategory()
+  }, []);
+
+ 
+
+  const handleCategoryClick = async (category) => {
+    // Here you can navigate to a page to show ads of the selected category
+    navigate(`/category/${category}`);
+  };
 
   return (
     <div className="bg-white shadow-md z-10">
@@ -186,13 +215,22 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           </button>
           <div className="border-l-2 border-gray-300 mx-4"></div>
           <ul className="flex text-gray-600 font-medium items-center font-inter gap-x-3">
-            <li className="mx-2">Mobile Phones</li>
-            <li className="mx-2">Electronics</li>
-            <li className="mx-2">Cars</li>
-            <li className="mx-2">Bikes</li>
+            <Link to='/phones&gadgets'>
+            <li className="mx-2">Phones & Gadgets</li>
+            </Link>
+
+            <Link to='/electronics&appliances'>
+            <li className="mx-2">Electronics & Appliances</li>
+            </Link>
+            <li className="mx-2">Vehicles</li>
             <li className="mx-2">Properties</li>
-            <li className="mx-2">Home and Living</li>
-            <li className="mx-2">Essentials</li>
+            <li className="mx-2">Spare Parts</li>
+            <li className="mx-2">Furnitures</li>
+            <li className="mx-2">Books & Stationery</li>
+            <li className="mx-2">Sports & Gyms</li>
+            <li className="mx-2">Fashion & Clothings</li>
+            <li className="mx-2">Services</li>
+
           </ul>
 
           <button className="font-inter text-gray-700 flex items-center border px-3 py-2 pl-3 pr-3 mt-2 rounded-sm bg-gray-100 absolute right-0">

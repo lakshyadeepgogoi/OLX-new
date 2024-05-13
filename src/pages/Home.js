@@ -24,6 +24,7 @@ import phoneimg from "../assets/phoneimg.png"
 import { FaGooglePlay } from "react-icons/fa";
 import { GrApple } from "react-icons/gr";
 import { motion } from 'framer-motion';
+import AdsCard from '../components/MobileAdsCard';
 
 
 import mobileIcon from "../assets/gadgets.png"
@@ -105,20 +106,24 @@ const Home = ({ isLoggedIn }) => {
           </div>
         </div>
       </div>
+      <h1 className='text-2xl font-semibold mt-12 mb-4 text-center'>Fresh Ads</h1>
+      <AdsCard/>
+
 
 
       {/* Second Section */}
       <div className='mt-8 w-full px-4 md:w-6/12 lg:w-8/12 xl:w-10/12 mx-auto '>
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+        <div className='w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
           <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center">Fresh recommended Ads </h2>
+          {/* <Cards />
           <Cards />
           <Cards />
           <Cards />
           <Cards />
           <Cards />
           <Cards />
-          <Cards />
-          <Cards />
+          <Cards /> */}
+          {/* <AdsCard/> */}
         </div>
 
         <motion.a

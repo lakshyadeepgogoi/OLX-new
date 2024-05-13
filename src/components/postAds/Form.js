@@ -152,7 +152,7 @@ function Form() {
                 </div>
             )}
             
-            {step === 3 && collectionId && <ContactUser collectionId={collectionId} docId={docId} selectedCategory={selectedCategory}  />}
+            {step === 3 && collectionId && <ContactUser selectedCategory={selectedCategory} collectionId= {collectionId} docId={docId} />}
         </div>
     );
 }
