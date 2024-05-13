@@ -49,7 +49,7 @@ function CategoryCard({ iconSrc, title, ads }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}>
       <div className={`rounded-full bg-[#E8F7FF] ${hover ? 'bg-green-600 shadow-lg shadow-gray-600' : ''} p-4`}>
-      <img src={iconSrc} alt="Category Icon" className="w-12 h-12" />
+        <img src={iconSrc} alt="Category Icon" className="w-12 h-12" />
       </div>
       <p className="mt-4 text-center text-lg font-medium text-gray-800">{title}</p>
       {
@@ -106,25 +106,16 @@ const Home = ({ isLoggedIn }) => {
           </div>
         </div>
       </div>
-      <h1 className='text-2xl font-semibold mt-12 mb-4 text-center'>Fresh Ads</h1>
-      <AdsCard/>
+      {/* <h1 className='text-2xl font-semibold mt-12 mb-4 text-center'>Fresh Ads</h1>
+      <AdsCard/> */}
 
 
 
       {/* Second Section */}
       <div className='mt-8 w-full px-4 md:w-6/12 lg:w-8/12 xl:w-10/12 mx-auto '>
-        <div className='w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-          <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center">Fresh recommended Ads </h2>
-          {/* <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards /> */}
-          {/* <AdsCard/> */}
-        </div>
+
+        <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center">Fresh recommended Ads </h2>
+        <AdsCard />
 
         <motion.a
           href="/all-ads"
@@ -145,17 +136,17 @@ const Home = ({ isLoggedIn }) => {
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center tracking-wide">Popular Categories</h2>
           {/* Categories */}
-          <CategoryCard iconSrc={mobileIcon}  title="Phones & Gadgets" ads="69,580" />
+          <CategoryCard iconSrc={mobileIcon} title="Phones & Gadgets" ads="69,580" />
           <CategoryCard iconSrc={electronicIcon} title="Electronics & Appliances" ads="69,580" />
           <CategoryCard iconSrc={vehicleIcon} title="Vehicles" ads="69,580" />
           <CategoryCard iconSrc={propertyIcon} title="Properties" ads="69,580" />
           <CategoryCard iconSrc={sparepartsIcon} title="Spare Parts" ads="69,580" />
           <CategoryCard iconSrc={furnitureIcon} title="Furnitures" ads="69,580" />
-          <CategoryCard iconSrc={fashionIcon}  title="Fashion & Clothings" ads="69,580" />
+          <CategoryCard iconSrc={fashionIcon} title="Fashion & Clothings" ads="69,580" />
           <CategoryCard iconSrc={bookIcon} title="Books & Stationery" ads="69,580" />
-          <CategoryCard iconSrc={sportsIcon}  title="Sports & Gyms" ads="69,580" />
+          <CategoryCard iconSrc={sportsIcon} title="Sports & Gyms" ads="69,580" />
 
-          <CategoryCard iconSrc={servicesIcon}title="Services" ads="69,580" />
+          <CategoryCard iconSrc={servicesIcon} title="Services" ads="69,580" />
 
           <CategoryCard iconSrc={jobForm} title="Vacancies" ads="69,580" />
           <CategoryCard iconSrc={petForm} title="Pets" ads="69,580" />

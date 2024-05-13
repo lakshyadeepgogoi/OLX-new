@@ -209,27 +209,27 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       <div className='hidden md:block'>
         <div className="border-t-2 border-gray-100 "></div>
         <div className="container mx-auto px-4 py-2 flex relative text-sm ">
-          <button className="font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2 mt-2 rounded-sm bg-gray-100">
+          <button className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2 mt-2 rounded-sm bg-gray-100">
             All categories
             <FaAngleDown className="ml-1" />
           </button>
           <div className="border-l-2 border-gray-300 mx-4"></div>
-          <ul className="flex text-gray-600 font-medium items-center font-inter gap-x-3">
+          <ul className="flex text-gray-600 font-medium items-center font-inter gap-x-3 ">
             <Link to='/phones&gadgets'>
-            <li className="mx-2">Phones & Gadgets</li>
+            <li className=" whitespace-nowrap">Phones & Gadgets</li>
             </Link>
 
             <Link to='/electronics&appliances'>
-            <li className="mx-2">Electronics & Appliances</li>
+            <li className=" whitespace-nowrap">Electronics & Appliances</li>
             </Link>
-            <li className="mx-2">Vehicles</li>
-            <li className="mx-2">Properties</li>
-            <li className="mx-2">Spare Parts</li>
-            <li className="mx-2">Furnitures</li>
-            <li className="mx-2">Books & Stationery</li>
-            <li className="mx-2">Sports & Gyms</li>
-            <li className="mx-2">Fashion & Clothings</li>
-            <li className="mx-2">Services</li>
+            <li className=" whitespace-nowrap">Vehicles</li>
+            <li className=" whitespace-nowrap">Properties</li>
+            <li className=" whitespace-nowrap">Spare Parts</li>
+            <li className=" whitespace-nowrap">Furnitures</li>
+            <li className=" whitespace-nowrap">Books & Stationery</li>
+            <li className=" whitespace-nowrap">Sports & Gyms</li>
+            <li className=" whitespace-nowrap">Fashion & Clothings</li>
+            <li className=" whitespace-nowrap">Services</li>
 
           </ul>
 

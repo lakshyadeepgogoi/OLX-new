@@ -7,12 +7,18 @@ import { Link } from 'react-router-dom';
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaHome, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../pages/firebase';
+import { db } from '../pages/firebase';
+import { useEffect } from 'react';
 
 
 function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
+    const [user, loading, error] = useAuthState(auth);
 
 
     const handleLogout = () => {
@@ -20,6 +26,12 @@ function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
         toast.success('Logged Out');
         setDropdownOpen(false);
     };
+
+    useEffect(() => {
+        if (user) {
+          setProfileImageUrl(user.photoURL);
+        }
+      }, [user]);
 
     const handleSearchInputChange = (event) => {
         setSearchQuery(event.target.value);
@@ -73,7 +85,7 @@ function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
                                         onClick={() => setDropdownOpen(!dropdownOpen)}
                                         className="relative flex items-center justify-center p-3 overflow-hidden bg-green-100 rounded-full transition duration-300 hover:bg-green-200 focus:outline-none"
                                     >
-                                        <img src={logo} alt="Profile" className="rounded-full w-8 h-8" />
+                                        <img src={profileImageUrl} alt="Profile" className="rounded-full w-8 h-8" />
                                     </button>
                                     {dropdownOpen && (
                                         <div className="absolute right-0 w-60 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-30 overflow-hidden">
