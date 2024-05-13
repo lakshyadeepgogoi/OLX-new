@@ -138,7 +138,7 @@ const handleClick = (index) => {
 
 
 
-    const postOwnerNumber = adDetails.phoneNumber; // Replace this with the actual phone number of the post owner
+    const postOwnerNumber = adDetails&&adDetails.phoneNumber; // Replace this with the actual phone number of the post owner
 
     const handleSendMessage = () => {
       const message = "Hi, I'm interested in your post. Can you provide more details about this Ads? <br>";
