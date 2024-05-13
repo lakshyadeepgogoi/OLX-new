@@ -7,20 +7,34 @@ function MobileadsCard() {
     const [ads, setAds] = useState([]);
 
     useEffect(() => {
-        const fetchAds = async () => {
+        const fetchAllCategoryAds = async () => {
             try {
-                const adsCollectionRef = collection(db, 'categories', 'Mobiles', 'ads');
-                const adsSnapshot = await getDocs(adsCollectionRef);
-                const adsData = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                console.log('Fetched ads data:', adsData); // Log fetched data
-                setAds(adsData);
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles'];
+                let allCategoryAds = [];
+    
+                for (const category of categories) {
+                    const adsCollectionRef = collection(db, 'categories', category, 'ads');
+                    const adsSnapshot = await getDocs(adsCollectionRef);
+                    const categoryAds = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    allCategoryAds = [...allCategoryAds, ...categoryAds];
+                }
+    
+                // Sort ads by timestamp in descending order
+                allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
+    
+                // Slice the array to only include the latest 16 ads
+                const latestAds = allCategoryAds.slice(0, 16);
+    
+                console.log('Fetched latest 16 category ads:', latestAds); // Log fetched data
+                setAds(latestAds);
             } catch (error) {
                 console.error('Error fetching ads:', error); // Log any errors
             }
         };
     
-        fetchAds();
+        fetchAllCategoryAds();
     }, []);
+    
     
 
     return (
