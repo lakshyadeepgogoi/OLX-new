@@ -103,7 +103,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   return (
-    <div className="bg-white shadow-md z-10">
+    <div className="bg-white shadow-md z-10 w-full">
       {/* First part of navbar */}
       <div className="container mx-auto px-4 py-4 flex justify-between items-center ">
         {/* Logo */}

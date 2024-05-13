@@ -242,7 +242,7 @@ const handleClick = (index) => {
               <div className='flex flex-row justify-between '>
                 <div className='flex flex-row justify-start gap-4'> 
                 {user && user.photoURL && <img src={user.photoURL} alt='profile_img' loading='lazy'/>}
-                  <div className='flex flex-col gap-2'><span className='text-[#767E94] text-sm'>Added by</span><span className='flex flex-row justify-center items-center gap-2 font-bold'>Kevin Gilbert <FaRegCheckCircle className='text-green-500'/></span></div>
+                  <div className='flex flex-col gap-2'><span className='text-[#767E94] text-sm'>Added by</span><span className='flex flex-row justify-center items-center gap-2 font-bold'>{adDetails&&adDetails.name}<FaRegCheckCircle className='text-green-500'/></span></div>
                 </div>
                 <button className='text-[#00AAFF] text-sm '>View Profile</button>
               </div>
@@ -255,11 +255,11 @@ const handleClick = (index) => {
               </div>
             </div>
 
-            <div className='w-full h-[412px]  border-b-2 flex flex-col p-7 gap-5'>
+            <div className='w-full h-[400px]  border-b-2 flex flex-col p-5 gap-5'>
             <h1 className='text-xl text-[#191F33]'>Ads Location</h1>
             <div className='w-full h-[348px]'>
             <GoogleMapReact
-            bootstrapURLKeys={{ key: "" }}
+            bootstrapURLKeys={{ key:'' }}
             defaultCenter={defaultProps.center}
             defaultZoom={defaultProps.zoom}>
             <AnyReactComponent
