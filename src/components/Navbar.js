@@ -206,10 +206,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
       {/* Second part of navbar */}
 
-      <div className='hidden md:block'>
+      <div className='hidden md:block w-full'>
         <div className="border-t-2 border-gray-100 "></div>
-        <div className="container mx-auto px-4 py-2 flex relative text-sm ">
-          <button className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2 mt-2 rounded-sm bg-gray-100">
+        <div className="container mx-auto px-4 py-2 flex relative text-sm w-full h-16">
+          <button className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2  ml-4 rounded-sm bg-gray-100">
             All categories
             <FaAngleDown className="ml-1" />
           </button>
@@ -227,13 +227,13 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <li className=" whitespace-nowrap">Spare Parts</li>
             <li className=" whitespace-nowrap">Furnitures</li>
             <li className=" whitespace-nowrap">Books & Stationery</li>
-            <li className=" whitespace-nowrap">Sports & Gyms</li>
+            {/* <li className=" whitespace-nowrap">Sports & Gyms</li>
             <li className=" whitespace-nowrap">Fashion & Clothings</li>
-            <li className=" whitespace-nowrap">Services</li>
+            <li className=" whitespace-nowrap">Services</li> */}
 
           </ul>
 
-          <button className="font-inter text-gray-700 flex items-center border px-3 py-2 pl-3 pr-3 mt-2 rounded-sm bg-gray-100 absolute right-0">
+          <button className="font-inter text-gray-700 flex items-center border px-3 py-2 pl-3 pr-3 my-2 rounded-sm bg-gray-100 absolute right-5">
             {stateName}
             <FaAngleDown className="ml-1" />
           </button>
