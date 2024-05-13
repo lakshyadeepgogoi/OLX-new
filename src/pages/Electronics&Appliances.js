@@ -1,5 +1,5 @@
 import React from "react";
-import MobileAdsCard from '../components/MobileAdsCard';
+import AdsCard from '../components/AdsCard';
 import { FaLaptop, FaMobileAlt, FaPhone, FaDesktop, FaHeadphones } from 'react-icons/fa';
 import { IoWatchOutline } from "react-icons/io5";
 import { FaTabletScreenButton } from "react-icons/fa6";

@@ -24,7 +24,7 @@ import phoneimg from "../assets/phoneimg.png"
 import { FaGooglePlay } from "react-icons/fa";
 import { GrApple } from "react-icons/gr";
 import { motion } from 'framer-motion';
-import AdsCard from '../components/MobileAdsCard';
+import AdsCard from '../components/AdsCard';
 
 
 import mobileIcon from "../assets/gadgets.png"
