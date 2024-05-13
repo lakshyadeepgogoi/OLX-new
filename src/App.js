@@ -16,6 +16,9 @@ import BoostPaymentPage from "./components/Boost/BoostPaymentPage";
 import { FormDataProvider } from "./components/postAds/FormDataContext";
 import ContactUser from "./components/postAds/ContactUser";
 import FormSuccess from "./components/postAds/FormSuccess";
+import PhonesGadgets from "./pages/Phones&Gadgets";
+import ElectronicsAppliances from "./pages/Electronics&Appliances";
+import AdDetailPage from "./components/AdDetailPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,6 +47,15 @@ function App() {
         <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
         <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
 
+    {/* Forms Routs For Nav */}
+        <Route path="/phones&gadgets" element= {<PhonesGadgets/>}/>
+        <Route path="/electronics&appliances" element= {<ElectronicsAppliances/>}/>
+
+
+
+{/* Routes for Ads Detail */}
+
+        <Route path="/ad-details/:id"  element={ <AdDetailPage/>}/>
 
         <Route path="/profile" element={
           <PrivateRoute isLoggedIn={isLoggedIn}>
