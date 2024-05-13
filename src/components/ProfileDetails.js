@@ -9,6 +9,7 @@ import { CiShoppingTag, CiLocationOn } from "react-icons/ci";
 import { getDocs, collection, where, query } from 'firebase/firestore';
 import './loader.css';
 
+
 function ProfileDetails() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState('');
@@ -45,9 +46,9 @@ function ProfileDetails() {
         const fetchUserAds = async () => {
             try {
                 const userId = auth.currentUser.uid;
-                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles','BooksStati','Pets','Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles' ]; // Add other categories as needed
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles']; // Add other categories as needed
                 let allUserAds = [];
-    
+
                 // Loop through each category and fetch ads
                 for (const category of categories) {
                     const adsCollectionQuery = query(collection(db, 'categories', category, 'ads'), where('userId', '==', userId));
@@ -55,7 +56,7 @@ function ProfileDetails() {
                     const categoryAds = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                     allUserAds = [...allUserAds, ...categoryAds];
                 }
-    
+
                 setAds(allUserAds);
                 setIsLoading(false); // Set isLoading to false after fetching ads
             } catch (error) {
@@ -65,12 +66,18 @@ function ProfileDetails() {
         };
         fetchUserAds();
     }, []);
-    
+
+    const variants = {
+        hidden: { opacity: 0, scale: 0.9 },
+        visible: { opacity: 1, scale: 1 }
+    };
+
+
 
     return (
-        <div className="flex w-full mt-4">
+        <div className="flex flex-col md:flex-row w-full mt-4">
             {/* Left Section - User Details */}
-            <div className="max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter">
+            <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center justify-center w-full font-inter md:w-auto md:flex-shrink-0">
                 <div className="relative">
                     <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
                     {isEditing ? (
@@ -90,9 +97,9 @@ function ProfileDetails() {
                         onChange={handleImageUpload}
                     />
                 </div>
-                <h1 className="text-2xl font-semibold flex flex-wrap">{name}</h1>
+                <h1 className="text-2xl font-semibold flex flex-wrap justify-center">{name}</h1>
                 <div className='border-t w-full my-3'></div>
-                <div className="space-y-1 flex flex-col items-start leading-8 p-4 w-full">
+                <div className="space-y-1 flex flex-col items-center leading-8 p-4 w-full">
                     <h1 className='text-xl text-gray-400'>Contact Details</h1>
                     <p className="flex items-center justify-start gap-2">
                         <CiPhone className="text-lg text-blue-400" />
@@ -130,42 +137,75 @@ function ProfileDetails() {
                     </button>
                 </div>
                 {/* Card Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
                     {isLoading ? (
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="loader"></div> {/* Render the loader */}
                         </div>
                     ) : (
                         ads.map(ad => (
-                            <div key={ad.id} className="border rounded-md overflow-hidden">
-                                {ad.promoted && (
-                                    <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
-                                        Promoted
-                                    </span>
-                                )}
-                                {ad.images && ad.images.length > 0 && (
-                                    <img src={ad.images[0]} alt="Ad" className="w-full h-48 object-cover" loading='lazy' />
-                                )}
-                                <div className="p-4">
-                                    <p className="text-gray-800 mb-2 text-xl">{ad.adName}</p>
-                                    <hr></hr>
-                                    <p className="font-medium text-black text-2xl mb-2">Rs {ad.price} </p>
-
-                                    <div className="flex justify-between">
-                                        <p className="text-sm text-gray-500">
-                                            {ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString()}
-                                        </p>
-                                        {/* Assuming address is also available in ad data */}
-                                        <p className="text-sm text-gray-500">{ad.userAddress}</p>
+                            <motion.div
+                                key={ad.id}
+                                className="card-style flex items-center"
+                                initial="hidden"
+                                animate="visible"
+                                variants={variants}
+                            >
+                                <div className=" w-full rounded overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer flex  relative">
+                                    <div className="w-1/2">
+                                        <div className="relative">
+                                            {/* <div className="absolute top-7 left-0 transform -translate-x-1/4 -translate-y-1/4 rotate-[-45deg] bg-red-500 text-white text-sm font-bold px-9 py-1 rounded w-32 uppercase">
+                                                Urgent
+                                            </div> */}
+                                            {/* When the ad is boost  */}
+                                            {/* {ad.promoted && (
+                                                    <div className="absolute top-7 left-0 transform -translate-x-1/4 -translate-y-1/4 rotate-[-45deg] bg-red-500 text-white text-sm font-bold px-9 py-1 rounded w-32 uppercase">
+                                                        Promoted
+                                                    </div>
+                                                )} */}
+                                            {ad.images && ad.images.length > 0 && (
+                                                <img src={ad.images[0]} alt="Ad" className="w-full p-2 h-56 object-fill" loading='lazy' />
+                                            )}
+                                            <div className='absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer'>
+                                                Boost
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div className="w-1/2 p-4">
+                                        <div className="flex justify-between  mb-2 flex-col md:flex-row">
+                                            <div className="flex items-center gap-2 ">
+                                                <CiShoppingTag className="text-gray-600 text-lg" />
+                                                <p className='font-inter text-sm'>{ad.subcategory}</p>
+                                            </div>
+                                            <button className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200 w-20">
+                                                Mark as Sold
+                                            </button>
+                                        </div>
+                                        <div className="text-md mb-1 font-inter">{ad.adName}</div>
+                                        <div className='border w-full mb-2'></div>
+    
+                                        <div className="flex justify-between  flex-col ">
+                                            <div className="flex items-center gap-2">
+                                                <CiLocationOn className="text-green-500 text-lg" />
+                                                <p className="font-inter text-[12px] text-gray-600">{ad.userAddress}</p>
+                                            </div>
+                                            <div className='absolute bottom-2 right-2'>
+    
+                                            <p className="text-red-500 text-xl font-semibold">₹ {ad.price}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))
                     )}
                 </div>
             </div>
         </div>
     );
+    
+    
 }
 
 export default ProfileDetails;
