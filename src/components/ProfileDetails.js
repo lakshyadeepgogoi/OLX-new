@@ -110,7 +110,7 @@ function ProfileDetails() {
                         onChange={handleImageUpload}
                     />
                 </div>
-                <h1 className="text-2xl font-semibold flex flex-wrap justify-center">{name}</h1>
+                <h1 className="text-2xl font-semibold flex flex-wrap justify-center ">{name}</h1>
                 <div className='border-t w-full my-3'></div>
                 <div className="space-y-1 flex flex-col items-center leading-8 p-4 w-full">
                     <h1 className='text-xl text-gray-400'>Contact Details</h1>
