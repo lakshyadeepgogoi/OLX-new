@@ -41,7 +41,7 @@ function AdsDetails() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-                const adDocRef = doc(db, 'categories', 'Mobiles', 'ads', id);
+                const adDocRef = doc(db, 'categories', 'Mobiles', 'ads', id );
                 const adDocSnapshot = await getDoc(adDocRef);
                 if (adDocSnapshot.exists()) {
                     setAdDetails({ id: adDocSnapshot.id, ...adDocSnapshot.data() });
@@ -157,35 +157,35 @@ const handleClick = (index) => {
 
 
   return (
-    <div  className='w-full h-max flex flex-col my-4 m-auto pl-8 pr-4'>
+    <div  className='w-full h-max flex flex-col my-4 m-auto md:pl-8 md:pr-4'>
       {/* upper part */}
-      <div className=' flex flex-row mx-auto w-11/12 h-max gap-4 border-b-2'>
+      <div className=' flex flex-col md:flex-row mx-auto w-11/12 h-max gap-4 border-b-2'>
         {/* left side */}
-          <div className='w-3/4'>
-            <div className='w-full h-12 flex flex-row gap-4 my-4 items-center '>
+          <div className='md:w-3/4 w-full'>
+            <div className='w-full h-12 flex flex-row gap-2 md:gap-4 my-4 items-center '>
               <div className='w-28 h-10 bg-[#FFF2CC] text-orange-700 rounded-2xl flex items-center justify-center font-semibold'>Featured</div>
               <div className='w-40 h-10 bg-[#E4F9E0] text-green-900 rounded-2xl flex items-center justify-center gap-2 font-semibold p-1'><FaCheckCircle className='text-[#27C200]'/>Verified Seller</div>
             </div>
             {/* heading section */}
-            <div className='flex flex-col my-3'>
+            <div className='md:flex flex-col my-3'>
               <h1 className='text-2xl font-bold'>{adDetails&&adDetails.adName}</h1>
               <div className='flex flex-row justify-start items-center my-4 gap-24 text-md'>
                 <div>{adDetails && adDetails.userAddress}</div>
                 <div>{adDetails && adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString('en-US', {  day: 'numeric', year: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase()}</div>
-                <div>69,656 Viewed</div>
+                <div className='hidden md:block'>69,656 Viewed</div>
               </div>
             </div>
             {/* photo section */}
             <div className='w-full flex flex-col'>
               <div className='w-full p-2 bg-[#EBEEF7] mb-2'>
-              <img src={adDetails && adDetails.images && adDetails.images[sliderIndex]} alt='images' className='object-cover m-auto h-[640px] w-[648px]' />
+              <img src={adDetails && adDetails.images && adDetails.images[sliderIndex]} alt='images' className='object-cover m-auto h-[380px] md:h-[640px] w-[648px]' />
 
                 {/* <img src={main_photo} alt='photo' className='object-contain'/> */}
               </div>
               {/* <AwesomeSlider > */}
               <div className='flex flex-row gap-2'>
               {adDetails && adDetails.images && adDetails.images.map((image, i) => (
-              <img key={i} src={image} onClick={() => { handleClick(i) }} className={`h-28 w-28 object-cover ${i === sliderIndex ? 'border-2 border-blue-500' : ''}`} alt='images' />
+              <img key={i} src={image} onClick={() => { handleClick(i) }} className={`h-20 w-20 md:h-28 md:w-28 object-cover ${i === sliderIndex ? 'border-2 border-blue-500' : ''}`} alt='images' />
             ))}
 
               </div>
@@ -221,9 +221,9 @@ const handleClick = (index) => {
           </div>
 
         {/* right side */}
-        <div className='w-1/4 my-12 h-max flex flex-col gap-4'>
+        <div className='lg:w-1/4 md:w-[35%] w-full my-12 h-max flex flex-col gap-4'>
           <div className='w-full border-2 rounded-lg shadow-sm'>
-            <div className='flex flex-row justify-between p-8 h-28 items-center border-b-2'>
+            <div className='flex flex-row justify-between p-4 md:p-8 h-24 md:h-28 items-center border-b-2'>
               <div className='text-3xl'>RS.{adDetails&&adDetails.price}</div>
               <button className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-md flex items-center justify-center'> <img src={heart} alt='heart' className='' /></button>
             </div>
@@ -238,14 +238,15 @@ const handleClick = (index) => {
              {/* <div className='h-12 w-full bg-[#EBEEF7] flex flex-row gap-2 justify-center items-center text-[#191F33] text-md rounded-sm'><MdOutlineEmail />Message Via email</div> */}
             </div>
 
-            <div className='w-full h-56  border-b-2 flex flex-col gap-6 p-7'>
-              <div className='flex flex-row justify-between '>
-                <div className='flex flex-row justify-start gap-4'> 
-                {user && user.photoURL && <img src={user.photoURL} alt='profile_img' loading='lazy'/>}
-                  <div className='flex flex-col gap-2'><span className='text-[#767E94] text-sm'>Added by</span><span className='flex flex-row justify-center items-center gap-2 font-bold'>{adDetails&&adDetails.name}<FaRegCheckCircle className='text-green-500'/></span></div>
+            <div className='w-full h-72 sm:h-80 md:h-[280px] xl:h-72 border-b-2 flex flex-col gap-6 p-7'>
+              <div className='flex flex-wrap justify-between '>
+                <div className='flex flex-row justify-start gap-3'> 
+                {user && user.photoURL && <img src={user.photoURL} alt='profile_img' className='rounded-xl' loading='lazy'/>}
+                  <div className='flex flex-col gap-1'><span className='text-[#767E94] text-sm'>Added by</span><span className='flex flex-row justify-center items-center  font-bold'>{adDetails&&adDetails.name}<FaRegCheckCircle className='text-green-500'/></span></div>
                 </div>
-                <button className='text-[#00AAFF] text-sm '>View Profile</button>
               </div>
+              <button className='text-[#00AAFF] text-sm text-left w-full'>View Profile</button>
+
               <div>
                 <ul className='leading-6'>
                   <li className='flex flex-row justify-items-start my-2 items-center text-[#636A80]'><MdOutlineEmail className='text-[#27C200] text-lg' />{adDetails&&adDetails.email}</li>
@@ -291,26 +292,26 @@ const handleClick = (index) => {
         <GoShareAndroid  /> Share Ads
       </div>
       
-        <div className='flex flex-row gap-2 my-3'>
-          <button className='w-10 h-10 bg-[#25D366] rounded-full flex justify-center items-center text-xl text-white'
+        <div className='flex flex-row gap-1 sm:gap-2 my-3'>
+          <button className='w-9 h-9 bg-[#25D366] rounded-full flex justify-center items-center text-xl text-white'
             onClick={shareViaWhatsApp}><FaWhatsapp /></button>
 
           <button
-            className='w-10 h-10 bg-[#3B5998] rounded-full flex justify-center items-center text-xl text-white'
+            className='w-9 h-9 bg-[#3B5998] rounded-full flex justify-center items-center text-xl text-white'
             onClick={shareViaFacebook}><FaFacebookF /></button>
           
           <button
-            className='w-10 h-10 bg-[#1DA1F2] rounded-full flex justify-center items-center text-xl text-white'
+            className='w-9 h-9 bg-[#1DA1F2] rounded-full flex justify-center items-center text-xl text-white'
             onClick={shareViaTwitter}><CiTwitter /></button>
           
-          <button className='w-10 h-10 bg-[#0077B5] rounded-full flex justify-center items-center text-xl text-white'
+          <button className='w-9 h-9 bg-[#0077B5] rounded-full flex justify-center items-center text-xl text-white'
             onClick={shareViaLinkedIn}>
             <FaLinkedinIn /></button>
 
-          <button className='w-10 h-10 bg-[#CB2027] rounded-full flex justify-center items-center text-xl text-white' onClick={shareViaPinterest}>
+          <button className='w-9 h-9 bg-[#CB2027] rounded-full flex justify-center items-center text-xl text-white' onClick={shareViaPinterest}>
             <FaPinterestP /></button>
 
-          <button className='w-10 h-10 bg-[#636A80] rounded-full flex justify-center items-center text-xl text-white'
+          <button className='w-9 h-9 bg-[#636A80] rounded-full flex justify-center items-center text-xl text-white'
             onClick={copyLink}><FaLink /></button>
 
         </div>
@@ -323,7 +324,7 @@ const handleClick = (index) => {
       </div>
 
       {/* related ads */}
-      <div className='w-full h-max sm:h-[690px] lg:pl-24 lg:pr-24 pt-6 pb-6'>
+      <div className='w-full h-max sm:h-[680px] lg:pl-24 lg:pr-24 pt-6 pb-6'>
         <div className='flex  flex-row justify-between items-center'>
         <h1 className='text-2xl md:text-3xl font-semibold my-8'>Related Ads</h1>
         <div className='sm:flex flex-row gap-4  hidden'>
