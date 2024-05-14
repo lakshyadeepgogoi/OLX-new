@@ -11,8 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../pages/firebase';
 import { db } from '../pages/firebase';
-import { getDocs, collection } from 'firebase/firestore';
+// import { getDocs, collection } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
+import { getDoc, doc, collection, getDocs } from 'firebase/firestore';
+
 
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -85,10 +87,27 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   }
 
   useEffect(() => {
-    if (user) {
-      setProfileImageUrl(user.photoURL);
-    }
+    const fetchProfileImageUrl = async () => {
+      if (user) {
+        if (user.photoURL) {
+          setProfileImageUrl(user.photoURL);
+        } else {
+          // User logged in with email and password, fetch profile image URL from Firestore
+          try {
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (userDoc.exists()) {
+              setProfileImageUrl(userDoc.data().profileImageUrl || '');
+            }
+          } catch (error) {
+            console.error('Error fetching profile image URL:', error);
+          }
+        }
+      }
+    };
+  
+    fetchProfileImageUrl();
   }, [user]);
+  
 
   useEffect(() => {
     const fetchCategory =async () =>{

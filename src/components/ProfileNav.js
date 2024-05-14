@@ -12,6 +12,8 @@ import { auth } from '../pages/firebase';
 import { db } from '../pages/firebase';
 import { useEffect } from 'react';
 import { signOut } from "firebase/auth";
+import { getDoc, doc, collection, getDocs } from 'firebase/firestore';
+
 
 
 function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
@@ -35,11 +37,27 @@ function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
     };
     
 
-      useEffect(() => {
-        if (user) {
-            setProfileImageUrl(user.photoURL || 'default-profile-url'); // Provide a default profile URL if user.photoURL is null
-        }
-    }, [user]);
+    useEffect(() => {
+        const fetchProfileImageUrl = async () => {
+          if (user) {
+            if (user.photoURL) {
+              setProfileImageUrl(user.photoURL);
+            } else {
+              // User logged in with email and password, fetch profile image URL from Firestore
+              try {
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                if (userDoc.exists()) {
+                  setProfileImageUrl(userDoc.data().profileImageUrl || '');
+                }
+              } catch (error) {
+                console.error('Error fetching profile image URL:', error);
+              }
+            }
+          }
+        };
+      
+        fetchProfileImageUrl();
+      }, [user]);
     
 
     const handleSearchInputChange = (event) => {
