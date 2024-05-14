@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../pages/firebase';
+import { auth, db, storage } from '../pages/firebase';
 import { CiPhone, CiMail } from "react-icons/ci";
 import { FaCheck, FaRegEdit } from "react-icons/fa";
 import { motion } from 'framer-motion';
 import { CiShoppingTag, CiLocationOn } from "react-icons/ci";
-import { getDocs, collection, where, query } from 'firebase/firestore';
+import { getDocs, collection, where, query, doc, setDoc, getDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import LazyLoad from 'react-lazyload';
-// import './loader.css';
 
 function ProfileDetails() {
     const [user, loading, error] = useAuthState(auth);
@@ -22,17 +22,37 @@ function ProfileDetails() {
     const [cardWidth, setCardWidth] = useState(0);
 
     useEffect(() => {
-        if (user) {
-            setProfileImageUrl(user.photoURL);
-            setName(user.displayName || '');
-            setEmail(user.email || '');
-            setPhoneNumber(user.phoneNumber || '');
-        }
+        const fetchUserProfileImage = async () => {
+            if (user) {
+                setProfileImageUrl(user.photoURL);
+                setName(user.displayName || '');
+                setEmail(user.email || '');
+                setPhoneNumber(user.phoneNumber || '');
+
+                // Fetch profile image from Firestore if user signed in with email/password
+                if (!user.photoURL) {
+                    const userDoc = await getDoc(doc(db, 'users', user.uid));
+                    if (userDoc.exists()) {
+                        setProfileImageUrl(userDoc.data().profileImageUrl);
+                    }
+                }
+            }
+        };
+        fetchUserProfileImage();
     }, [user]);
 
-    const handleImageUpload = (event) => {
+    const handleImageUpload = async (event) => {
         const imageFile = event.target.files[0];
-        setProfileImageUrl(URL.createObjectURL(imageFile));
+        if (imageFile) {
+            const storageRef = ref(storage, `profileImages/${user.uid}/${imageFile.name}`);
+            await uploadBytes(storageRef, imageFile);
+            const downloadURL = await getDownloadURL(storageRef);
+
+            setProfileImageUrl(downloadURL);
+
+            // Save the URL to Firestore
+            await setDoc(doc(db, 'users', user.uid), { profileImageUrl: downloadURL }, { merge: true });
+        }
     };
 
     const handleSave = () => {
@@ -70,7 +90,7 @@ function ProfileDetails() {
 
     return (
         <div className="flex flex-col md:flex-row w-full mt-4">
-            <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center   w-full font-inter md:w-auto md:flex-shrink-0">
+            <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter md:w-auto md:flex-shrink-0">
                 <div className="relative">
                     <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
                     {isEditing ? (
@@ -79,7 +99,7 @@ function ProfileDetails() {
                         </label>
                     ) : (
                         <label htmlFor="profileImageUpload" className="absolute bottom-0 right-0 p-1 bg-white rounded-full cursor-pointer">
-                            <FaRegEdit className="text-gray-600" />
+                            <FaRegEdit className="text-gray-600" onClick={() => setIsEditing(true)} />
                         </label>
                     )}
                     <input

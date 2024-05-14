@@ -11,6 +11,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../pages/firebase';
 import { db } from '../pages/firebase';
 import { useEffect } from 'react';
+import { signOut } from "firebase/auth";
 
 
 function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
@@ -21,17 +22,25 @@ function ProfileNav({ isLoggedIn, setIsLoggedIn }) {
     const [user, loading, error] = useAuthState(auth);
 
 
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        toast.success('Logged Out');
-        setDropdownOpen(false);
-    };
-
-    useEffect(() => {
-        if (user) {
-          setProfileImageUrl(user.photoURL);
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            setIsLoggedIn(false);
+            toast.success('Logged Out');
+            setDropdownOpen(false);
+            navigate('/');
+        } catch (error) {
+            toast.error('Failed to log out');
         }
-      }, [user]);
+    };
+    
+
+      useEffect(() => {
+        if (user) {
+            setProfileImageUrl(user.photoURL || 'default-profile-url'); // Provide a default profile URL if user.photoURL is null
+        }
+    }, [user]);
+    
 
     const handleSearchInputChange = (event) => {
         setSearchQuery(event.target.value);
