@@ -228,56 +228,59 @@ function ProfileDetails() {
                                                         setIsConfirmationModalOpen(true);
                                                     }}
                                                     className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200 w-20"
-                                                    >
-                                                        Mark as Sold
-                                                    </button>
+                                                >
+                                                    Mark as Sold
+                                                </button>
+                                            </div>
+                                            <div className="text-md mb-1 font-inter">{ad.adName}</div>
+                                            <div className='border w-full mb-2'></div>
+
+                                            <div className="flex justify-between flex-col">
+                                                <div className="flex items-center gap-2">
+                                                    <CiLocationOn className="text-green-500 text-lg" />
+                                                    <p className="font-inter text-[12px] text-gray-600">{ad.userAddress}</p>
                                                 </div>
-                                                <div className="text-md mb-1 font-inter">{ad.adName}</div>
-                                                <div className='border w-full mb-2'></div>
-    
-                                                <div className="flex justify-between flex-col">
-                                                    <div className="flex items-center gap-2">
-                                                        <CiLocationOn className="text-green-500 text-lg" />
-                                                        <p className="font-inter text-[12px] text-gray-600">{ad.userAddress}</p>
-                                                    </div>
-                                                    <div className='absolute bottom-2 right-2'>
-                                                        <p className="text-red-500 text-xl font-semibold">₹ {ad.price}</p>
-                                                    </div>
+                                                <div className='absolute bottom-2 right-2'>
+                                                    <p className="text-red-500 text-xl font-semibold">
+                                                    {ad.category === 'Vacancies' ? `₹ ${ad.salery}` : `₹ ${ad.price}`}
+                                                    </p>
+
                                                 </div>
                                             </div>
                                         </div>
-                                    </LazyLoad>
-                                </motion.div>
-                            ))
-                        )}
-                    </div>
+                                    </div>
+                                </LazyLoad>
+                            </motion.div>
+                        ))
+                    )}
                 </div>
-    
-                {isConfirmationModalOpen && (
-                    <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50">
-                        <div className="bg-white rounded-lg p-8">
-                            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this ad?</p>
-                            <div className="flex justify-between">
-                                <button
-                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4"
-                                    onClick={handleDeleteAd}
-                                >
-                                    Yes, Delete
-                                </button>
-                                <button
-                                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                                    onClick={() => setIsConfirmationModalOpen(false)}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
+            </div>
+
+            {isConfirmationModalOpen && (
+                <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50">
+                    <div className="bg-white rounded-lg p-8">
+                        <p className="text-lg font-semibold mb-4">Are you sure you want to delete this ad?</p>
+                        <div className="flex justify-between">
+                            <button
+                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4"
+                                onClick={handleDeleteAd}
+                            >
+                                Yes, Delete
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                                onClick={() => setIsConfirmationModalOpen(false)}
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </div>
-                )}
-            </div>
-        );
-    }
-    
-    export default ProfileDetails;
-    
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default ProfileDetails;
+
 
