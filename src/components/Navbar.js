@@ -12,6 +12,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../pages/firebase';
 import { db } from '../pages/firebase';
 import { getDocs, collection } from 'firebase/firestore';
+import { signOut } from "firebase/auth";
 
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -30,10 +31,16 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   }, [user]);
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    toast.success('Logged Out');
-    setDropdownOpen(false);
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setIsLoggedIn(false);
+      toast.success('Logged Out');
+      setDropdownOpen(false);
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to log out');
+    }
   };
 
   const handleSearchInputChange = (event) => {
