@@ -38,10 +38,10 @@ function AllCards() {
     
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-[95%] m-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  md:gap-5 xl:gap-6 w-[95%] m-auto">
             {ads.map(ad => (
                 <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
-                    <div className="border rounded-md overflow-hidden h-[380px] w-[290px]">
+                    <div className="border rounded-md overflow-hidden h-[380px] w-[260px] xl:w-[290px]">
                         {ad.promoted && (
                             <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
                                 Promoted
