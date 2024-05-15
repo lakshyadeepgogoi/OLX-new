@@ -253,10 +253,19 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <li className=" whitespace-nowrap">Vehicles</li>
             </Link>
             
+            <Link to='/Properties'>
             <li className=" whitespace-nowrap">Properties</li>
+            </Link>
+
+            <Link to='/Spare&Parts'>
             <li className=" whitespace-nowrap">Spare Parts</li>
+            </Link>
+            <Link to='/Furnitures'>
             <li className=" whitespace-nowrap">Furnitures</li>
+            </Link>
+            <Link to='/Books&Stationery'>
             <li className=" whitespace-nowrap">Books & Stationery</li>
+            </Link>
             {/* <li className=" whitespace-nowrap">Sports & Gyms</li>
             <li className=" whitespace-nowrap">Fashion & Clothings</li>
             <li className=" whitespace-nowrap">Services</li> */}

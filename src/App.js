@@ -27,12 +27,7 @@ import SpareParts from "./pages/RoutesForNav/SpareParts";
 import Properties from "./pages/RoutesForNav/Properties";
 import Vehicles from "./pages/RoutesForNav/Vehicles";
 
-
-
-// import PhonesGadgets from "./pages/Phones&Gadgets";
-// import ElectronicsAppliances from "./pages/Electronics&Appliances";
 import EditAdForm from "./components/EditAdForm"
-// import BoostPaymentPage from "./components/Boost/BoostPaymentPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
