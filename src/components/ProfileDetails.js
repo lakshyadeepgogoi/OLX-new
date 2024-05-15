@@ -170,7 +170,7 @@ function ProfileDetails() {
                         Expired Ads
                     </button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4 max-w-full">
                     {isLoading ? (
                         Array.from({ length: 10 }).map((_, index) => (
                             <div key={index} className="animate-pulse w-full">
