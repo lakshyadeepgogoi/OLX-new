@@ -5,9 +5,10 @@ import { CiPhone, CiMail } from "react-icons/ci";
 import { FaCheck, FaRegEdit } from "react-icons/fa";
 import { motion } from 'framer-motion';
 import { CiShoppingTag, CiLocationOn } from "react-icons/ci";
-import { getDocs, collection, where, query, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getDocs, collection, where, query, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import LazyLoad from 'react-lazyload';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileDetails() {
     const [user, loading, error] = useAuthState(auth);
@@ -20,6 +21,9 @@ function ProfileDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [cardHeight, setCardHeight] = useState(0);
     const [cardWidth, setCardWidth] = useState(0);
+    const [selectedAdId, setSelectedAdId] = useState(null);
+    const [selectedAdCategory, setSelectedAdCategory] = useState(null);
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchUserProfileImage = async () => {
@@ -29,7 +33,6 @@ function ProfileDetails() {
                 setEmail(user.email || '');
                 setPhoneNumber(user.phoneNumber || '');
 
-                // Fetch profile image from Firestore if user signed in with email/password
                 if (!user.photoURL) {
                     const userDoc = await getDoc(doc(db, 'users', user.uid));
                     if (userDoc.exists()) {
@@ -50,7 +53,6 @@ function ProfileDetails() {
 
             setProfileImageUrl(downloadURL);
 
-            // Save the URL to Firestore
             await setDoc(doc(db, 'users', user.uid), { profileImageUrl: downloadURL }, { merge: true });
         }
     };
@@ -63,13 +65,13 @@ function ProfileDetails() {
         const fetchUserAds = async () => {
             try {
                 const userId = auth.currentUser.uid;
-                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles'];
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'vehicles'];
                 let allUserAds = [];
 
                 for (const category of categories) {
                     const adsCollectionQuery = query(collection(db, 'categories', category, 'ads'), where('userId', '==', userId));
                     const querySnapshot = await getDocs(adsCollectionQuery);
-                    const categoryAds = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    const categoryAds = querySnapshot.docs.map(doc => ({ id: doc.id, category, ...doc.data() }));
                     allUserAds = [...allUserAds, ...categoryAds];
                 }
 
@@ -83,9 +85,27 @@ function ProfileDetails() {
         fetchUserAds();
     }, []);
 
+    const handleDeleteAd = async () => {
+        try {
+            if (selectedAdId && selectedAdCategory) {
+                await deleteDoc(doc(db, 'categories', selectedAdCategory, 'ads', selectedAdId));
+                setAds(ads.filter(ad => ad.id !== selectedAdId));
+                setIsConfirmationModalOpen(false); // Close the confirmation modal after deletion
+            }
+        } catch (error) {
+            console.error('Error deleting ad:', error);
+        }
+    };
+
     const variants = {
         hidden: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1 }
+    };
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/boost-payment-page');
     };
 
     return (
@@ -173,7 +193,7 @@ function ProfileDetails() {
                                 variants={variants}
                             >
                                 <LazyLoad height={cardHeight} width={cardWidth} offset={100}>
-                                    <div className=" w-full rounded overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer flex  relative"
+                                    <div className=" w-full rounded overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer flex relative"
                                         ref={el => {
                                             if (el) {
                                                 setCardHeight(el.clientHeight);
@@ -186,33 +206,45 @@ function ProfileDetails() {
                                                 {ad.images && ad.images.length > 0 && (
                                                     <img src={ad.images[0]} alt="Ad" className="w-full p-2 h-56 object-fill" loading='lazy' />
                                                 )}
-                                                <div className='absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer'>
+                                                <div
+                                                    onClick={handleClick}
+                                                    className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer"
+                                                >
                                                     Boost
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="w-1/2 p-4">
-                                            <div className="flex justify-between  mb-2 flex-col md:flex-row">
-                                                <div className="flex items-center gap-2 ">
+                                            <div className="flex justify-between mb-2 flex-col md:flex-row">
+                                                <div className="flex items-center gap-2">
                                                     <CiShoppingTag className="text-gray-600 text-lg" />
                                                     <p className='font-inter text-sm'>{ad.subcategory}</p>
                                                 </div>
-                                                <button className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200 w-20">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedAdId(ad.id);
+                                                        setSelectedAdCategory(ad.category);
+                                                        setIsConfirmationModalOpen(true);
+                                                    }}
+                                                    className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200 w-20"
+                                                >
                                                     Mark as Sold
                                                 </button>
                                             </div>
                                             <div className="text-md mb-1 font-inter">{ad.adName}</div>
                                             <div className='border w-full mb-2'></div>
 
-                                            <div className="flex justify-between  flex-col ">
+                                            <div className="flex justify-between flex-col">
                                                 <div className="flex items-center gap-2">
                                                     <CiLocationOn className="text-green-500 text-lg" />
                                                     <p className="font-inter text-[12px] text-gray-600">{ad.userAddress}</p>
                                                 </div>
                                                 <div className='absolute bottom-2 right-2'>
+                                                    <p className="text-red-500 text-xl font-semibold">
+                                                    {ad.category === 'Vacancies' ? `₹ ${ad.salery}` : `₹ ${ad.price}`}
+                                                    </p>
 
-                                                    <p className="text-red-500 text-xl font-semibold">₹ {ad.price}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -223,8 +255,32 @@ function ProfileDetails() {
                     )}
                 </div>
             </div>
+
+            {isConfirmationModalOpen && (
+                <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50">
+                    <div className="bg-white rounded-lg p-8">
+                        <p className="text-lg font-semibold mb-4">Are you sure you want to delete this ad?</p>
+                        <div className="flex justify-between">
+                            <button
+                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4"
+                                onClick={handleDeleteAd}
+                            >
+                                Yes, Delete
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                                onClick={() => setIsConfirmationModalOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
 
 export default ProfileDetails;
+
+
