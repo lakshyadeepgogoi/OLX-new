@@ -1,26 +1,27 @@
 import React from "react";
-import PhoneAdCards from '../components/PhoneAdCards';
+// import AllCards from '../components/AllCards.js';
 import { FaLaptop, FaMobileAlt, FaPhone, FaDesktop, FaHeadphones } from 'react-icons/fa';
 import { IoWatchOutline } from "react-icons/io5";
 import { FaTabletScreenButton } from "react-icons/fa6";
 import { GoCpu } from "react-icons/go";
+import ElectronicsAdCards from "../../components/ElectronicsAdCards";
 
-function PhonesGadgets(){
+function Furnitures(){
     return(
         <div>
             <div className="grid grid-cols-4 justify-center w-11/12 m-auto gap-2 mb-4 ">
-                <SubCategoryCard icon={<FaLaptop />} name="Laptops" />
-                <SubCategoryCard icon={<FaMobileAlt />} name="Mobiles" />
-                <SubCategoryCard icon={<FaTabletScreenButton />} name="Tablets" />
-                <SubCategoryCard icon={<FaDesktop />} name="PCs" />
-                <SubCategoryCard icon={<IoWatchOutline />} name="Smartwatches" />
-                <SubCategoryCard icon={<FaHeadphones />} name="Headsets" />
-                <SubCategoryCard icon={<GoCpu />} name="CPU & Accesories" />
-                <SubCategoryCard icon={<FaHeadphones />} name="Headsets" />
+                <SubCategoryCard icon={<FaLaptop />} name="Refrigerators" />
+                <SubCategoryCard icon={<FaMobileAlt />} name="AC" />
+                <SubCategoryCard icon={<FaTabletScreenButton />} name="Washing Machines" />
+                <SubCategoryCard icon={<FaDesktop />} name="Cooler" />
+                <SubCategoryCard icon={<IoWatchOutline />} name="Geyser" />
+                <SubCategoryCard icon={<FaHeadphones />} name="Fans & Bulbs" />
+                <SubCategoryCard icon={<GoCpu />} name="Kitchen Appliances" />
+                <SubCategoryCard icon={<FaHeadphones />} name="Others" />
 
             </div>
             <div>
-                <PhoneAdCards/>
+                <ElectronicsAdCards/>
             </div>
         </div>
     )
@@ -37,4 +38,4 @@ const SubCategoryCard = ({ icon, name }) => (
     </div>
 );
 
-export default PhonesGadgets;
+export default Furnitures;
