@@ -10,6 +10,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import LazyLoad from 'react-lazyload';
 import { useNavigate } from 'react-router-dom';
 
+
+
 function ProfileDetails() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState('');
@@ -24,6 +26,9 @@ function ProfileDetails() {
     const [selectedAdId, setSelectedAdId] = useState(null);
     const [selectedAdCategory, setSelectedAdCategory] = useState(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+    const [adBeingEdited, setAdBeingEdited] = useState(null);
+
 
     useEffect(() => {
         const fetchUserProfileImage = async () => {
@@ -231,6 +236,16 @@ function ProfileDetails() {
                                                 >
                                                     Mark as Sold
                                                 </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setAdBeingEdited(ads);
+                                                        navigate(`/edit-ad/${ads.id}`);
+                                                    }}
+                                                    className="bg-green-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-green-600 transition-colors duration-200 w-20"
+                                                >
+                                                    Edit
+                                                </button>
+
                                             </div>
                                             <div className="text-md mb-1 font-inter">{ad.adName}</div>
                                             <div className='border w-full mb-2'></div>
@@ -242,7 +257,7 @@ function ProfileDetails() {
                                                 </div>
                                                 <div className='absolute bottom-2 right-2'>
                                                     <p className="text-red-500 text-xl font-semibold">
-                                                    {ad.category === 'Vacancies' ? `₹ ${ad.salery}` : `₹ ${ad.price}`}
+                                                        {ad.category === 'Vacancies' ? `₹ ${ad.salery}` : `₹ ${ad.price}`}
                                                     </p>
 
                                                 </div>

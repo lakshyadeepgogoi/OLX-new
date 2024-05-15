@@ -18,6 +18,7 @@ import ContactUser from "./components/postAds/ContactUser";
 import FormSuccess from "./components/postAds/FormSuccess";
 import PhonesGadgets from "./pages/Phones&Gadgets";
 import ElectronicsAppliances from "./pages/Electronics&Appliances";
+import EditAdForm from "./components/EditAdForm"
 // import BoostPaymentPage from "./components/Boost/BoostPaymentPage";
 
 function App() {
@@ -34,46 +35,50 @@ function App() {
     <div className="w-full h-full flex flex-col">
       {showNavbar && <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
       <FormDataProvider>
-      <Routes>
-
-     
-        <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
-        <Route path="/ads-details" element={<AdsDetails isLoggedIn={isLoggedIn} />} />
-        <Route path="/all-ads" element={<AllAds isLoggedIn={isLoggedIn} />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/phone-auth" element={<PhoneAuth setIsLoggedIn={setIsLoggedIn} />} />
-
-        <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
-        <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
-
-    {/* Forms Routs For Nav */}
-        <Route path="/phones&gadgets" element= {<PhonesGadgets/>}/>
-        <Route path="/electronics&appliances" element= {<ElectronicsAppliances/>}/>
+        <Routes>
 
 
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
+          <Route path="/ads-details" element={<AdsDetails isLoggedIn={isLoggedIn} />} />
+          <Route path="/all-ads" element={<AllAds isLoggedIn={isLoggedIn} />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/phone-auth" element={<PhoneAuth setIsLoggedIn={setIsLoggedIn} />} />
 
-{/* Routes for Ads Detail */}
+          <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
+          <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
 
-        <Route path="/ad-details/:id"  element={ <AdsDetails/>}/>
+          {/* Forms Routs For Nav */}
+          <Route path="/phones&gadgets" element={<PhonesGadgets />} />
+          <Route path="/electronics&appliances" element={<ElectronicsAppliances />} />
 
-        <Route path="/profile" element={
-          <PrivateRoute isLoggedIn={isLoggedIn}>
-            <Profile />
-          </PrivateRoute>
-        } />
-        <Route path="/boost-payment-page" element={
-          <PrivateRoute isLoggedIn={isLoggedIn}>
-            <BoostPaymentPage />
-          </PrivateRoute>
-        } />
-        <Route path="/form" element={
-          <PrivateRoute isLoggedIn={isLoggedIn}>
-            <Form />
-          </PrivateRoute>
-        } />
-        
-      </Routes>
+          {/* Edit form  */}
+          <Route path="/edit-ad/:adsId" element={<EditAdForm />} />
+
+
+
+
+          {/* Routes for Ads Detail */}
+
+          <Route path="/ad-details/:id" element={<AdsDetails />} />
+
+          <Route path="/profile" element={
+            <PrivateRoute isLoggedIn={isLoggedIn}>
+              <Profile />
+            </PrivateRoute>
+          } />
+          <Route path="/boost-payment-page" element={
+            <PrivateRoute isLoggedIn={isLoggedIn}>
+              <BoostPaymentPage />
+            </PrivateRoute>
+          } />
+          <Route path="/form" element={
+            <PrivateRoute isLoggedIn={isLoggedIn}>
+              <Form />
+            </PrivateRoute>
+          } />
+
+        </Routes>
       </FormDataProvider>
 
       <Footer />
