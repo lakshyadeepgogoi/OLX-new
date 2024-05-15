@@ -1,12 +1,12 @@
 import React from "react";
-import AllCards from '../components/AllCards.js';
+// import AllCards from '../components/AllCards.js';
 import { FaLaptop, FaMobileAlt, FaPhone, FaDesktop, FaHeadphones } from 'react-icons/fa';
 import { IoWatchOutline } from "react-icons/io5";
 import { FaTabletScreenButton } from "react-icons/fa6";
 import { GoCpu } from "react-icons/go";
-import ElectronicsAdCards from "../components/ElectronicsAdCards";
+import ElectronicsAdCards from "../../components/ElectronicsAdCards";
 
-function ElectronicsAppliances(){
+function FashionClothing(){
     return(
         <div>
             <div className="grid grid-cols-4 justify-center w-11/12 m-auto gap-2 mb-4 ">
@@ -38,4 +38,4 @@ const SubCategoryCard = ({ icon, name }) => (
     </div>
 );
 
-export default ElectronicsAppliances;
+export default FashionClothing;

@@ -16,6 +16,19 @@ import BoostPaymentPage from "./components/Boost/BoostPaymentPage";
 import { FormDataProvider } from "./components/postAds/FormDataContext";
 import ContactUser from "./components/postAds/ContactUser";
 import FormSuccess from "./components/postAds/FormSuccess";
+import PhonesGadgets from "./pages/RoutesForNav/Phones&Gadgets";
+
+import ElectronicsAppliances from "./pages/RoutesForNav/Electronics&Appliances";
+import BooksStationery from "./pages/RoutesForNav/Books&Stationery";
+import FashionClothing from "./pages/RoutesForNav//Fashion&Clothing";
+import Services from "./pages/RoutesForNav/Services";
+import Furnitures from "./pages/RoutesForNav/Furnitures";
+import SpareParts from "./pages/RoutesForNav/SpareParts";
+import Properties from "./pages/RoutesForNav/Properties";
+import Vehicles from "./pages/RoutesForNav/Vehicles";
+
+
+
 import PhonesGadgets from "./pages/Phones&Gadgets";
 import ElectronicsAppliances from "./pages/Electronics&Appliances";
 import EditAdForm from "./components/EditAdForm"
@@ -54,6 +67,17 @@ function App() {
 
           {/* Edit form  */}
           <Route path="/edit-ad/:adsId" element={<EditAdForm />} />
+    {/* Forms Routs For Nav */}
+        <Route path="/phones&gadgets" element= {<PhonesGadgets/>}/>
+        <Route path="/electronics&appliances" element= {<ElectronicsAppliances/>}/>
+        <Route path="/Vehicles" element= {<Vehicles/>}/>
+        <Route path="/Properties" element= {<Properties/>}/>
+        <Route path="/Spare&Parts" element= {<SpareParts/>}/>
+        <Route path="/Furnitures" element= {<Furnitures/>}/>
+        <Route path="/Books&Stationery" element= {<BooksStationery/>}/>
+        <Route path="/Sports&Gyms" element= {<SpareParts/>}/>
+        <Route path="/Fashion&Clothings" element= {<FashionClothing/>}/>
+        <Route path="/Services" element= {<Services/>}/>
 
 
 
