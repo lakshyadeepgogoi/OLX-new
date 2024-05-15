@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
-import { db } from '../pages/firebase';
+import { db } from '../../pages/firebase';
+import { Link } from 'react-router-dom';
 
-function ElectronicsAdCards() {
+
+
+function ServiceAdCards() {
     const [ads, setAds] = useState([]);
 
     useEffect(() => {
         const fetchAds = async () => {
             try {
-                const adsCollectionRef = collection(db, 'categories', 'Electronics', 'ads');
+                const adsCollectionRef = collection(db, 'categories', 'Services', 'ads');
                 const adsSnapshot = await getDocs(adsCollectionRef);
                 const adsData = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 console.log('Fetched ads data:', adsData); // Log fetched data
@@ -25,6 +28,8 @@ function ElectronicsAdCards() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-11/12 m-auto">
             {ads.map(ad => (
+                <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
+
                 <div key={ad.id} className="border rounded-md overflow-hidden">
                     {ad.promoted && (
                         <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
@@ -48,9 +53,10 @@ function ElectronicsAdCards() {
                         </div>
                     </div>
                 </div>
+                </Link>
             ))}
         </div>
     );
 }
 
-export default ElectronicsAdCards;
+export default ServiceAdCards;

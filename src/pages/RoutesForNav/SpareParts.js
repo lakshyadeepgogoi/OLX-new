@@ -4,8 +4,7 @@ import { FaLaptop, FaMobileAlt, FaPhone, FaDesktop, FaHeadphones } from 'react-i
 import { IoWatchOutline } from "react-icons/io5";
 import { FaTabletScreenButton } from "react-icons/fa6";
 import { GoCpu } from "react-icons/go";
-import ElectronicsAdCards from "../../components/ElectronicsAdCards";
-
+import SpareAdCards from "../../components/NavAds/SpareAdCards";
 function SpareParts(){
     return(
         <div>
@@ -21,7 +20,7 @@ function SpareParts(){
 
             </div>
             <div>
-                <ElectronicsAdCards/>
+                <SpareAdCards/>
             </div>
         </div>
     )

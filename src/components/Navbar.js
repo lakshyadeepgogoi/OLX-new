@@ -240,7 +240,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <FaAngleDown className="ml-1" />
           </button>
           <div className="border-l-2 border-gray-300 mx-4"></div>
-          <ul className="flex text-gray-600 font-medium items-center font-inter gap-x-3 ">
+          <ul className="flex text-gray-600 font-medium items-center font-inter gap-x-4 ">
             <Link to='/phones&gadgets'>
             <li className=" whitespace-nowrap">Phones & Gadgets</li>
             </Link>
@@ -248,7 +248,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <Link to='/electronics&appliances'>
             <li className=" whitespace-nowrap">Electronics & Appliances</li>
             </Link>
-
+  
             <Link to='/Vehicles'>
             <li className=" whitespace-nowrap">Vehicles</li>
             </Link>
@@ -266,9 +266,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <Link to='/Books&Stationery'>
             <li className=" whitespace-nowrap">Books & Stationery</li>
             </Link>
-            {/* <li className=" whitespace-nowrap">Sports & Gyms</li>
-            <li className=" whitespace-nowrap">Fashion & Clothings</li>
-            <li className=" whitespace-nowrap">Services</li> */}
+            <Link to='/Sports&Gyms'>
+            <li className=" whitespace-nowrap">Sports & Gyms</li>
+            </Link>
+             {/*<li className=" whitespace-nowrap">Fashion & Clothings</li>
+              <li className=" whitespace-nowrap">Services</li> */}
 
           </ul>
 

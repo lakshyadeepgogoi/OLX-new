@@ -26,8 +26,9 @@ import Furnitures from "./pages/RoutesForNav/Furnitures";
 import SpareParts from "./pages/RoutesForNav/SpareParts";
 import Properties from "./pages/RoutesForNav/Properties";
 import Vehicles from "./pages/RoutesForNav/Vehicles";
+import SportsGym from "./pages/RoutesForNav/Sports&Gyms"
 
-import EditAdForm from "./components/EditAdForm"
+import EditAdForm from "./components/EditAdForm";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,7 +71,7 @@ function App() {
         <Route path="/Spare&Parts" element= {<SpareParts/>}/>
         <Route path="/Furnitures" element= {<Furnitures/>}/>
         <Route path="/Books&Stationery" element= {<BooksStationery/>}/>
-        <Route path="/Sports&Gyms" element= {<SpareParts/>}/>
+        <Route path="/Sports&Gyms" element= {<SportsGym/>}/>
         <Route path="/Fashion&Clothings" element= {<FashionClothing/>}/>
         <Route path="/Services" element= {<Services/>}/>
 

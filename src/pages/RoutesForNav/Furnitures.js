@@ -4,7 +4,7 @@ import { FaLaptop, FaMobileAlt, FaPhone, FaDesktop, FaHeadphones } from 'react-i
 import { IoWatchOutline } from "react-icons/io5";
 import { FaTabletScreenButton } from "react-icons/fa6";
 import { GoCpu } from "react-icons/go";
-import ElectronicsAdCards from "../../components/ElectronicsAdCards";
+import FurnituresAdCards from "../../components/NavAds/FurnituresAdCards";
 
 function Furnitures(){
     return(
@@ -21,7 +21,7 @@ function Furnitures(){
 
             </div>
             <div>
-                <ElectronicsAdCards/>
+                <FurnituresAdCards/>
             </div>
         </div>
     )
