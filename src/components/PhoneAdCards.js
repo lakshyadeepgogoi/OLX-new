@@ -16,7 +16,7 @@ function PhoneAdCards() {
             } catch (error) {
                 console.error('Error fetching ads:', error); // Log any errors
             }
-        };
+        };       
     
         fetchAds();
     }, []);
