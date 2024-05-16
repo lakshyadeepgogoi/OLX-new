@@ -10,8 +10,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import LazyLoad from 'react-lazyload';
 import { useNavigate } from 'react-router-dom';
 
-
-
 function ProfileDetails() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState('');
@@ -26,9 +24,9 @@ function ProfileDetails() {
     const [selectedAdId, setSelectedAdId] = useState(null);
     const [selectedAdCategory, setSelectedAdCategory] = useState(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('recentAds');
 
     const [adBeingEdited, setAdBeingEdited] = useState(null);
-
 
     useEffect(() => {
         const fetchUserProfileImage = async () => {
@@ -113,6 +111,10 @@ function ProfileDetails() {
         navigate('/boost-payment-page');
     };
 
+    const handleTabChange = (tabName) => {
+        setActiveTab(tabName);
+    };
+
     return (
         <div className="flex flex-col md:flex-row w-full mt-4">
             <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter md:w-auto md:flex-shrink-0">
@@ -155,24 +157,25 @@ function ProfileDetails() {
             <div className="w-full p-4">
                 <div className="border-b-2 overflow-x-auto whitespace-nowrap">
                     <button
-                        className="px-4 py-2 text-blue-700 hover:border-blue-700 "
-                        onClick={() => { }}>
+                        className={`px-4 py-2 text-blue-700 hover:border-blue-700 ${activeTab === 'recentAds' && 'border-b-2'}
+                        `}
+                        onClick={() => handleTabChange('recentAds')}>
                         Recent Ads
                     </button>
                     <button
-                        className="px-4 py-2 text-gray-600 bg-transparent  "
-                        onClick={() => { }}>
+                        className={`px-4 py-2 text-gray-600 bg-transparent ${activeTab === 'boostedAds' && 'border-b-2'}`}
+                        onClick={() => handleTabChange('boostedAds')}>
                         Boosted Ads
                     </button>
                     <button
-                        className="px-4 py-2  text-gray-600 bg-transparent  "
-                        onClick={() => { }}>
+                        className={`px-4 py-2  text-gray-600 bg-transparent ${activeTab === 'expiredAds' && 'border-b-2'}`}
+                        onClick={() => handleTabChange('expiredAds')}>
                         Expired Ads
                     </button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4 max-w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 mt-4 w-full ">
                     {isLoading ? (
-                        Array.from({ length: 10 }).map((_, index) => (
+                        Array.from({ length: 4 }).map((_, index) => (
                             <div key={index} className="animate-pulse w-full">
                                 <div className="h-56 bg-gray-300 rounded-md"></div>
                                 <div className="flex justify-between mt-2">
@@ -189,86 +192,104 @@ function ProfileDetails() {
                             </div>
                         ))
                     ) : (
-                        ads.map(ad => (
-                            <motion.div
-                                key={ad.id}
-                                className="card-style flex items-center"
-                                initial="hidden"
-                                animate="visible"
-                                variants={variants}
-                            >
-                                <LazyLoad height={cardHeight} width={cardWidth} offset={100}>
-                                    <div className=" w-full rounded overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer flex relative"
-                                        ref={el => {
-                                            if (el) {
-                                                setCardHeight(el.clientHeight);
-                                                setCardWidth(el.clientWidth);
-                                            }
-                                        }}
-                                    >
-                                        <div className="w-1/2">
-                                            <div className="relative">
-                                                {ad.images && ad.images.length > 0 && (
-                                                    <img src={ad.images[0]} alt="Ad" className="w-full p-2 h-56 object-fill" loading='lazy' />
-                                                )}
-                                                <div
-                                                    onClick={handleClick}
-                                                    className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer"
-                                                >
-                                                    Boost
+                        ads.length > 0 ? (
+                            ads.map(ad => (
+                                <motion.div
+                                    key={ad.id}
+                                    className="card-style w-full flex"
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={variants}
+                                >
+                                    <LazyLoad height={cardHeight} width={cardWidth} offset={100}>
+                                        <div className="w-full rounded overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 cursor-pointer flex relative">
+                                            {/* <div className="w-1/2 flex-shrink-0">
+                                                <div className="relative w-full h-full">
+                                                    {ad.images && ad.images.length > 0 && (
+                                                        <img
+                                                            src={ad.images[0]}
+                                                            alt="Ad"
+                                                            className="w-full  max-w-full  h-56 object-cover"
+                                                            loading='lazy'
+                                                        />
+                                                    )}
+                                                    <div
+                                                        onClick={handleClick}
+                                                        className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer"
+                                                    >
+                                                        Boost
+                                                    </div>
+                                                </div>
+                                            </div> */}
+                                            <div className='relative w-[300px]  '>
+                                                <div className=' w-full'>
+                                                    {ad.images && ad.images.length > 0 && (
+                                                        <img
+                                                            src={ad.images[0]}
+                                                            alt="Ad"
+                                                            className="w-full  max-w-full  h-56 object-fill"
+                                                            loading='lazy'
+                                                        />
+                                                    )}
+                                                </div>
+                                                <div  onClick={handleClick}
+                                                        className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer">Boost
+
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div className="w-1/2 p-4">
-                                            <div className="flex justify-between mb-2 flex-col md:flex-row">
-                                                <div className="flex items-center gap-2">
-                                                    <CiShoppingTag className="text-gray-600 text-lg" />
-                                                    <p className='font-inter text-sm'>{ad.subcategory}</p>
+                                            <div className="w-1/2 p-4 flex flex-col justify-between">
+                                                <div className="flex justify-between mb-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <CiShoppingTag className="text-gray-600 text-lg" />
+                                                        <p className='font-inter text-sm'>{ad.subcategory}</p>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            onClick={() => {
+                                                                setSelectedAdId(ad.id);
+                                                                setSelectedAdCategory(ad.category);
+                                                                setIsConfirmationModalOpen(true);
+                                                            }}
+                                                            className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200"
+                                                        >
+                                                            Mark as Sold
+                                                        </button>
+                                                        <button
+                                                            onClick={() => {
+                                                                setAdBeingEdited(ad);
+                                                                navigate(`/edit-ad/${ad.id}`);
+                                                            }}
+                                                            className="bg-green-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-green-600 transition-colors duration-200"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <button
-                                                    onClick={() => {
-                                                        setSelectedAdId(ad.id);
-                                                        setSelectedAdCategory(ad.category);
-                                                        setIsConfirmationModalOpen(true);
-                                                    }}
-                                                    className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200 w-20"
-                                                >
-                                                    Mark as Sold
-                                                </button>
-                                                <button
-                                                    onClick={() => {
-                                                        setAdBeingEdited(ads);
-                                                        navigate(`/edit-ad/${ads.id}`);
-                                                    }}
-                                                    className="bg-green-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-green-600 transition-colors duration-200 w-20"
-                                                >
-                                                    Edit
-                                                </button>
+                                                <div className="text-md mb-1 font-inter">{ad.adName}</div>
+                                                <div className='border w-full mb-2'></div>
 
-                                            </div>
-                                            <div className="text-md mb-1 font-inter">{ad.adName}</div>
-                                            <div className='border w-full mb-2'></div>
-
-                                            <div className="flex justify-between flex-col">
-                                                <div className="flex items-center gap-2">
-                                                    <CiLocationOn className="text-green-500 text-lg" />
-                                                    <p className="font-inter text-[12px] text-gray-600">{ad.userAddress}</p>
-                                                </div>
-                                                <div className='absolute bottom-2 right-2'>
-                                                    <p className="text-red-500 text-xl font-semibold">
+                                                <div className="flex justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <CiLocationOn className="text-green-500 text-lg" />
+                                                        <p className="font-inter text-[12px] text-gray-600">{ad.userAddress}</p>
+                                                    </div>
+                                                    <div className='text-red-500 text-xl font-semibold'>
                                                         {ad.category === 'Vacancies' ? `₹ ${ad.salery}` : `₹ ${ad.price}`}
-                                                    </p>
-
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </LazyLoad>
-                            </motion.div>
-                        ))
+                                    </LazyLoad>
+                                </motion.div>
+                            ))
+                        ) : (
+                            <div className="w-full text-center text-gray-600">No data found</div>
+                        )
                     )}
                 </div>
+
+
             </div>
 
             {isConfirmationModalOpen && (
@@ -297,5 +318,4 @@ function ProfileDetails() {
 }
 
 export default ProfileDetails;
-
 
