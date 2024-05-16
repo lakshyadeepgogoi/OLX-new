@@ -52,7 +52,7 @@ function AdDetailPage() {
                         <p className="text-lg text-gray-700">Price: Rs {adDetails.price}</p>
                         <p className="text-lg text-gray-700">Date Posted: {adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString()}</p>
                         <p className="text-lg text-gray-700 mt-4">{adDetails.userAddress}</p>
-                        <button className="bg-blue-500 text-white px-4 py-2 mt-4 rounded">Contact via WhatsApp</button>
+                        <button className="bg-blue-500 text-white px-4 py-2 mt-4 rounded">Contact via WhatsApppppp</button>
 
                     </div>
                 )}
