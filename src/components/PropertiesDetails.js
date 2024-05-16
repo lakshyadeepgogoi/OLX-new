@@ -206,13 +206,13 @@ const handleClick = (index) => {
                 <ul className='leading-loose '>
                   <li className='flex flex-row gap-2'><img src={checkmark}  alt='checkmark' className='object-contain'/> <span className='font-semibold'>Type :</span> {adDetails && adDetails.category} </li>
                   <li className='flex flex-row gap-2'><img src={checkmark}  alt='checkmark' className='object-contain'/> <span className='font-semibold'>Sub-Type :</span> {adDetails && adDetails.subcategory} </li>
-                  <li className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Floors : </span>{adDetails && adDetails.floor}</li>
+                  <li className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Floors : </span>{adDetails && adDetails.totalFloors}</li>
                 </ul>
                 <ul className='leading-loose w-[50%]'>
                   <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><spam className='font-semibold'>Conditons :</spam></li>
                   <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Negotiable :</span> {adDetails && adDetails.negotiable} </li>
                   <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>BHK:</span> {adDetails && adDetails.bhk}</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Car Parking : </span>{adDetails && adDetails.parking}</li>
+                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Car Parking : </span>{adDetails && adDetails.carParking}</li>
 
                 </ul>
               </div>
