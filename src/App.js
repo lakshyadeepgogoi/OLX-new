@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Footer from './components/common/Footer';
 import PrivateRoute from "./components/PrivateRoute";
 import AdsDetails from "./components/AdsDetails";
+import PropertiesAdDetails from './components/PropertiesDetails'
 import AllAds from "./components/AllAds";
 import PhoneAuth from "./components/PhoneAuth"
 import Form from "./components/postAds/Form";

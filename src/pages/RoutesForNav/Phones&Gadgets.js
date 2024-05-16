@@ -8,7 +8,7 @@ import { GoCpu } from "react-icons/go";
 function PhonesGadgets(){
     return(
         <div>
-            <div className="grid grid-cols-4 justify-center w-11/12 m-auto gap-2 mb-4 ">
+            {/* <div className="grid grid-cols-4 justify-center w-11/12 m-auto gap-2 mb-4 ">
                 <SubCategoryCard icon={<FaLaptop />} name="Laptops" />
                 <SubCategoryCard icon={<FaMobileAlt />} name="Mobiles" />
                 <SubCategoryCard icon={<FaTabletScreenButton />} name="Tablets" />
@@ -18,8 +18,8 @@ function PhonesGadgets(){
                 <SubCategoryCard icon={<GoCpu />} name="CPU & Accesories" />
                 <SubCategoryCard icon={<FaHeadphones />} name="Headsets" />
 
-            </div>
-            <div>
+            </div> */}
+            <div className="my-6">
                 <PhoneAdCards/>
             </div>
         </div>

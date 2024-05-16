@@ -8,7 +8,7 @@ import SpareAdCards from "../../components/NavAds/SpareAdCards";
 function SpareParts(){
     return(
         <div>
-            <div className="grid grid-cols-4 justify-center w-11/12 m-auto gap-2 mb-4 ">
+            {/* <div className="grid grid-cols-4 justify-center w-11/12 m-auto gap-2 mb-4 ">
                 <SubCategoryCard icon={<FaLaptop />} name="Refrigerators" />
                 <SubCategoryCard icon={<FaMobileAlt />} name="AC" />
                 <SubCategoryCard icon={<FaTabletScreenButton />} name="Washing Machines" />
@@ -18,8 +18,8 @@ function SpareParts(){
                 <SubCategoryCard icon={<GoCpu />} name="Kitchen Appliances" />
                 <SubCategoryCard icon={<FaHeadphones />} name="Others" />
 
-            </div>
-            <div>
+            </div> */}
+            <div className="my-6">
                 <SpareAdCards/>
             </div>
         </div>
