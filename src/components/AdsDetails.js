@@ -41,7 +41,7 @@ function AdsDetails() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-              const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'vehicles'];
+              const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
                 let allUserAds = [];
                 for(const category of categories){
                   const adDocRef = doc(db, 'categories', category, 'ads', id );
