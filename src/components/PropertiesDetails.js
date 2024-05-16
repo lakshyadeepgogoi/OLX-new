@@ -351,7 +351,7 @@ const handleClick = (index) => {
           <button className='w-12 h-12 text-[#00AAFF] bg-[#E8F7FF] text-xl flex justify-center items-center'><FaArrowRight/></button>
         </div>
         </div>
-        <div className='flex flex-row gap-6 h-96  overflow-y-scroll no-scroll '>
+        <div className='flex flex-row gap-6 h-96  overflow-y-scroll no-scrollbar '>
         {ads.map(ad => (
                 <Link to={`/properties-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
                 <div className="border-2 rounded-md overflow-hidden h-full  w-[260px] xl:w-80">
