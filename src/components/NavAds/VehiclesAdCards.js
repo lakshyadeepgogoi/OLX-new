@@ -10,7 +10,7 @@ function VehiclesAdCards() {
     useEffect(() => {
         const fetchAds = async () => {
             try {
-                const adsCollectionRef = collection(db, 'categories', 'vehicles', 'ads');
+                const adsCollectionRef = collection(db, 'categories', 'Vehicles', 'ads');
                 const adsSnapshot = await getDocs(adsCollectionRef);
                 const adsData = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 console.log('Fetched ads data:', adsData); // Log fetched data
