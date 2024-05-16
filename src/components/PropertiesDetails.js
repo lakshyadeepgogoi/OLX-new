@@ -351,9 +351,9 @@ const handleClick = (index) => {
           <button className='w-12 h-12 text-[#00AAFF] bg-[#E8F7FF] text-xl flex justify-center items-center'><FaArrowRight/></button>
         </div>
         </div>
-        <div className='flex flex-row gap-6 h-96  overflow-y-scroll no-scrollbar '>
+        <div className='flex flex-row gap-6 h-96  overflow-y-scroll no-scroll '>
         {ads.map(ad => (
-                <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
+                <Link to={`/properties-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
                 <div className="border-2 rounded-md overflow-hidden h-full  w-[260px] xl:w-80">
                         {ad.promoted && (
                             <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
