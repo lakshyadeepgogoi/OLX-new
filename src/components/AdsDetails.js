@@ -41,13 +41,17 @@ function AdsDetails() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-                const adDocRef = doc(db, 'categories', 'Mobiles', 'ads', id );
+
+              const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
+                let allUserAds = [];
+                for(const category of categories){
+                  const adDocRef = doc(db, 'categories', category, 'ads', id );
                 const adDocSnapshot = await getDoc(adDocRef);
                 if (adDocSnapshot.exists()) {
                     setAdDetails({ id: adDocSnapshot.id, ...adDocSnapshot.data() });
                 } else {
                     console.log('Ad not found');
-                }
+                }}
             } catch (error) {
                 console.error('Error fetching ad details:', error);
             }

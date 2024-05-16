@@ -68,7 +68,7 @@ function ProfileDetails() {
         const fetchUserAds = async () => {
             try {
                 const userId = auth.currentUser.uid;
-                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'vehicles'];
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
                 let allUserAds = [];
 
                 for (const category of categories) {

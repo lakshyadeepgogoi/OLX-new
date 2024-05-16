@@ -2,22 +2,13 @@ import React from 'react';
 // import house from "../assets/house.png";
 import Cards from '../components/Cards';
 import { FaArrowRight } from 'react-icons/fa';
-import { CiMobile1 } from "react-icons/ci";
-import { CiMonitor } from "react-icons/ci";
-import { FaCarAlt } from "react-icons/fa";
-import { CiShop } from "react-icons/ci";
-import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
-import { FaHouse } from "react-icons/fa6";
-import { PiHandshake } from "react-icons/pi";
-import { PiGraduationCapDuotone } from "react-icons/pi";
 
+import { PiHandshake } from "react-icons/pi";
+
+import { Link } from 'react-router-dom';
 import { IoMdPeople } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
-import { TbSofa } from "react-icons/tb";
-import { PiPants } from "react-icons/pi";
-import { PiBooksLight } from "react-icons/pi";
-import { MdOutlineSportsBaseball } from "react-icons/md";
-import { PiDog } from "react-icons/pi";
+
 
 import { FaBox } from "react-icons/fa";
 import phoneimg from "../assets/phoneimg.png"
@@ -136,20 +127,42 @@ const Home = ({ isLoggedIn }) => {
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           <h2 className="text-2xl font-semibold m-4 col-span-full font-inter text-center tracking-wide">Popular Categories</h2>
           {/* Categories */}
-          <CategoryCard iconSrc={mobileIcon} title="Phones & Gadgets" ads="69,580" />
-          <CategoryCard iconSrc={electronicIcon} title="Electronics & Appliances" ads="69,580" />
-          <CategoryCard iconSrc={vehicleIcon} title="Vehicles" ads="69,580" />
-          <CategoryCard iconSrc={propertyIcon} title="Properties" ads="69,580" />
-          <CategoryCard iconSrc={sparepartsIcon} title="Spare Parts" ads="69,580" />
-          <CategoryCard iconSrc={furnitureIcon} title="Furnitures" ads="69,580" />
-          <CategoryCard iconSrc={fashionIcon} title="Fashion & Clothings" ads="69,580" />
-          <CategoryCard iconSrc={bookIcon} title="Books & Stationery" ads="69,580" />
-          <CategoryCard iconSrc={sportsIcon} title="Sports & Gyms" ads="69,580" />
-
-          <CategoryCard iconSrc={servicesIcon} title="Services" ads="69,580" />
-
-          <CategoryCard iconSrc={jobForm} title="Vacancies" ads="69,580" />
-          <CategoryCard iconSrc={petForm} title="Pets" ads="69,580" />
+          <Link to="/phones&gadgets">
+            <CategoryCard iconSrc={mobileIcon} title="Phones & Gadgets" ads="69,580" />
+          </Link>
+          <Link to="/electronics&appliances">
+            <CategoryCard iconSrc={electronicIcon} title="Electronics & Appliances" ads="69,580" />
+          </Link>
+          <Link to="/Vehicles">
+            <CategoryCard iconSrc={vehicleIcon} title="Vehicles" ads="69,580" />
+          </Link>
+          <Link to="/Properties">
+            <CategoryCard iconSrc={propertyIcon} title="Properties" ads="69,580" />
+          </Link>
+          <Link to="/Spare&Parts">
+            <CategoryCard iconSrc={sparepartsIcon} title="Spare Parts" ads="69,580" />
+          </Link>
+          <Link to="/Furnitures">
+            <CategoryCard iconSrc={furnitureIcon} title="Furnitures" ads="69,580" />
+          </Link>
+          <Link to="/fashion-clothings">
+            <CategoryCard iconSrc={fashionIcon} title="Fashion & Clothings" ads="69,580" />
+          </Link>
+          <Link to="/Books&Stationery">
+            <CategoryCard iconSrc={bookIcon} title="Books & Stationery" ads="69,580" />
+          </Link>
+          <Link to="/Sports&Gyms">
+            <CategoryCard iconSrc={sportsIcon} title="Sports & Gyms" ads="69,580" />
+          </Link>
+          <Link to="/services">
+            <CategoryCard iconSrc={servicesIcon} title="Services" ads="69,580" />
+          </Link>
+          <Link to="/vacancies">
+            <CategoryCard iconSrc={jobForm} title="Vacancies" ads="69,580" />
+          </Link>
+          <Link to="/pets">
+            <CategoryCard iconSrc={petForm} title="Pets" ads="69,580" />
+          </Link>
 
           {/* Repeat similar divs for other categories */}
         </div>
