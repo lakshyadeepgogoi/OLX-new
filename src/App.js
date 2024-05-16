@@ -82,6 +82,7 @@ function App() {
           {/* Routes for Ads Detail */}
 
           <Route path="/ad-details/:id" element={<AdsDetails />} />
+          <Route path="/properties-details/:id" element={<PropertiesAdDetails />} />
 
           <Route path="/profile" element={
             <PrivateRoute isLoggedIn={isLoggedIn}>

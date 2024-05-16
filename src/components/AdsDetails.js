@@ -41,19 +41,13 @@ function AdsDetails() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-              const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'vehicles'];
-                let allUserAds = [];
-                for(const category of categories){
-                  const adDocRef = doc(db, 'categories', category, 'ads', id );
+                const adDocRef = doc(db, 'categories', 'Mobiles', 'ads', id );
                 const adDocSnapshot = await getDoc(adDocRef);
                 if (adDocSnapshot.exists()) {
                     setAdDetails({ id: adDocSnapshot.id, ...adDocSnapshot.data() });
                 } else {
                     console.log('Ad not found');
                 }
-
-                }
-                
             } catch (error) {
                 console.error('Error fetching ad details:', error);
             }
@@ -178,7 +172,7 @@ const handleClick = (index) => {
               <div className='flex flex-row justify-start items-center my-4 gap-24 text-md'>
                 <div>{adDetails && adDetails.userAddress}</div>
                 <div>{adDetails && adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString('en-US', {  day: 'numeric', year: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase()}</div>
-                <div className='hidden md:block'>69, Viewed</div>
+                <div className='hidden md:block'>69,656 Viewed</div>
               </div>
             </div>
             {/* photo section */}

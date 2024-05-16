@@ -41,7 +41,7 @@ function AdsDetails() {
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
-                const adDocRef = doc(db, 'categories', 'Mobiles', 'ads', id );
+                const adDocRef = doc(db, 'categories', 'Properties', 'ads', id );
                 const adDocSnapshot = await getDoc(adDocRef);
                 if (adDocSnapshot.exists()) {
                     setAdDetails({ id: adDocSnapshot.id, ...adDocSnapshot.data() });
@@ -172,7 +172,7 @@ const handleClick = (index) => {
               <div className='flex flex-row justify-start items-center my-4 gap-24 text-md'>
                 <div>{adDetails && adDetails.userAddress}</div>
                 <div>{adDetails && adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString('en-US', {  day: 'numeric', year: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase()}</div>
-                <div className='hidden md:block'>69,656 Viewed</div>
+                <div className='hidden md:block'> Viewed</div>
               </div>
             </div>
             {/* photo section */}
@@ -200,23 +200,23 @@ const handleClick = (index) => {
             </div>
 
             {/* feacture section */}
-            {/* <div className='my-4 text-[#464D61]'>
-              <h1 className='text-2xl font-bold my-2'>Feature </h1>
-              <div className='flex flex-row items-start justify-between '>
+            <div className='my-4 text-[#464D61]'>
+              <h1 className='text-2xl font-bold my-2'>Detailed </h1>
+              <div className='flex md:flex-row flex-col items-start justify-between w-full '>
                 <ul className='leading-loose '>
-                  <li className='flex flex-row gap-2'><img src={checkmark}  alt='checkmark' className='object-contain'/> 128GB internal memory with 8GB RAM</li>
-                  <li className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Fingerprint (under display, optical), accelerometer.</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Android 11, Funtouch 11.1 Operating System</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Glass front, plastic frame, plastic back</li>
+                  <li className='flex flex-row gap-2'><img src={checkmark}  alt='checkmark' className='object-contain'/> <span className='font-semibold'>Type :</span> {adDetails && adDetails.category} </li>
+                  <li className='flex flex-row gap-2'><img src={checkmark}  alt='checkmark' className='object-contain'/> <span className='font-semibold'>Sub-Type :</span> {adDetails && adDetails.subcategory} </li>
+                  <li className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Floors : </span>{adDetails && adDetails.floor}</li>
                 </ul>
-                <ul className='leading-loose'>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>LED flash, HDR, panorama</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Li-Po 4000 mAh, non-removable battery</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Fast charging 33W, 63% in 30 min (advertised)</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>1 Year international warranty</li>
+                <ul className='leading-loose w-[50%]'>
+                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><spam className='font-semibold'>Conditons :</spam></li>
+                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Negotiable :</span> {adDetails && adDetails.negotiable} </li>
+                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>BHK:</span> {adDetails && adDetails.bhk}</li>
+                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/><span className='font-semibold'>Car Parking : </span>{adDetails && adDetails.parking}</li>
+
                 </ul>
               </div>
-            </div> */}
+            </div>
 
           </div>
 
@@ -275,14 +275,13 @@ const handleClick = (index) => {
           </div>
 
           {/* right bottom side  */}
-          <div className='h-[380px] w-full border-2 rounded-lg shadow-sm p-6 flex flex-col gap-4'>
-            <div className=' flex flex-col gap-5 h-[220px] w-full border-b-2'>
+          <div className='h-[320px] w-full border-2 rounded-lg shadow-sm p-6 flex flex-col gap-4'>
+            <div className=' flex flex-col gap-5 h-[180px] w-full border-b-2'>
               <h1 className='text-xl font-semibold'>Overview</h1>
               <div className='flex flex-col h-max gap-3 text-sm '>
                 <div className='flex flex-row justify-between'><span className='font-semibold'>Conditons:</span><span className='text-[#636A80]'>Used</span></div>
-                <div className='flex flex-row justify-between'><span className='font-semibold'>Brand:</span><span className='text-[#636A80]'>{adDetails && adDetails.brand}</span ></div>
-                <div className='flex flex-row justify-between'><span className='font-semibold'>Model:</span><span className='text-[#636A80]'>{adDetails && adDetails.model}</span></div>
-                <div className='flex flex-row justify-between'><span className='font-semibold'>Age of product:</span><span className='text-[#636A80]'>{adDetails && adDetails.age}</span></div>
+                <div className='flex flex-row justify-between'><span className='font-semibold'> BHK:</span><span className='text-[#636A80]'> {adDetails && adDetails.bhk}</span ></div>
+                <div className='flex flex-row justify-between'><span className='font-semibold'>Car Parking :</span><span className='text-[#636A80]'> {adDetails && adDetails.parking}</span></div>
                 <div className='flex flex-row justify-between'><span className='font-semibold'>Negotiable:</span><span className='text-[#636A80]'>{adDetails && adDetails.negotiable}</span></div>
               </div>
             </div>
