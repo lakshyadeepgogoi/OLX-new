@@ -22,7 +22,7 @@ function AllCards() {
             }
 
             try {
-                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Properties', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles'];
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles'];
                 let allCategoryAds = [];
     
                 for (const category of categories) {
