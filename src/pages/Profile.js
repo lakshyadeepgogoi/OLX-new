@@ -4,7 +4,7 @@ import ProfileDetails from '../components/ProfileDetails'
 
 const Profile = ({ isLoggedIn }) => {
   return (
-    <div>
+    <div className='overflow-x-auto'>
       <nav className='shadow-md '>
       <ProfileNav />
 
