@@ -57,7 +57,7 @@ function AllCards() {
 
     if (loading) {
         return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 w-[95%] m-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 sm:w-[95%] m-auto">
                 {Array.from({ length: 12 }).map((_, index) => (
                     <div key={index} className="animate-pulse w-full">
                         <div className="h-56 bg-gray-300 rounded-md"></div>
@@ -79,10 +79,10 @@ function AllCards() {
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 my-8 w-[95%] m-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 my-8 w-full sm:w-[95%] sm:m-auto">
             {memoizedAds.map(ad => (
                 <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
-                    <div className="border rounded-md overflow-hidden h-[380px] w-[260px] xl:w-[290px] relative">
+                    <div className="border rounded-md overflow-hidden h-[380px] w-full my-6 sm:my-2 sm:w-[260px] xl:w-[290px] relative">
                         {ad.promoted && (
                             <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
                                 Promoted
