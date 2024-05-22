@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Cards from './Cards';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../pages/firebase';
 
 function AllAds() {
     const [sortBy, setSortBy] = useState('latest');
+    const [totalAds, setTotalAds] = useState(0);
+
+    useEffect(() => {
+        const getTotalAdsCount = async () => {
+            try {
+                let total = 0;
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles', 'Properties'];
+
+                for (const category of categories) {
+                    const adsCollectionRef = collection(db, 'categories', category, 'ads');
+                    const adsSnapshot = await getDocs(adsCollectionRef);
+                    total += adsSnapshot.size;
+                }
+
+                setTotalAds(total);
+            } catch (error) {
+                console.error('Error fetching total ads count:', error);
+            }
+        };
+
+        getTotalAdsCount();
+    }, []);
 
     return (
         <motion.div
@@ -23,7 +46,7 @@ function AllAds() {
                 {/* Results count */}
                 <div>
                     <p className="text-lg font-semibold font-inter">
-                        <span className="text-lime-800">574,395</span> Results Found
+                        <span className="text-lime-800">{totalAds}</span> Results Found
                     </p>
                 </div>
                 {/* Filters */}
