@@ -10,7 +10,7 @@ import { getDownloadURL } from 'firebase/storage';
 
 function SportsgymsForm({ nextStep, previousStep, selectedCategory }) {
 
-  const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('');
 
     const [subcategory, setSubcategory] = useState('');
     const [subcategoryOptions, setSubcategoryOptions] = useState([]);
@@ -49,7 +49,7 @@ function SportsgymsForm({ nextStep, previousStep, selectedCategory }) {
             case '':
                 setSubcategoryOptions(['Other spare parts']);
                 break;
-            
+
 
             default:
                 setSubcategoryOptions([]);
@@ -119,6 +119,12 @@ function SportsgymsForm({ nextStep, previousStep, selectedCategory }) {
         }
     };
 
+    const handleRemoveImage = (index) => {
+        const newImages = [...images];
+        newImages[index] = null;
+        setImages(newImages);
+    };
+
     const handlePreviousClick = async (event) => {
         previousStep();
     };
@@ -131,7 +137,7 @@ function SportsgymsForm({ nextStep, previousStep, selectedCategory }) {
         event.preventDefault();
 
         try {
-            if (!category || !adName || !price || !negotiable || !description  ) {
+            if (!category || !adName || !price || !negotiable || !description) {
                 setError('All fields are required.');
                 return;
             }
@@ -150,9 +156,9 @@ function SportsgymsForm({ nextStep, previousStep, selectedCategory }) {
                 selectedCategory,
                 userId,
                 category,
-                subcategory,           
+                subcategory,
 
-      
+
                 adName,
                 tags,
                 description,
@@ -183,171 +189,188 @@ function SportsgymsForm({ nextStep, previousStep, selectedCategory }) {
     };
 
 
-  return (
-    <div>
-    <form onSubmit={''} className="flex flex-col w-full gap-y-4 mt-6">
+    return (
+        <div>
+            <form onSubmit={''} className="flex flex-col w-full gap-y-4 mt-6">
 
-        <label className='w-full relative'>
-            <p className='text-sm text-gray-800 mb-1'>
-                Category <sup className='text-pink-200'>*</sup>
-            </p>
-            <select
-                required
-                value={category}
-                onChange={handleCategoryChange}
-                className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
-            >
-                <option value="">Select</option>
-                <option value="Outdoor Games">Outdoor Games</option>
-                <option value="Indoor Games">Indoor Games</option>
-                <option value="Gyms Equipment">Gym Equipment</option>
-
-
-            </select>
-        </label>
-
-        <label className='w-full'>
-            <p className='text-sm text-gray-800 mb-1'>
-                Ad Name <sup className='text-pink-200'>*</sup>
-            </p>
-            <input
-                required
-                type="text"
-                value={adName}
-                onChange={handleadNameChange}
-                placeholder="Enter Ad Name"
-                className='rounded-md bg-gray-100 text-gray-800 w-full px-4 py-2'
-            />
-        </label>
-
-       
+                <label className='w-full relative'>
+                    <p className='text-sm text-gray-800 mb-1'>
+                        Category <sup className='text-pink-200'>*</sup>
+                    </p>
+                    <select
+                        required
+                        value={category}
+                        onChange={handleCategoryChange}
+                        className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
+                    >
+                        <option value="">Select</option>
+                        <option value="Outdoor Games">Outdoor Games</option>
+                        <option value="Indoor Games">Indoor Games</option>
+                        <option value="Gyms Equipment">Gym Equipment</option>
 
 
-        <div className='flex flex-row gap-4'>
-            <label className='w-full'>
-                <p className='text-sm text-gray-800 mb-1'>
-                    Price (INR) <sup className='text-pink-200'>*</sup>
-                </p>
-                <input
-                    required
-                    type="number"
-                    value={price}
-                    onChange={handlePriceChange}
-                    placeholder="Enter price"
-                    className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
-                />
-            </label>
-            <label className='w-full'>
-                <p className='text-sm text-gray-800 mb-1'>
-                    Negotiable <sup className='text-pink-200'>*</sup>
-                </p>
-                <select
-                    required
-                    value={negotiable}
-                    onChange={handleNegotiableChange}
-                    className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
-                >
-                    <option value="">Select</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </label>
-        </div>
+                    </select>
+                </label>
 
-        <label className='w-full'>
-            <p className='text-sm text-gray-800 mb-1'>
-                Description <sup className='text-pink-200'>*</sup>
-            </p>
-            <textarea
-                required
-                value={description}
-                onChange={handleDescriptionChange}
-                placeholder="Enter description"
-                className='bg-gray-100 rounded-md text-gray-800 w-full h-32 px-4 py-2'
-            />
-        </label>
+                <label className='w-full'>
+                    <p className='text-sm text-gray-800 mb-1'>
+                        Ad Name <sup className='text-pink-200'>*</sup>
+                    </p>
+                    <input
+                        required
+                        type="text"
+                        value={adName}
+                        onChange={handleadNameChange}
+                        placeholder="Enter Ad Name"
+                        className='rounded-md bg-gray-100 text-gray-800 w-full px-4 py-2'
+                    />
+                </label>
 
-        <label className='w-full'>
-            <p className='text-sm text-gray-800 mb-1'>
-                Tags <sup className='text-pink-200'>*</sup>
-            </p>
-            <div className="flex flex-wrap gap-2">
-                {tags.map((tag, index) => (
-                    <div key={index} className="flex items-center bg-gray-200 px-2 py-1 rounded">
-                        <span>{tag}</span>
-                        <button onClick={() => handleRemoveTag(tag)} type="button" className="ml-2 text-red-500">
-                            ×
+
+
+
+                <div className='flex flex-row gap-4'>
+                    <label className='w-full'>
+                        <p className='text-sm text-gray-800 mb-1'>
+                            Price (INR) <sup className='text-pink-200'>*</sup>
+                        </p>
+                        <input
+                            required
+                            type="number"
+                            value={price}
+                            onChange={handlePriceChange}
+                            placeholder="Enter price"
+                            className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
+                        />
+                    </label>
+                    <label className='w-full'>
+                        <p className='text-sm text-gray-800 mb-1'>
+                            Negotiable <sup className='text-pink-200'>*</sup>
+                        </p>
+                        <select
+                            required
+                            value={negotiable}
+                            onChange={handleNegotiableChange}
+                            className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
+                        >
+                            <option value="">Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label className='w-full'>
+                    <p className='text-sm text-gray-800 mb-1'>
+                        Description <sup className='text-pink-200'>*</sup>
+                    </p>
+                    <textarea
+                        required
+                        value={description}
+                        onChange={handleDescriptionChange}
+                        placeholder="Enter description"
+                        className='bg-gray-100 rounded-md text-gray-800 w-full h-32 px-4 py-2'
+                    />
+                </label>
+
+                <label className='w-full'>
+                    <p className='text-sm text-gray-800 mb-1'>
+                        Tags <sup className='text-pink-200'>*</sup>
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                        {tags.map((tag, index) => (
+                            <div key={index} className="flex items-center bg-gray-200 px-2 py-1 rounded">
+                                <span>{tag}</span>
+                                <button onClick={() => handleRemoveTag(tag)} type="button" className="ml-2 text-red-500">
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex items-center mt-2">
+                        <input
+                            type="text"
+                            value={newTag}
+                            onChange={(e) => setNewTag(e.target.value)}
+                            placeholder="Add new tag"
+                            className='bg-gray-100 rounded-md text-gray-800 px-4 py-2 flex-grow'
+                        />
+                        <button onClick={handleAddTag} type="button" className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">
+                            Add
                         </button>
                     </div>
-                ))}
-            </div>
-            <div className="flex items-center mt-2">
-                <input
-                    type="text"
-                    value={newTag}
-                    onChange={(e) => setNewTag(e.target.value)}
-                    placeholder="Add new tag"
-                    className='bg-gray-100 rounded-md text-gray-800 px-4 py-2 flex-grow'
-                />
-                <button onClick={handleAddTag} type="button" className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">
-                    Add
-                </button>
-            </div>
-        </label>
-        <hr></hr>
-
-
-        <lable>Add Images</lable>
-
-
-        <div className="flex flex-wrap gap-4">
-            {[...Array(6)].map((_, index) => (
-                <label key={index} className="w-1/2 sm:w-1/3">
-                    <p className="text-sm text-gray-800 mb-1">Image {index + 1}:</p>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleImageChange(e, index)}
-                        className="bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2"
-                    />
-                    {imageLoadings[index] && <div className="flex justify-center items-center">
-                        <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
-                    </div>}
-                    {!imageLoadings[index] && images[index] && (
-                        <img src={images[index]} alt={`Preview ${index + 1}`} className="mt-2 w-full h-auto object-cover" />
-                    )}
                 </label>
-            ))}
-        </div>
+                <hr></hr>
 
 
-        <hr></hr>
+                <lable>Add Images</lable>
 
-        <div className='flex flex-col-reverse sm:flex-row justify-between items-baseline'>
-            <div className='flex sm:flex-row gap-4'>
-                <button onClick={handlePreviousClick} className='border-4 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6'>
-                    previous
-                </button>
-                <button
-                    onClick={handleNextClick}
-                    className="border-4 bg-green-500 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6"
-                >
-                    Next →
-                </button>
-            </div>
-        </div>
 
-        {error && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-                <div className="bg-white p-4 rounded-md">
-                    <p className="text-red-500">{error}</p>
-                    <button onClick={() => setError('')} className="text-blue-500 underline mt-2">Close</button>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+                    {[...Array(6)].map((_, index) => (
+                        <div key={index} className="relative overflow-hidden bg-gray-100 rounded-md text-gray-800">
+                            <div className="h-40 aspect-w-1 aspect-h-1 relative">
+                                {images[index] && (
+                                    <div>
+                                        <img src={images[index]} alt={`Preview ${index + 1}`} className="absolute inset-0 w-full h-full object-cover" />
+                                        <button onClick={() => handleRemoveImage(index)} className="absolute top-2 right-2 text-red-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                )}
+                                {!images[index] && (
+                                    <>
+                                        <div className="flex justify-center items-center h-full">
+                                            <span className="text-5xl text-gray-400">+</span>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => handleImageChange(e, index)}
+                                            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                                        />
+                                    </>
+                                )}
+                                {imageLoadings[index] && (
+                                    <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                                        <div className="border-t-transparent border-solid animate-spin rounded-full border-blue-400 border-4 h-8 w-8"></div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            </div>
-        )}
-    </form>
-</div>
-  )
+
+
+                <hr></hr>
+
+                <div className='flex flex-col-reverse sm:flex-row justify-between items-baseline'>
+                    <div className='flex sm:flex-row gap-4'>
+                        <button onClick={handlePreviousClick} className='border-4 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6'>
+                            previous
+                        </button>
+                        <button
+                            onClick={handleNextClick}
+                            className="border-4 bg-green-500 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6"
+                        >
+                            Next →
+                        </button>
+                    </div>
+                </div>
+
+                {error && (
+                    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                        <div className="bg-white p-4 rounded-md">
+                            <p className="text-red-500">{error}</p>
+                            <button onClick={() => setError('')} className="text-blue-500 underline mt-2">Close</button>
+                        </div>
+                    </div>
+                )}
+            </form>
+        </div>
+    )
 }
 
 export default SportsgymsForm
