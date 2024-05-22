@@ -375,10 +375,10 @@ function FashionForm({ nextStep, previousStep, selectedCategory }) {
                 <hr></hr>
 
                 <div className='flex flex-col-reverse sm:flex-row justify-between items-baseline'>
-                    
+
                     <div className='flex sm:flex-row gap-4'>
                         <button onClick={handlePreviousClick} className='border-4 rounded-md text-gray-800 h-14 w-36 sm:w-40 font-semibold py-2 mt-6'>
-                            previous
+                            Previous
                         </button>
                         <button
                             onClick={handleNextClick}
@@ -391,9 +391,9 @@ function FashionForm({ nextStep, previousStep, selectedCategory }) {
 
                 {error && (
                     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-                        <div className="bg-white p-4 rounded-md">
-                            <p className="text-red-500">{error}</p>
-                            <button onClick={() => setError('')} className="text-blue-500 underline mt-2">Close</button>
+                        <div className="bg-white p-6 rounded-md shadow-md flex flex-col justify-center items-center gap-4">
+                            <p className="text-red-600 font-semibold text-center">{error}</p>
+                            <button onClick={() => setError('')} className="text-white font-semibold bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md px-6 py-3 transition duration-300 ease-in-out">Close</button>
                         </div>
                     </div>
                 )}
