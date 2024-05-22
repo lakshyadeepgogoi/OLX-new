@@ -29,6 +29,10 @@ function AllAds() {
         getTotalAdsCount();
     }, []);
 
+    const handleSortChange = (e) => {
+        setSortBy(e.target.value);
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -55,7 +59,7 @@ function AllAds() {
                     <select
                         className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                         value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
+                        onChange={handleSortChange}
                     >
                         <option value="latest">Latest</option>
                         <option value="oldest">Oldest</option>
