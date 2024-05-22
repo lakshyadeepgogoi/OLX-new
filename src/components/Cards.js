@@ -81,7 +81,7 @@ function Cards({ sortBy }) {
             animate="visible"
         >
             {ads.map(ad => (
-                <Link to={`/ad-details/${ad.id}`} key={ad.id} className="border rounded-md overflow-hidden h-[380px] w-[260px] xl:w-[290px] relative">
+                <Link to={`/ad-details/${ad.id}`} key={ad.id} className="border rounded-md overflow-hidden h-[380px] w-full sm:w-[260px] xl:w-[290px] relative">
                     <div className="relative">
                         {ad.promoted && (
                             <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
