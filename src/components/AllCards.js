@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../pages/firebase';
 import { Link } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 
 const CACHE_DURATION = 300000; // Cache duration in milliseconds (e.g., 5 minutes)
 let cachedAds = null;
@@ -55,7 +56,26 @@ function AllCards() {
     const memoizedAds = useMemo(() => ads, [ads]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 w-[95%] m-auto">
+                {Array.from({ length: 12 }).map((_, index) => (
+                    <div key={index} className="animate-pulse w-full">
+                        <div className="h-56 bg-gray-300 rounded-md"></div>
+                        <div className="flex justify-between mt-2">
+                            <div className="w-2/3 h-4 bg-gray-300 rounded-md"></div>
+                            <div className="w-1/4 h-4 bg-gray-300 rounded-md"></div>
+                        </div>
+                        <div className="flex justify-between mt-1">
+                            <div className="w-2/3 h-4 bg-gray-300 rounded-md"></div>
+                            <div className="w-1/4 h-4 bg-gray-300 rounded-md"></div>
+                        </div>
+                        <div className="mt-2">
+                            <div className="w-3/4 h-4 bg-gray-300 rounded-md"></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
     }
 
     return (
@@ -68,9 +88,9 @@ function AllCards() {
                                 Promoted
                             </span>
                         )}
-                        {ad.images && ad.images.length > 0 && (
-                            <img src={ad.images[0]} alt="Ad" className="w-full h-52 object-cover" loading="lazy" />
-                        )}
+                        <LazyLoad height={200} offset={100} once>
+                            <img src={ad.images && ad.images.length > 0 ? ad.images[0] : ''} alt="Ad" className="w-full h-52 object-cover" loading="lazy" />
+                        </LazyLoad>
                         <div className="p-3">
                             <p className="font-semibold text-black text-2xl">Rs {ad.price}</p>
                             <p className="text-gray-800 mb-2 text-xl">{ad.adName}</p>
