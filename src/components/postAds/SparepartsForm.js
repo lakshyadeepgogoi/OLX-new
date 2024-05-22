@@ -133,7 +133,7 @@ function SparepartsForm({ nextStep, previousStep, selectedCategory }) {
         event.preventDefault();
 
         try {
-            if (!category || !adName || !price || !negotiable || !description || !subcategory) {
+            if (!category || !adName || !price || !negotiable || !description ) {
                 setError('All fields are required.');
                 return;
             }
