@@ -23,7 +23,7 @@ function AllCards() {
             }
 
             try {
-                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacacies', 'vehicles'];
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
                 let allCategoryAds = [];
     
                 for (const category of categories) {
@@ -36,8 +36,8 @@ function AllCards() {
                 // Sort ads by timestamp in descending order
                 allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
     
-                // Slice the array to only include the latest 16 ads
-                const latestAds = allCategoryAds.slice(0, 16);
+                // Slice the array to only include the latest 12 ads
+                const latestAds = allCategoryAds.slice(0, 12);
     
                 console.log('Fetched latest 16 category ads:', latestAds); // Log fetched data
                 cachedAds = latestAds; // Cache the data
