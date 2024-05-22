@@ -79,7 +79,7 @@ function AllCards() {
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-4 my-8 w-[80%] m-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 my-8 w-[95%] m-auto">
             {memoizedAds.map(ad => (
                 <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
                     <div className="border rounded-md overflow-hidden h-[380px] w-[260px] xl:w-[290px] relative">
