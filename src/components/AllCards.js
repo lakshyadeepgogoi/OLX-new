@@ -37,7 +37,7 @@ function AllCards() {
                 allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
     
                 // Slice the array to only include the latest 12 ads
-                const latestAds = allCategoryAds.slice(0, 20);
+                const latestAds = allCategoryAds.slice(0, 12);
     
                 console.log('Fetched latest 16 category ads:', latestAds); // Log fetched data
                 cachedAds = latestAds; // Cache the data
