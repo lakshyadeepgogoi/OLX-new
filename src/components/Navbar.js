@@ -243,7 +243,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           <div className='relative' onMouseEnter={() => setCategoriesDropdownOpen(true)}
             onMouseLeave={() => setTimeout(() => setCategoriesDropdownOpen(false), 1000)} >
             <button
-                      className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2 ml-4 rounded-sm bg-gray-100"
+              className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2 ml-4 rounded-sm bg-gray-100"
 
             >
               All categories
@@ -251,9 +251,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             </button>
             {categoriesDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10"
-              style={{ opacity: categoriesDropdownOpen ? 1 : 0, transition: 'opacity 0.3s ease' }}
-              onMouseEnter={() => setCategoriesDropdownOpen(true)}
-              onMouseLeave={() => setTimeout(() => setCategoriesDropdownOpen(false), 300)}>
+                style={{ opacity: categoriesDropdownOpen ? 1 : 0, transition: 'opacity 0.3s ease' }}
+                onMouseEnter={() => setCategoriesDropdownOpen(true)}
+                onMouseLeave={() => setTimeout(() => setCategoriesDropdownOpen(false), 300)}>
                 <ul className="text-gray-700">
                   <Link to='/phones&gadgets'>
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Phones & Gadgets</li>
