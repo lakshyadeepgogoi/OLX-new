@@ -10,6 +10,8 @@ import { FaHome, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../pages/firebase';
+import heart from '../assets/Heart.png'
+
 import { db } from '../pages/firebase';
 // import { getDocs, collection } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
@@ -154,6 +156,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             />
           </div>
 
+          <button className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-full flex items-center justify-center'> <img src={heart} alt='heart' className='' /></button>
+
+
           {/* Country button - only visible on mobile view */}
           <div className='block md:hidden mx-auto'>
             <button className="font-inter text-gray-700 flex items-center border px-3 py-2 pl-3 pr-3 mt-2 rounded-sm bg-gray-100 ">
@@ -236,9 +241,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         <div className="border-t-2 border-gray-100 "></div>
         <div className="container mx-auto px-4 py-2 flex relative text-sm w-full h-16">
           <button 
-            onClick={() => setCategoriesDropdownOpen(!categoriesDropdownOpen)}
-            className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2  ml-4 rounded-sm bg-gray-100"
-          >
+            HoveronMouseEnter={() => setCategoriesDropdownOpen(!categoriesDropdownOpen)}
+            className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2  ml-4 rounded-sm bg-gray-100">
             All categories
             <FaAngleDown className="ml-1" />
           </button>

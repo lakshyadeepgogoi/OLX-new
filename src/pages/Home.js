@@ -8,6 +8,7 @@ import { PiHandshake } from "react-icons/pi";
 import { Link } from 'react-router-dom';
 import { IoMdPeople } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
+import heart from '../assets/Heart.png'
 
 
 import { FaBox } from "react-icons/fa";
@@ -86,13 +87,12 @@ const Home = ({ isLoggedIn }) => {
               <input
                 type='text'
                 placeholder='Search in All Categories'
-                className='py-2 px-4 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none flex-grow font-inter bg-transparent'
-              />
+                className='py-2 px-4 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none flex-grow font-inter bg-transparent'/>
               <button
-                className='bg-green-600 text-white py-2 px-4  rounded-r-lg border border-l-0 border-gray-300 hover:bg-blue-600 transition duration-300 font-inter '
-              >
+                className='bg-green-600 text-white py-2 px-4  rounded-r-lg border border-l-0 border-gray-300 hover:bg-blue-600 transition duration-300 font-inter '>
                 Search
               </button>
+
             </div>
           </div>
         </div>

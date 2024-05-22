@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
+
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -31,6 +32,8 @@ import Vacancies from "./pages/RoutesForNav/Vacancies";
 import Pets from "./pages/RoutesForNav/Pets";
 import EditAdForm from "./components/EditAdForm";
 import Preloader from './components/common/PreLoader';
+import AllCards from './components/AllCards';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,7 +61,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
           <Route path="/ads-details" element={<AdsDetails isLoggedIn={isLoggedIn} />} />
-          <Route path="/all-ads" element={<AllAds isLoggedIn={isLoggedIn} />} />
+          <Route path="/all-ads" element={<AllCards isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/phone-auth" element={<PhoneAuth setIsLoggedIn={setIsLoggedIn} />} />

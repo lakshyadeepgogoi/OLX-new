@@ -47,28 +47,28 @@ function Footer() {
             <div className='flex flex-col gap-2'>
               <h1 className='text-lg text-white mb-2'>Supports</h1>
               <ul className='leading-7'>
-                <li><a href='/'>Contact</a></li>
-                <li>FAQs</li>
-                <li>Pricing Plans</li>
-                <li>Sitemap</li>
+                <li className='hover:text-white'><a href='/'>Contact</a></li>
+                <li className='hover:text-white'>FAQs</li>
+                <li className='hover:text-white'>Pricing Plans</li>
+                <li className='hover:text-white'>Sitemap</li>
               </ul>
             </div>
             <div className='flex flex-col gap-2'>
               <h1 className='text-lg text-white mb-2'>Quick Links</h1>
               <ul className='leading-7'>
-                <li>About</li>
-                <li>Get Membership</li>
-                <li>Post a Ad</li>
-                <li>Blog</li>
+                <li className='hover:text-white'>About</li>
+                <li className='hover:text-white'>Get Membership</li>
+                <li className='hover:text-white'><a href='/Form'>Post a Ad</a></li>
+                <li className='hover:text-white'>Blog</li>
               </ul>
             </div>
             <div className='flex flex-col gap-2'>
               <h1 className='text-lg text-white mb-2'>Category</h1>
               <ul className='leading-7'>
-                <li>Mobile</li>
-                <li>Electronics</li>
-                <li>Vehicles</li>
-                <li>Property</li>
+                <li className='hover:text-white'><a href='/phones&gadgets'>Mobile</a></li>
+                <li className='hover:text-white'><a href='/electronics&appliances'>Electronics</a></li>
+                <li className='hover:text-white'><a href='/Vehicles'>Vehicles</a></li>
+                <li className='hover:text-white'><a href='/Properties'>Property</a></li>
               </ul>
             </div>
           </div>
