@@ -25,6 +25,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [user, loading, error] = useAuthState(auth);
   const [categories, setCategories] = useState([]);
+  const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
 
 
   useEffect(() => {
@@ -231,48 +232,93 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       </div>
 
       {/* Second part of navbar */}
-
       <div className='hidden md:block w-full'>
         <div className="border-t-2 border-gray-100 "></div>
         <div className="container mx-auto px-4 py-2 flex relative text-sm w-full h-16">
-          <button className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2  ml-4 rounded-sm bg-gray-100">
+          <button 
+            onClick={() => setCategoriesDropdownOpen(!categoriesDropdownOpen)}
+            className="whitespace-nowrap font-inter text-gray-700 flex items-center border px-2 py-2 pl-2 pr-2  ml-4 rounded-sm bg-gray-100"
+          >
             All categories
             <FaAngleDown className="ml-1" />
           </button>
+          {categoriesDropdownOpen && (
+            <div className="absolute top-full left-4 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+              <ul className="text-gray-700">
+                <Link to='/phones&gadgets'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Phones & Gadgets</li>
+                </Link>
+                <Link to='/electronics&appliances'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Electronics & Appliances</li>
+                </Link>
+                <Link to='/Vehicles'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Vehicles</li>
+                </Link>
+                <Link to='/Properties'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Properties</li>
+                </Link>
+                <Link to='/Spare&Parts'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Spare Parts</li>
+                </Link>
+                <Link to='/Furnitures'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Furnitures</li>
+                </Link>
+                <Link to='/Books&Stationery'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Books & Stationery</li>
+                </Link>
+                <Link to='/Sports&Gyms'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Sports & Gyms</li>
+                </Link>
+                <Link to='/Fashion&Clothings'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Fashion & Clothings</li>
+                </Link>
+                <Link to='/Services'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Services</li>
+                </Link>
+                <Link to='/Vacancies'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Vacancies</li>
+                </Link>
+                <Link to='/Pets'>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Pets</li>
+                </Link>
+              </ul>
+            </div>
+          )}
           <div className="border-l-2 border-gray-300 mx-4"></div>
           <ul className="flex text-gray-600 font-medium items-center font-inter gap-x-4 ">
             <Link to='/phones&gadgets'>
-            <li className=" whitespace-nowrap">Phones & Gadgets</li>
+              <li className="whitespace-nowrap">Phones & Gadgets</li>
             </Link>
 
             <Link to='/electronics&appliances'>
-            <li className=" whitespace-nowrap">Electronics & Appliances</li>
+              <li className="whitespace-nowrap">Electronics & Appliances</li>
             </Link>
   
             <Link to='/Vehicles'>
-            <li className=" whitespace-nowrap">Vehicles</li>
+              <li className="whitespace-nowrap">Vehicles</li>
             </Link>
             
             <Link to='/Properties'>
-            <li className=" whitespace-nowrap">Properties</li>
+              <li className="whitespace-nowrap">Properties</li>
             </Link>
 
             <Link to='/Spare&Parts'>
-            <li className=" whitespace-nowrap">Spare Parts</li>
+              <li className="whitespace-nowrap">Spare Parts</li>
             </Link>
             <Link to='/Furnitures'>
-            <li className=" whitespace-nowrap">Furnitures</li>
+              <li className="whitespace-nowrap">Furnitures</li>
             </Link>
             <Link to='/Books&Stationery'>
-            <li className=" whitespace-nowrap">Books & Stationery</li>
+              <li className="whitespace-nowrap">Books & Stationery</li>
             </Link>
             <Link to='/Sports&Gyms'>
-            <li className=" whitespace-nowrap">Sports & Gyms</li>
+              <li className="whitespace-nowrap">Sports & Gyms</li>
             </Link>
-             {/*<li className=" whitespace-nowrap">Fashion & Clothings</li>
-              <li className=" whitespace-nowrap">Services</li> */}
 
+            {/*<li className=" whitespace-nowrap">Fashion & Clothings</li>
+              <li className=" whitespace-nowrap">Services</li> */}
           </ul>
+
 
           <button className="font-inter text-gray-700 flex items-center border px-3 py-2 pl-3 pr-3 my-2 rounded-sm bg-gray-100 absolute right-5">
             {stateName}

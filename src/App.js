@@ -28,6 +28,8 @@ import SpareParts from "./pages/RoutesForNav/SpareParts";
 import Properties from "./pages/RoutesForNav/Properties";
 import Vehicles from "./pages/RoutesForNav/Vehicles";
 import SportsGym from "./pages/RoutesForNav/Sports&Gyms"
+import Vacancies from "./pages/RoutesForNav/Vacancies";
+import Pets from "./pages/RoutesForNav/Pets";
 
 import EditAdForm from "./components/EditAdForm";
 
@@ -75,6 +77,8 @@ function App() {
         <Route path="/Sports&Gyms" element= {<SportsGym/>}/>
         <Route path="/Fashion&Clothings" element= {<FashionClothing/>}/>
         <Route path="/Services" element= {<Services/>}/>
+        <Route path="/Vacancies" element= {<Vacancies/>}/>
+        <Route path="/Pets" element= {<Pets/>}/>
 
 
 

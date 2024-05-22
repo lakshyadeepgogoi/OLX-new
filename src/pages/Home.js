@@ -157,10 +157,10 @@ const Home = ({ isLoggedIn }) => {
           <Link to="/services">
             <CategoryCard iconSrc={servicesIcon} title="Services" ads="69,580" />
           </Link>
-          <Link to="/vacancies">
+          <Link to="/Vacancies">
             <CategoryCard iconSrc={jobForm} title="Vacancies" ads="69,580" />
           </Link>
-          <Link to="/pets">
+          <Link to="/Pets">
             <CategoryCard iconSrc={petForm} title="Pets" ads="69,580" />
           </Link>
 
