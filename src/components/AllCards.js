@@ -4,9 +4,7 @@ import { db } from '../pages/firebase';
 import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
-const CACHE_DURATION = 300000; // Cache duration in milliseconds (e.g., 5 minutes)
-let cachedAds = null;
-let cacheTimestamp = null;
+const CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
 
 function AllCards() {
     const [ads, setAds] = useState([]);
@@ -14,6 +12,8 @@ function AllCards() {
 
     useEffect(() => {
         const fetchAllCategoryAds = async () => {
+            const cachedAds = JSON.parse(localStorage.getItem('cachedAds'));
+            const cacheTimestamp = localStorage.getItem('cacheTimestamp');
             const now = new Date().getTime();
 
             if (cachedAds && cacheTimestamp && now - cacheTimestamp < CACHE_DURATION) {
@@ -25,15 +25,14 @@ function AllCards() {
             try {
                 const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
                 let allCategoryAds = [];
-    
+
                 for (const category of categories) {
                     const adsCollectionRef = collection(db, 'categories', category, 'ads');
                     const adsSnapshot = await getDocs(adsCollectionRef);
                     const categoryAds = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                     allCategoryAds = [...allCategoryAds, ...categoryAds];
                 }
-    
-                // Sort ads by timestamp in descending order
+
                 allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
     
                 // Slice the array to only include the latest 12 ads
@@ -43,13 +42,16 @@ function AllCards() {
                 cachedAds = latestAds; // Cache the data
                 cacheTimestamp = now; // Update the cache timestamp
                 setAds(latestAds);
+
+                localStorage.setItem('cachedAds', JSON.stringify(latestAds));
+                localStorage.setItem('cacheTimestamp', now);
             } catch (error) {
-                console.error('Error fetching ads:', error); // Log any errors
+                console.error('Error fetching ads:', error); 
             } finally {
                 setLoading(false);
             }
         };
-    
+
         fetchAllCategoryAds();
     }, []);
 
@@ -98,7 +100,7 @@ function AllCards() {
                             <div className="flex flex-col">
                                 <p className="text-sm text-gray-500">{ad.userAddress}</p>
                                 <p className="text-xs text-gray-500 items-end mt-4 self-end">
-                                    <div>{ad && ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString('en-US', { day: 'numeric', year: 'numeric', month: 'long' }).toUpperCase()}</div>
+                                    {ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString('en-US', { day: 'numeric', year: 'numeric', month: 'long' }).toUpperCase()}
                                 </p>
                             </div>
                         </div>

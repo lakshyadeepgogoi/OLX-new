@@ -224,6 +224,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                 </button>
               </li>
 
+              <div>
+              <Link to='/chat-app'>
+                <button className='border-2 px-4 py-3 rounded-md'>Chat</button>
+                </Link>
+              </div>
+
               {/* Post ads button */}
               <li className="hidden md:block">
                 <button className="flex items-center justify-center px-3 py-3 pl-2 pr-2 gap-x-1  overflow-hidden text-md font-medium text-white bg-green-500 cursor-pointer shadow-md border rounded-md transition duration-300 hover:bg-green-600" onClick={handlePost}>
