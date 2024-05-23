@@ -52,11 +52,11 @@ function App() {
   }, []);
 
   // Check if the current path is not '/profile' to decide if the Navbar should be displayed
-  const showNavbar = location.pathname !== "/profile";
 
   console.log("Current Path:", location.pathname);
 
   const isChatAppRoute = location.pathname === "/chat-app" || location.pathname.startsWith("/chat/");
+  const showNavbar = !isChatAppRoute && location.pathname !== "/profile";;
   const showFooter = !isChatAppRoute;
 
   return (
