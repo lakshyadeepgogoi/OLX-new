@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import main_photo from '../assets/addetail_photo1.png'
 import checkmark from '../assets/Vector.png'
 import heart from '../assets/Heart.png'
@@ -18,10 +19,8 @@ import { collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../pages/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, getDocs } from '../pages/firebase';
-
-
 import 'react-awesome-slider/dist/styles.css';
-
+import { useUserContext } from './UserContext';
 
 
 
@@ -35,6 +34,7 @@ function AdsDetails() {
   const [user, loading, error] = useAuthState(auth);
 
   const [ads, setAds] = useState([]);
+  const { setUserId } = useUserContext(); 
 
   useEffect(() => {
       const fetchAds = async () => {
@@ -168,14 +168,16 @@ const handleClick = (index) => {
       window.open(whatsappUrl, '_blank');
     };
 
+    const navigate = useNavigate();
 
-
-
-
-
-
-
-
+    const handleChat = () => {
+    if (adDetails && adDetails.userId) {
+      setUserId(adDetails.userId); // Set the userId in the context
+      navigate('/chat-app');
+    } else {
+      console.error('Seller ID not found');
+    }
+  };
 
 
   return (
@@ -255,8 +257,8 @@ const handleClick = (index) => {
                 <div className='flex flex-row justify-center gap-2 items-center m-auto'><FiPhoneCall className='text-green-500 items-center text-xl' />(808) 5XX-XXXX</div>
                 <button className='text-[#636A80]'>Click here to reveal phone number.</button>
               </div>
-              <div className='h-12 w-full bg-[#00AAFF] flex flex-row gap-2 justify-center items-center text-white text-md rounded-sm'> <AiOutlineMessage />Send Message</div>
-              <div className='h-12 w-full bg-[#2DD54B] flex flex-row gap-2 justify-center items-center text-white text-md rounded-sm' onClick={handleSendMessage}><FaWhatsapp />Message Via Whatsapp</div>
+              <button className='h-12 w-full bg-[#00AAFF] flex flex-row gap-2 justify-center items-center text-white text-md rounded-sm' onClick={handleChat}>  <AiOutlineMessage />Send Message</button>
+              <button className='h-12 w-full bg-[#2DD54B] flex flex-row gap-2 justify-center items-center text-white text-md rounded-sm' onClick={handleSendMessage}><FaWhatsapp />Message Via Whatsapp</button>
              {/* <div className='h-12 w-full bg-[#EBEEF7] flex flex-row gap-2 justify-center items-center text-[#191F33] text-md rounded-sm'><MdOutlineEmail />Message Via email</div> */}
             </div>
 
