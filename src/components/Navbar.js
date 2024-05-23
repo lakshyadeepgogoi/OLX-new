@@ -12,6 +12,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../pages/firebase';
 import heart from '../assets/Heart.png'
 
+
 import { db } from '../pages/firebase';
 // import { getDocs, collection } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
@@ -28,6 +29,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [user, loading, error] = useAuthState(auth);
   const [categories, setCategories] = useState([]);
   const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
+
+
+ 
 
 
   useEffect(() => {

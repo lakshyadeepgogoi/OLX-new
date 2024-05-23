@@ -6,7 +6,7 @@ import { FaCheck, FaRegEdit } from "react-icons/fa";
 import { motion } from 'framer-motion';
 import { CiShoppingTag, CiLocationOn } from "react-icons/ci";
 import { getDocs, collection, where, query, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import LazyLoad from 'react-lazyload';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +26,8 @@ function ProfileDetails() {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isUpdatingProfile, setIsUpdatingProfile] = useState(false); // Added state for updating profile
     const [activeTab, setActiveTab] = useState('recentAds');
+    const [oldProfileImageUrl, setOldProfileImageUrl] = useState('');
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
 
     const navigate = useNavigate();
 
@@ -50,23 +52,36 @@ function ProfileDetails() {
         fetchUserProfile();
     }, [user]);
 
-   
+
 
 
     const handleImageUpload = async (event) => {
         const imageFile = event.target.files[0];
         if (imageFile) {
+            setIsUploadingImage(true); // Set loading state while uploading
             const storageRef = ref(storage, `profileImages/${user.uid}/${imageFile.name}`);
             await uploadBytes(storageRef, imageFile);
             const downloadURL = await getDownloadURL(storageRef);
 
+            if (oldProfileImageUrl && oldProfileImageUrl !== user.photoURL) {
+                const oldImageRef = ref(storage, oldProfileImageUrl);
+                try {
+                    await deleteObject(oldImageRef);
+                } catch (error) {
+                    console.error('Error deleting old profile image:', error);
+                }
+            }
+
             setProfileImageUrl(downloadURL);
+            setOldProfileImageUrl(downloadURL);
 
             await setDoc(doc(db, 'users', user.uid), { profileImageUrl: downloadURL }, { merge: true });
+            setIsUploadingImage(false); // Clear loading state after upload
         }
     };
 
-   
+
+
 
 
     const handleSaveProfile = async () => {
@@ -96,7 +111,7 @@ function ProfileDetails() {
             setIsUpdatingProfile(false); // Reset loading state
         }
     };
-    
+
     const handleSave = () => {
         setIsEditing(false);
     };
@@ -158,15 +173,27 @@ function ProfileDetails() {
             <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter md:w-auto md:flex-shrink-0">
                 <div className="relative">
                     <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
-                    {isEditing ? (
-                        <label htmlFor="profileImageUpload" className="absolute bottom-0 right-0 p-1 bg-white rounded-full cursor-pointer">
+
+                    {isUploadingImage && (
+                    <div className="absolute inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 rounded-full w-32 h-32 mt-4 ">
+                        <div role="status">
+                            <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                            </svg>
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                )}
+
+
+                    <label htmlFor="profileImageUpload" className="absolute bottom-0 right-0 p-1 bg-white rounded-full cursor-pointer">
+                        {isEditing ? (
                             <FaCheck className="text-gray-600" onClick={handleSave} />
-                        </label>
-                    ) : (
-                        <label htmlFor="profileImageUpload" className="absolute bottom-0 right-0 p-1 bg-white rounded-full cursor-pointer">
+                        ) : (
                             <FaRegEdit className="text-gray-600" onClick={() => setIsEditing(true)} />
-                        </label>
-                    )}
+                        )}
+                    </label>
                     <input
                         id="profileImageUpload"
                         type="file"
@@ -188,7 +215,7 @@ function ProfileDetails() {
                         {email}
                     </p>
                 </div>
-                <button 
+                <button
                     className="w-full py-2 mt-2 text-gray-600"
                     onClick={() => setIsEditingProfile(true)}
                 >
