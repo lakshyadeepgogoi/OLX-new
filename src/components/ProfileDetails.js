@@ -29,24 +29,29 @@ function ProfileDetails() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserProfileImage = async () => {
-            if (user) {
-                setProfileImageUrl(user.photoURL);
-                setName(user.displayName || '');
-                setEmail(user.email || '');
-                setPhoneNumber(user.phoneNumber || '');
+    const fetchUserProfile = async () => {
+        if (user) {
+            setProfileImageUrl(user.photoURL);
+            setName(user.displayName || '');
+            setEmail(user.email || '');
+            setPhoneNumber(user.phoneNumber || '');
 
-                if (!user.photoURL) {
-                    const userDoc = await getDoc(doc(db, 'users', user.uid));
-                    if (userDoc.exists()) {
-                        setProfileImageUrl(userDoc.data().profileImageUrl);
-                    }
-                }
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                setProfileImageUrl(userData.profileImageUrl || user.photoURL);
+                setName(userData.displayName || user.displayName || '');
+                setEmail(userData.email || user.email || '');
+                setPhoneNumber(userData.phoneNumber || user.phoneNumber || '');
             }
-        };
-        fetchUserProfileImage();
+        }
+    };
+    useEffect(() => {
+        fetchUserProfile();
     }, [user]);
+
+   
+
 
     const handleImageUpload = async (event) => {
         const imageFile = event.target.files[0];
@@ -61,6 +66,9 @@ function ProfileDetails() {
         }
     };
 
+   
+
+
     const handleSaveProfile = async () => {
         setIsUpdatingProfile(true); // Set loading state
         try {
@@ -72,7 +80,10 @@ function ProfileDetails() {
                     email: email,
                     phoneNumber: phoneNumber
                 }, { merge: true });
-    
+
+                // Fetch updated profile
+                await fetchUserProfile();
+
                 // Update local state
                 setName(name);
                 setEmail(email);
@@ -85,7 +96,6 @@ function ProfileDetails() {
             setIsUpdatingProfile(false); // Reset loading state
         }
     };
-    
     
     const handleSave = () => {
         setIsEditing(false);
