@@ -116,6 +116,15 @@ function ProfileDetails() {
         setIsEditing(false);
     };
 
+    const getRandomColor = () => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
+
     useEffect(() => {
         const fetchUserAds = async () => {
             try {
@@ -172,7 +181,18 @@ function ProfileDetails() {
         <div className="flex flex-col md:flex-row w-full mt-4">
             <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter md:w-auto md:flex-shrink-0 ">
                 <div className="relative">
-                    <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
+                    {profileImageUrl ? (
+                        <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
+                    ) : (
+                        <div
+                            className="w-32 h-32 rounded-full border flex items-center justify-center mt-4"
+                            style={{ backgroundColor: getRandomColor() }}
+                        >
+                            <span className="text-4xl font-semibold text-white">
+                                {name.charAt(0).toUpperCase()}
+                            </span>
+                        </div>
+                    )}
 
                     {isUploadingImage && (
                         <div className="absolute inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 rounded-full w-32 h-32 mt-4 ">
