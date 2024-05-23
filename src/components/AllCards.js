@@ -4,9 +4,16 @@ import { db } from '../pages/firebase';
 import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
-const CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
+
+
 
 function AllCards() {
+
+    const CACHE_DURATION = 300000; // Cache duration in milliseconds (e.g., 5 minutes)
+let cachedAds = null;
+let cacheTimestamp = null;
+
+
     const [ads, setAds] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -83,7 +90,7 @@ function AllCards() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 my-8 w-full sm:w-[95%] sm:m-auto">
             {memoizedAds.map(ad => (
-                <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Wrap card in Link */}
+                <Link to={`/ad-details/${ads.id}`} key={ads.id}> {/* Wrap card in Link */}
                     <div className="border rounded-md overflow-hidden h-[380px] w-full my-6 sm:my-2 sm:w-[260px] xl:w-[290px] relative">
                         {ad.promoted && (
                             <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
@@ -100,8 +107,7 @@ function AllCards() {
                             <div className="flex flex-col">
                                 <p className="text-sm text-gray-500">{ad.userAddress}</p>
                                 <p className="text-xs text-gray-500 items-end mt-4 self-end">
-                                    {ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString('en-US', { day: 'numeric', year: 'numeric', month: 'long' }).toUpperCase()}
-                                </p>
+                                <div>{ad && ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString('en-US', { day: 'numeric', year: 'numeric', month: 'long' }).toUpperCase()}</div>                                </p>
                             </div>
                         </div>
                     </div>

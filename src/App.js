@@ -44,10 +44,19 @@ function App() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
 
+  useEffect(() => {
+    // Simulate loading time with a timeout. Replace this with actual data fetching.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  // Check if the current path is not '/profile' to decide if the Navbar should be displayed
+  const showNavbar = location.pathname !== "/profile";
+
   console.log("Current Path:", location.pathname);
 
   const isChatAppRoute = location.pathname === "/chat-app" || location.pathname.startsWith("/chat/");
-  const showNavbar = !isChatAppRoute;
   const showFooter = !isChatAppRoute;
 
   return (
