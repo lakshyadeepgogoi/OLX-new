@@ -18,7 +18,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
   const [negotiable, setNegotiable] = useState('');
 
 
-  const [salery, setSalery] = useState('');
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState('');
@@ -91,7 +91,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
 
   const handleSaleryChange = (event) => {
     const saleryValue = event.target.value;
-    setSalery(saleryValue);
+    setPrice(saleryValue);
   };
 
   const handleNegotiableChange = (event) => {
@@ -162,7 +162,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
     event.preventDefault();
 
     try {
-      if (!category || !adName || !salery || !negotiable || !description || !saleryPeriod || !positionType) {
+      if (!category || !adName || !price || !negotiable || !description || !saleryPeriod || !positionType) {
         setError('All fields are required.');
         return;
       }
@@ -188,7 +188,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
         adName,
         tags,
         description,
-        salery,
+        price,
         negotiable,
         images: images.filter(image => image !== null),
         timestamp: serverTimestamp(),
@@ -255,8 +255,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
             value={adName}
             onChange={handleadNameChange}
             placeholder="Enter Ad Name"
-            className='rounded-md bg-gray-100 text-gray-800 w-full px-4 py-2'
-          />
+            className='rounded-md bg-gray-100 text-gray-800 w-full px-4 py-2'/>
         </label>
 
         <div className='grid grid-cols-2 gap-4'>
@@ -270,8 +269,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
               required
               value={saleryPeriod}
               onChange={(e) => setSaleryPeriod(e.target.value)}
-              className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
-            >
+              className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'>
               <option value="">Select</option>
               <option value="Hourly">Hourly</option>
               <option value="Monthly">Monthly</option>
@@ -288,8 +286,7 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
             <select
               value={positionType}
               onChange={(e) => setPositionType(e.target.value)}
-              className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
-            >
+              className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'>
               <option value="Contract">Contract</option>
               <option value="Full-Time">Full-Time</option>
               <option value="Part Time">Part Time</option>
@@ -309,11 +306,10 @@ function VacanciesForm({ nextStep, previousStep, selectedCategory }) {
             <input
               required
               type="number"
-              value={salery}
+              value={price}
               onChange={handleSaleryChange}
               placeholder="Enter Salery Given"
-              className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'
-            />
+              className='bg-gray-100 rounded-md text-gray-800 w-full px-4 py-2'/>
           </label>
           <label className='w-full'>
             <p className='text-sm text-gray-800 mb-1'>

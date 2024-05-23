@@ -246,7 +246,7 @@ const handleClick = (index) => {
         <div className='lg:w-1/4 md:w-[35%] w-full my-12 h-max flex flex-col gap-4'>
           <div className='w-full border-2 rounded-lg shadow-sm'>
             <div className='flex flex-row justify-between p-4 md:p-8 h-24 md:h-28 items-center border-b-2'>
-              <div className='text-3xl'>RS.{adDetails&&adDetails.price}</div>
+              <div className='text-3xl'>RS.{adDetails && adDetails.price}</div>
               <button className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-md flex items-center justify-center'> <img src={heart} alt='heart' className='' /></button>
             </div>
 
