@@ -88,6 +88,8 @@ function App() {
               <Route path="/phone-auth" element={<PhoneAuth setIsLoggedIn={setIsLoggedIn} />} />
               <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
               <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
+              {/* <Route path="/AllCards" element={<AllCards isLoggedIn={isLoggedIn} />} /> */}
+
 
               {/* Forms Routes For Nav */}
               <Route path="/phones&gadgets" element={<PhonesGadgets />} />
@@ -104,9 +106,12 @@ function App() {
               <Route path="/Books&Stationery" element={<BooksStationery />} />
               <Route path="/Sports&Gyms" element={<SportsGym />} />
               <Route path="/Fashion&Clothings" element={<FashionClothing />} />
+              <Route path="/Vacancies" element={<Vacancies />} />
               <Route path="/Services" element={<Services />} />
+              <Route path="/Pets" element={<Pets />} />
               
               {/* Routes for Ads Detail */}
+
               <Route path="/ad-details/:id" element={<AdsDetails />} />
               <Route path="/chat/:userId" element={<Chat/>} />
               <Route path="/profile" element={
