@@ -59,6 +59,10 @@ function App() {
   const showNavbar = !isChatAppRoute && location.pathname !== "/profile";;
   const showFooter = !isChatAppRoute;
 
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
     <div className="w-full h-full flex flex-col">
       {showNavbar && <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}

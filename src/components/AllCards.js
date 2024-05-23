@@ -10,8 +10,8 @@ import LazyLoad from 'react-lazyload';
 function AllCards() {
 
     const CACHE_DURATION = 300000; // Cache duration in milliseconds (e.g., 5 minutes)
-let cachedAds = null;
-let cacheTimestamp = null;
+    let cachedAds = null;
+    let cacheTimestamp = null;
 
 
     const [ads, setAds] = useState([]);
@@ -41,10 +41,10 @@ let cacheTimestamp = null;
                 }
 
                 allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
-    
+
                 // Slice the array to only include the latest 12 ads
                 const latestAds = allCategoryAds.slice(0, 12);
-    
+
                 console.log('Fetched latest 16 category ads:', latestAds); // Log fetched data
                 cachedAds = latestAds; // Cache the data
                 cacheTimestamp = now; // Update the cache timestamp
@@ -53,7 +53,7 @@ let cacheTimestamp = null;
                 localStorage.setItem('cachedAds', JSON.stringify(latestAds));
                 localStorage.setItem('cacheTimestamp', now);
             } catch (error) {
-                console.error('Error fetching ads:', error); 
+                console.error('Error fetching ads:', error);
             } finally {
                 setLoading(false);
             }
@@ -107,7 +107,7 @@ let cacheTimestamp = null;
                             <div className="flex flex-col">
                                 <p className="text-sm text-gray-500">{ad.userAddress}</p>
                                 <p className="text-xs text-gray-500 items-end mt-4 self-end">
-                                <div>{ad && ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString('en-US', { day: 'numeric', year: 'numeric', month: 'long' }).toUpperCase()}</div>                                </p>
+                                    <div>{ad && ad.timestamp && new Date(ad.timestamp.seconds * 1000).toLocaleString('en-US', { day: 'numeric', year: 'numeric', month: 'long' }).toUpperCase()}</div>                                </p>
                             </div>
                         </div>
                     </div>
