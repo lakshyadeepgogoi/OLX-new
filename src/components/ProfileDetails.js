@@ -17,12 +17,14 @@ function ProfileDetails() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [profileImageUrl, setProfileImageUrl] = useState('');
     const [isEditing, setIsEditing] = useState(false);
-    const [ads, setAds] = useState([]);
+    const [isEditingProfile, setIsEditingProfile] = useState(false);
+    const [ads, setAds] = useState([]); // Added ads state variable
     const [isLoading, setIsLoading] = useState(true);
     const [selectedAdId, setSelectedAdId] = useState(null);
     const [selectedAdCategory, setSelectedAdCategory] = useState(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);  // New state for loading during deletion
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isUpdatingProfile, setIsUpdatingProfile] = useState(false); // Added state for updating profile
     const [activeTab, setActiveTab] = useState('recentAds');
 
     const navigate = useNavigate();
@@ -59,6 +61,32 @@ function ProfileDetails() {
         }
     };
 
+    const handleSaveProfile = async () => {
+        setIsUpdatingProfile(true); // Set loading state
+        try {
+            if (user) {
+                console.log("Updating profile with data:", { name, email, phoneNumber }); // Check the values
+                // Update user profile in Firestore
+                await setDoc(doc(db, 'users', user.uid), {
+                    displayName: name,
+                    email: email,
+                    phoneNumber: phoneNumber
+                }, { merge: true });
+    
+                // Update local state
+                setName(name);
+                setEmail(email);
+                setPhoneNumber(phoneNumber);
+            }
+            setIsEditingProfile(false);
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        } finally {
+            setIsUpdatingProfile(false); // Reset loading state
+        }
+    };
+    
+    
     const handleSave = () => {
         setIsEditing(false);
     };
@@ -93,7 +121,7 @@ function ProfileDetails() {
             if (selectedAdId && selectedAdCategory) {
                 await deleteDoc(doc(db, 'categories', selectedAdCategory, 'ads', selectedAdId));
                 setAds(ads.filter(ad => ad.id !== selectedAdId));
-                setIsConfirmationModalOpen(false); // Close the confirmation modal after deletion
+                setIsConfirmationModalOpen(false);
             }
         } catch (error) {
             console.error('Error deleting ad:', error);
@@ -150,45 +178,44 @@ function ProfileDetails() {
                         {email}
                     </p>
                 </div>
-                <button className="w-full py-2 mt-2 text-gray-600">
-                    Report Seller
+                <button 
+                    className="w-full py-2 mt-2 text-gray-600"
+                    onClick={() => setIsEditingProfile(true)}
+                >
+                    Edit Profile
                 </button>
             </div>
             <div className="w-full p-4">
                 <div className="border-b-2 overflow-x-auto whitespace-nowrap">
                     <button
-                        className={`px-4 py-2 text-blue-700 hover:border-blue-700 ${activeTab === 'recentAds' && 'border-b-2'}
-                        `}
-                        onClick={() => handleTabChange('recentAds')}>
+                        className={`px-4 py-2 text-blue-700 hover:border-blue-700 ${activeTab === 'recentAds' && 'border-b-2'}`}
+                        onClick={() => handleTabChange('recentAds')}
+                    >
                         Recent Ads
                     </button>
                     <button
                         className={`px-4 py-2 text-gray-600 bg-transparent ${activeTab === 'boostedAds' && 'border-b-2'}`}
-                        onClick={() => handleTabChange('boostedAds')}>
+                        onClick={() => handleTabChange('boostedAds')}
+                    >
                         Boosted Ads
                     </button>
                     <button
                         className={`px-4 py-2  text-gray-600 bg-transparent ${activeTab === 'expiredAds' && 'border-b-2'}`}
-                        onClick={() => handleTabChange('expiredAds')}>
+                        onClick={() => handleTabChange('expiredAds')}
+                    >
                         Expired Ads
                     </button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 mt-4 w-full ">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 mt-4 w-full">
                     {isLoading ? (
                         Array.from({ length: 4 }).map((_, index) => (
                             <div key={index} className="animate-pulse w-full">
                                 <div className="h-56 bg-gray-300 rounded-md"></div>
                                 <div className="flex justify-between mt-2">
                                     <div className="w-2/3 h-4 bg-gray-300 rounded-md"></div>
-                                    <div className="w-1/4 h-4 bg-gray-300 rounded-md"></div>
+                                    <div className="w-1/3 h-4 bg-gray-300 rounded-md"></div>
                                 </div>
-                                <div className="flex justify-between mt-1">
-                                    <div className="w-2/3 h-4 bg-gray-300 rounded-md"></div>
-                                    <div className="w-1/4 h-4 bg-gray-300 rounded-md"></div>
-                                </div>
-                                <div className="mt-2">
-                                    <div className="w-3/4 h-4 bg-gray-300 rounded-md"></div>
-                                </div>
+                                <div className="w-full h-4 bg-gray-300 rounded-md mt-2"></div>
                             </div>
                         ))
                     ) : (
@@ -301,8 +328,59 @@ function ProfileDetails() {
                     </div>
                 </div>
             )}
+
+            {isEditingProfile && (
+                <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50">
+                    <div className="bg-white rounded-lg p-8 w-96">
+                        <h2 className="text-xl font-semibold mb-4>                        ">Edit Profile</h2>
+                        <form onSubmit={(e) => { e.preventDefault(); handleSaveProfile(); }}>
+                            <div className="mb-4">
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input
+                                    id="phone"
+                                    type="text"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                                    required
+                                />
+                            </div>
+                            <div className="flex justify-between">
+                                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                                    {isUpdatingProfile ? "Updating..." : "Save"}
+                                </button>
+                                <button type="button" className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400" onClick={() => setIsEditingProfile(false)}>Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
 
 export default ProfileDetails;
+
+
