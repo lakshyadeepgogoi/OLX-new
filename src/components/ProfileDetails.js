@@ -19,14 +19,13 @@ function ProfileDetails() {
     const [isEditing, setIsEditing] = useState(false);
     const [ads, setAds] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [cardHeight, setCardHeight] = useState(0);
-    const [cardWidth, setCardWidth] = useState(0);
     const [selectedAdId, setSelectedAdId] = useState(null);
     const [selectedAdCategory, setSelectedAdCategory] = useState(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);  // New state for loading during deletion
     const [activeTab, setActiveTab] = useState('recentAds');
 
-    const [adBeingEdited, setAdBeingEdited] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserProfileImage = async () => {
@@ -89,6 +88,7 @@ function ProfileDetails() {
     }, []);
 
     const handleDeleteAd = async () => {
+        setIsDeleting(true);
         try {
             if (selectedAdId && selectedAdCategory) {
                 await deleteDoc(doc(db, 'categories', selectedAdCategory, 'ads', selectedAdId));
@@ -97,6 +97,8 @@ function ProfileDetails() {
             }
         } catch (error) {
             console.error('Error deleting ad:', error);
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -104,8 +106,6 @@ function ProfileDetails() {
         hidden: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1 }
     };
-
-    const navigate = useNavigate();
 
     const handleClick = () => {
         navigate('/boost-payment-page');
@@ -201,40 +201,21 @@ function ProfileDetails() {
                                     animate="visible"
                                     variants={variants}
                                 >
-                                    <LazyLoad height={cardHeight} width={cardWidth} offset={100}>
+                                    <LazyLoad height={200} offset={100}>
                                         <div className="w-full rounded overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 cursor-pointer flex relative">
-                                            {/* <div className="w-1/2 flex-shrink-0">
-                                                <div className="relative w-full h-full">
-                                                    {ad.images && ad.images.length > 0 && (
-                                                        <img
-                                                            src={ad.images[0]}
-                                                            alt="Ad"
-                                                            className="w-full  max-w-full  h-56 object-cover"
-                                                            loading='lazy'
-                                                        />
-                                                    )}
-                                                    <div
-                                                        onClick={handleClick}
-                                                        className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer"
-                                                    >
-                                                        Boost
-                                                    </div>
-                                                </div>
-                                            </div> */}
-                                            <div className='relative w-[300px]  '>
+                                            <div className="relative w-[300px]">
                                                 <div className=' w-full'>
                                                     {ad.images && ad.images.length > 0 && (
                                                         <img
                                                             src={ad.images[0]}
                                                             alt="Ad"
-                                                            className="w-full  max-w-full  h-56 object-fill"
+                                                            className="w-full max-w-full h-56 object-cover"
                                                             loading='lazy'
                                                         />
                                                     )}
                                                 </div>
-                                                <div  onClick={handleClick}
-                                                        className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer">Boost
-
+                                                <div onClick={handleClick} className="absolute bottom-2 right-2 px-2 py-1 rounded-lg font-medium bg-black bg-opacity-50 text-white cursor-pointer">
+                                                    Boost
                                                 </div>
                                             </div>
 
@@ -257,7 +238,6 @@ function ProfileDetails() {
                                                         </button>
                                                         <button
                                                             onClick={() => {
-                                                                setAdBeingEdited(ad);
                                                                 navigate(`/edit-ad/${ad.id}`);
                                                             }}
                                                             className="bg-green-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-green-600 transition-colors duration-200"
@@ -288,28 +268,36 @@ function ProfileDetails() {
                         )
                     )}
                 </div>
-
-
             </div>
 
             {isConfirmationModalOpen && (
                 <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50">
                     <div className="bg-white rounded-lg p-8">
                         <p className="text-lg font-semibold mb-4">Are you sure you want to delete this ad?</p>
-                        <div className="flex justify-between">
-                            <button
-                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4"
-                                onClick={handleDeleteAd}
-                            >
-                                Yes, Delete
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                                onClick={() => setIsConfirmationModalOpen(false)}
-                            >
-                                Cancel
-                            </button>
-                        </div>
+                        {isDeleting ? (
+                            <div className="flex justify-center items-center">
+                                <svg className="animate-spin h-5 w-5 mr-3 text-blue-500" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                </svg>
+                                Deleting...
+                            </div>
+                        ) : (
+                            <div className="flex justify-between">
+                                <button
+                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4"
+                                    onClick={handleDeleteAd}
+                                >
+                                    Yes, Delete
+                                </button>
+                                <button
+                                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                                    onClick={() => setIsConfirmationModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
@@ -318,4 +306,3 @@ function ProfileDetails() {
 }
 
 export default ProfileDetails;
-
