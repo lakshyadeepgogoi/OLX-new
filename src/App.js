@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
+import { auth } from './pages/firebase'; // Import Firebase auth module
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -46,18 +47,23 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // Simulate loading time with a timeout. Replace this with actual data fetching.
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    // Check Firebase Auth state change
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setLoading(false); // Set loading to false once Auth state is determined
+    });
+
+    // Clean up function
+    return () => unsubscribe();
   }, []);
 
   // Check if the current path is not '/profile' to decide if the Navbar should be displayed
-
-  console.log("Current Path:", location.pathname);
-
   const isChatAppRoute = location.pathname === "/chat-app" || location.pathname.startsWith("/chat/");
-  const showNavbar = !isChatAppRoute && location.pathname !== "/profile";;
+  const showNavbar = !isChatAppRoute && location.pathname !== "/profile";
   const showFooter = !isChatAppRoute;
 
   if (loading) {
@@ -70,67 +76,66 @@ function App() {
       <UserAuthContextProvider>
         <DrawerContextProvider>
           <FormDataProvider>
-          <UserProvider>
+            <UserProvider>
+              <Routes>
+                <Route
+                  path='/chat-app'
+                  element={
+                    <DrawerContextProvider>
+                      <ChatApp/>
+                    </DrawerContextProvider>
+                  }
+                />
+                <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
+                <Route path="/ads-details" element={<AdsDetails isLoggedIn={isLoggedIn} />} />
+                <Route path="/all-ads" element={<AllAds isLoggedIn={isLoggedIn} />} />
+                <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/phone-auth" element={<PhoneAuth setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
+                <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
+                {/* <Route path="/AllCards" element={<AllCards isLoggedIn={isLoggedIn} />} /> */}
+                <Route path="/Wishlist" element={<Wishlist isLoggedIn={isLoggedIn}></Wishlist>}/>
 
-            <Routes>
-              <Route
-                path='/chat-app'
-                element={
-                  <DrawerContextProvider>
-                    <ChatApp/>
-                  </DrawerContextProvider>
-                }
-              />
-              <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
-              <Route path="/ads-details" element={<AdsDetails isLoggedIn={isLoggedIn} />} />
-              <Route path="/all-ads" element={<AllAds isLoggedIn={isLoggedIn} />} />
-              <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-              <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
-              <Route path="/phone-auth" element={<PhoneAuth setIsLoggedIn={setIsLoggedIn} />} />
-              <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
-              <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
-              {/* <Route path="/AllCards" element={<AllCards isLoggedIn={isLoggedIn} />} /> */}
-              <Route path="/Wishlist" element={<Wishlist isLoggedIn={isLoggedIn}></Wishlist>}/>
+                {/* Forms Routes For Nav */}
+                <Route path="/phones&gadgets" element={<PhonesGadgets />} />
+                <Route path="/electronics&appliances" element={<ElectronicsAppliances />} />
 
-              {/* Forms Routes For Nav */}
-              <Route path="/phones&gadgets" element={<PhonesGadgets />} />
-              <Route path="/electronics&appliances" element={<ElectronicsAppliances />} />
+                {/* Edit form */}
+                <Route path="/edit-ad/:adsId" element={<EditAdForm />} />
 
-              {/* Edit form */}
-              <Route path="/edit-ad/:adsId" element={<EditAdForm />} />
+                {/* Forms Routes For Nav */}
+                <Route path="/Vehicles" element={<Vehicles />} />
+                <Route path="/Properties" element={<Properties />} />
+                <Route path="/Spare&Parts" element={<SpareParts />} />
+                <Route path="/Furnitures" element={<Furnitures />} />
+                <Route path="/Books&Stationery" element={<BooksStationery />} />
+                <Route path="/Sports&Gyms" element={<SportsGym />} />
+                <Route path="/Fashion&Clothings" element={<FashionClothing />} />
+                <Route path="/Vacancies" element={<Vacancies />} />
+                <Route path="/Services" element={<Services />} />
+                <Route path="/Pets" element={<Pets />} />
+                
+                {/* Routes for Ads Detail */}
 
-              {/* Forms Routes For Nav */}
-              <Route path="/Vehicles" element={<Vehicles />} />
-              <Route path="/Properties" element={<Properties />} />
-              <Route path="/Spare&Parts" element={<SpareParts />} />
-              <Route path="/Furnitures" element={<Furnitures />} />
-              <Route path="/Books&Stationery" element={<BooksStationery />} />
-              <Route path="/Sports&Gyms" element={<SportsGym />} />
-              <Route path="/Fashion&Clothings" element={<FashionClothing />} />
-              <Route path="/Vacancies" element={<Vacancies />} />
-              <Route path="/Services" element={<Services />} />
-              <Route path="/Pets" element={<Pets />} />
-              
-              {/* Routes for Ads Detail */}
-
-              <Route path="/ad-details/:id" element={<AdsDetails />} />
-              <Route path="/chat/:userId" element={<Chat/>} />
-              <Route path="/profile" element={
-                <PrivateRoute isLoggedIn={isLoggedIn}>
-                  <Profile />
-                </PrivateRoute>
-              } />
-              <Route path="/boost-payment-page" element={
-                <PrivateRoute isLoggedIn={isLoggedIn}>
-                  <BoostPaymentPage />
-                </PrivateRoute>
-              } />
-              <Route path="/form" element={
-                <PrivateRoute isLoggedIn={isLoggedIn}>
-                  <Form />
-                </PrivateRoute>
-              } />
-            </Routes>
+                <Route path="/ad-details/:id" element={<AdsDetails />} />
+                <Route path="/chat/:userId" element={<Chat/>} />
+                <Route path="/profile" element={
+                  <PrivateRoute isLoggedIn={isLoggedIn}>
+                    <Profile />
+                  </PrivateRoute>
+                } />
+                <Route path="/boost-payment-page" element={
+                  <PrivateRoute isLoggedIn={isLoggedIn}>
+                    <BoostPaymentPage />
+                  </PrivateRoute>
+                } />
+                <Route path="/form" element={
+                  <PrivateRoute isLoggedIn={isLoggedIn}>
+                    <Form />
+                  </PrivateRoute>
+                } />
+              </Routes>
             </UserProvider>
           </FormDataProvider>
         </DrawerContextProvider>
