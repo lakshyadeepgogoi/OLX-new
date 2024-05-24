@@ -52,8 +52,9 @@ function Wishlist() {
             ) : (
                 ads.map(ad => (
                     <LazyLoad key={ad.id} height={380} offset={100}>
+                    <div className="border-2 rounded-md overflow-hidden h-[460px] sm:h-[420px] w-[90%] m-auto mb-5 sm:w-[260px] xl:w-80">
+
                         <Link to={`/ad-details/${ad.id}`}>
-                            <div className="border-2 rounded-md overflow-hidden h-[380px] w-[260px] xl:w-80">
                                 {ad.promoted && (
                                     <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
                                         Promoted
@@ -62,10 +63,9 @@ function Wishlist() {
                                 {ad.images && ad.images.length > 0 && (
                                     <img src={ad.images[0]} alt="Ad" className="w-full h-52 object-cover" />
                                 )}
-                                <div className="p-3">
+                                <div className="p-3 h-[160px]">
                                     <p className="font-semibold text-black text-2xl">Rs {ad.price} </p>
                                     <p className="text-gray-800 mb-2 text-xl">{ad.adName}</p>
-                                    <hr />
                                     <div className="flex flex-col">
                                         <p className="text-sm text-gray-500">{ad.userAddress}</p>
                                         <p className="text-xs text-gray-500 items-end mt-4 self-end">
@@ -73,9 +73,16 @@ function Wishlist() {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
+                                </Link>
+
+
+                                {/* remove button */}
+                                <button type="submit" class=" w-[90%] mx-4 py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">Remove from Wishlist</button>
+                           
+                        </div>
+
                     </LazyLoad>
+
                 ))
             )}
         </div>
