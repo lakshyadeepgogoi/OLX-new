@@ -179,7 +179,7 @@ function ProfileDetails() {
 
     return (
         <div className="flex flex-col md:flex-row w-full mt-4">
-            <div className="max-w-full md:max-w-[20%] pt-4 space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter md:w-auto md:flex-shrink-0 ">
+            <div className="max-w-full md:max-w-[20%] pt-4 h-full space-y-4 bg-white shadow-md flex flex-col items-center w-full font-inter md:w-auto md:flex-shrink-0 ">
                 <div className="relative">
                     {profileImageUrl ? (
                         <img src={profileImageUrl} alt="Profile" className="w-32 h-32 rounded-full border object-cover mt-4" />
@@ -235,17 +235,24 @@ function ProfileDetails() {
                         {email}
                     </p>
                 </div>
+                <div>
                 <button
-                    className=" p-3 mt-4 text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 transition-colors duration-300 "
-                    onClick={() => setIsEditingProfile(true)}
-                >
+                    className=" p-3 mb-6 h-16 text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 transition-colors duration-300 "
+                    onClick={() => setIsEditingProfile(true)}>
                     <span className="flex items-center justify-center">
                         <FaRegEdit className="mr-2 text-md " />
                         Edit Profile
                     </span>
                 </button>
+                </div>
+              
 
             </div>
+
+
+
+
+
             <div className="w-full p-4">
                 <div className="border-b-2 overflow-x-auto whitespace-nowrap">
                     <button
@@ -267,7 +274,7 @@ function ProfileDetails() {
                         Expired Ads
                     </button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 mt-4 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2  mt-4 w-[80%] sm:w-full m-auto gap-4 h-max">
                     {isLoading ? (
                         Array.from({ length: 4 }).map((_, index) => (
                             <div key={index} className="animate-pulse w-full">
@@ -290,8 +297,8 @@ function ProfileDetails() {
                                     variants={variants}
                                 >
                                     <LazyLoad height={200} offset={100}>
-                                        <div className="w-full rounded overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 cursor-pointer flex relative">
-                                            <div className="relative w-[300px]">
+                                        <div className="w-full rounded overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 cursor-pointer flex flex-col sm:flex-row relative">
+                                            <div className="relative w-72 sm:w-80">
                                                 <div className=' w-full'>
                                                     {ad.images && ad.images.length > 0 && (
                                                         <img
@@ -307,11 +314,11 @@ function ProfileDetails() {
                                                 </div>
                                             </div>
 
-                                            <div className="w-1/2 p-4 flex flex-col justify-between">
+                                            <div className=" w-full sm:w-1/2 p-4 flex flex-col justify-between my-2">
                                                 <div className="flex justify-between mb-2">
                                                     <div className="flex items-center gap-2">
-                                                        <CiShoppingTag className="text-gray-600 text-lg" />
-                                                        <p className='font-inter text-sm'>{ad.subcategory}</p>
+                                                        <CiShoppingTag className="text-gray-600 sm:text-lg text-xl" />
+                                                        <p className='font-inter text-lg sm:text-sm'>{ad.subcategory}</p>
                                                     </div>
                                                     <div className="flex items-center gap-2">
                                                         <button
@@ -320,21 +327,19 @@ function ProfileDetails() {
                                                                 setSelectedAdCategory(ad.category);
                                                                 setIsConfirmationModalOpen(true);
                                                             }}
-                                                            className="bg-blue-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200"
-                                                        >
+                                                            className="bg-blue-500 text-white text-sm font-bold py-1 px-2 rounded-full hover:bg-blue-600 transition-colors duration-200">
                                                             Mark as Sold
                                                         </button>
                                                         <button
                                                             onClick={() => {
                                                                 navigate(`/edit-ad/${ad.id}`);
                                                             }}
-                                                            className="bg-green-500 text-white text-[8px] font-bold py-1 px-2 rounded-full hover:bg-green-600 transition-colors duration-200"
-                                                        >
+                                                            className="bg-green-500 text-white text-sm font-bold py-1 px-2 rounded-full hover:bg-green-600 transition-colors duration-200">
                                                             Edit
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div className="text-md mb-1 font-inter">{ad.adName}</div>
+                                                <div className="text-md my-2 font-inter">{ad.adName}</div>
                                                 <div className='border w-full mb-2'></div>
 
                                                 <div className="flex justify-between">

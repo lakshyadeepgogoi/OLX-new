@@ -273,9 +273,10 @@ const handleClick = (index) => {
             {/* heading section */}
             <div className='md:flex flex-col my-3'>
               <h1 className='text-2xl font-bold'>{adDetails&&adDetails.adName}</h1>
-              <div className='flex flex-row justify-start items-center my-4 gap-24 text-md'>
+              <div className='flex flex-row  items-center my-4 gap-24 text-md justify-between'>
                 <div>{adDetails && adDetails.userAddress}</div>
-                <div>{adDetails && adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString('en-US', {  day: 'numeric', year: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase()}</div>
+                <div className='hidden sm:block'>{adDetails && adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString('en-US', {  day: 'numeric', year: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase()}</div>
+                <div className='block sm:hidden'>{adDetails && adDetails.timestamp && new Date(adDetails.timestamp.seconds * 1000).toLocaleString('en-US', {  year: 'numeric', month: 'long' }).toUpperCase()}</div>
                 <div className='hidden md:block'>69,656 Viewed</div>
               </div>
             </div>

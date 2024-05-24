@@ -9,7 +9,7 @@ const Profile = ({ isLoggedIn }) => {
       <ProfileNav />
 
       </nav>
-      <div >
+      <div className='' >
         <ProfileDetails/>
       </div>
 

@@ -160,21 +160,19 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             />
           </div>
 
-          {/* wishlist */}
-          <a className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-full flex items-center justify-center' href='/wishlist'> <img src={heart} alt='heart' className='' /></a>
 
 
           {/* Country button - only visible on mobile view */}
-          <div className='block md:hidden mx-auto'>
+          {/* <div className='block md:hidden mx-auto'>
             <button className="font-inter text-gray-700 flex items-center border px-3 py-2 pl-3 pr-3 mt-2 rounded-sm bg-gray-100 ">
               {stateName}
               <FaAngleDown className="ml-1" />
             </button>
-          </div>
+          </div> */}
 
-          <nav className="flex ml-6">
-            <ul className="text-black flex gap-x-3 items-center">
-              {/* Conditional rendering for Login or Profile button */}
+          <nav className="flex sm:ml-6 ml-auto">
+            <ul className="text-black flex gap-x-2 items-center">
+          {/* Conditional rendering for Login or Profile button */}
               <li>
                 {isLoggedIn ? (
                   <div className="relative inline-block">
@@ -223,11 +221,16 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
               </li>
 
               {/* Notification Button */}
-              <li className='block md:hidden'>
+              {/* <li className='block md:hidden'>
                 <button className="relative flex items-center justify-center p-3 overflow-hidden bg-green-100 rounded-full transition duration-300 hover:bg-green-200 focus:outline-none ">
                   <AiOutlineMessage className="text-green-500" />
                 </button>
-              </li>
+              </li> */}
+
+
+                {/* wishlist */}
+          <a className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-full flex items-center justify-center' href='/wishlist'> <img src={heart} alt='heart' className='' /></a>
+              
 
               <div>
               <Link to='/chat-app'>
