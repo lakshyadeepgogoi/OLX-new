@@ -35,6 +35,7 @@ function AdsDetails() {
 
   const [ads, setAds] = useState([]);
   const { setUserId } = useUserContext(); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
       const fetchAds = async () => {
@@ -67,11 +68,14 @@ function AdsDetails() {
                 const adDocSnapshot = await getDoc(adDocRef);
                 if (adDocSnapshot.exists()) {
                     setAdDetails({ id: adDocSnapshot.id, ...adDocSnapshot.data() });
+                    setIsLoading(false);
                 } else {
                     console.log('Ad not found');
                 }}
             } catch (error) {
                 console.error('Error fetching ad details:', error);
+            }finally {
+              setIsLoading(false);
             }
         };
 
@@ -179,6 +183,82 @@ const handleClick = (index) => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="animate-pulse w-full flex flex-col my-4 m-auto md:pl-8 md:pr-4">
+        <div className="flex flex-col md:flex-row mx-auto w-11/12 h-max gap-4 border-b-2">
+          <div className="md:w-3/4 w-full">
+            <div className="w-full h-12 flex flex-row gap-2 md:gap-4 my-4 items-center">
+              <div className="w-28 h-10 bg-gray-300 rounded-2xl"></div>
+              <div className="w-40 h-10 bg-gray-300 rounded-2xl"></div>
+            </div>
+            <div className="md:flex flex-col my-3">
+              <div className="h-8 bg-gray-300 rounded w-3/4"></div>
+              <div className="flex flex-row justify-start items-center my-4 gap-24 text-md">
+                <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+                <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+                <div className="h-4 bg-gray-300 rounded w-1/4 hidden md:block"></div>
+              </div>
+            </div>
+            <div className="w-full flex flex-col">
+              <div className="w-full p-2 bg-gray-300 mb-2 h-[380px] md:h-[640px]"></div>
+              <div className="flex flex-row gap-2">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div key={index} className="h-20 w-20 md:h-28 md:w-28 bg-gray-300 rounded-md"></div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="h-8 bg-gray-300 rounded w-1/4 my-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-full my-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-full my-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-full my-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-full my-2"></div>
+            </div>
+          </div>
+          <div className="lg:w-1/4 md:w-[35%] w-full my-12 h-max flex flex-col gap-4">
+            <div className="w-full border-2 rounded-lg shadow-sm">
+              <div className="flex flex-row justify-between p-4 md:p-8 h-24 md:h-28 items-center border-b-2">
+                <div className="h-8 bg-gray-300 rounded w-1/3"></div>
+                <div className="w-12 h-12 bg-gray-300 rounded-md"></div>
+              </div>
+              <div className="w-full h-[280px] p-7 border-b-2 flex flex-col gap-3">
+                <div className="bg-gray-300 h-28 w-full rounded-md"></div>
+                <div className="h-12 w-full bg-gray-300 rounded-sm"></div>
+                <div className="h-12 w-full bg-gray-300 rounded-sm"></div>
+              </div>
+              <div className="w-full h-72 sm:h-80 md:h-[280px] xl:h-72 border-b-2 flex flex-col gap-6 p-7">
+                <div className="flex flex-wrap justify-between">
+                  <div className="flex flex-row justify-start gap-3">
+                    <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
+                    <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
+                    <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
+                    <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
+                  </div>
+                  <div className="bg-gray-300 h-8 w-20 rounded-lg"></div>
+                </div>
+                <div className="flex flex-wrap justify-between">
+                  <div className="bg-gray-300 h-8 w-1/4 rounded-lg"></div>
+                  <div className="bg-gray-300 h-8 w-1/4 rounded-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full p-5 border-2 shadow-sm rounded-lg">
+              <div className="h-8 w-1/3 bg-gray-300 rounded-lg"></div>
+              <div className="h-4 w-1/2 bg-gray-300 rounded-lg my-4"></div>
+              <div className="h-8 w-1/3 bg-gray-300 rounded-lg"></div>
+              <div className="h-4 w-1/2 bg-gray-300 rounded-lg my-4"></div>
+              <div className="h-4 w-2/3 bg-gray-300 rounded-lg"></div>
+              <div className="h-8 w-1/4 bg-gray-300 rounded-lg my-4"></div>
+              <div className="h-4 w-1/2 bg-gray-300 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
 
   return (
     <div  className='w-full h-max flex flex-col my-4 m-auto md:pl-8 md:pr-4'>
@@ -223,24 +303,7 @@ const handleClick = (index) => {
               <p className='text-[#767E94] text-sm'>{adDetails && adDetails.description}</p>
             </div>
 
-            {/* feacture section */}
-            {/* <div className='my-4 text-[#464D61]'>
-              <h1 className='text-2xl font-bold my-2'>Feature </h1>
-              <div className='flex flex-row items-start justify-between '>
-                <ul className='leading-loose '>
-                  <li className='flex flex-row gap-2'><img src={checkmark}  alt='checkmark' className='object-contain'/> 128GB internal memory with 8GB RAM</li>
-                  <li className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Fingerprint (under display, optical), accelerometer.</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Android 11, Funtouch 11.1 Operating System</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Glass front, plastic frame, plastic back</li>
-                </ul>
-                <ul className='leading-loose'>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>LED flash, HDR, panorama</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Li-Po 4000 mAh, non-removable battery</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>Fast charging 33W, 63% in 30 min (advertised)</li>
-                  <li  className='flex flex-row gap-2'><img src={checkmark} alt='checkmark' className='object-contain'/>1 Year international warranty</li>
-                </ul>
-              </div>
-            </div> */}
+            
 
           </div>
 
