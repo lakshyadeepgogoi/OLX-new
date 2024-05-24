@@ -1,58 +1,41 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../pages/firebase';
 import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
 function AllCards() {
-    const CACHE_DURATION = 300000; // Cache duration in milliseconds (e.g., 5 minutes)
-
     const [ads, setAds] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchAllCategoryAds = useCallback(async () => {
-        const cachedAds = JSON.parse(localStorage.getItem('cachedAds'));
-        const cacheTimestamp = parseInt(localStorage.getItem('cacheTimestamp'), 10);
-        const now = Date.now();
-
-        if (cachedAds && cacheTimestamp && now - cacheTimestamp < CACHE_DURATION) {
-            setAds(cachedAds);
-            setLoading(false);
-            return;
-        }
-
-        try {
-            const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
-            let allCategoryAds = [];
-
-            for (const category of categories) {
-                const adsCollectionRef = collection(db, 'categories', category, 'ads');
-                const adsSnapshot = await getDocs(adsCollectionRef);
-                const categoryAds = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                allCategoryAds = [...allCategoryAds, ...categoryAds];
-            }
-
-            allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
-
-            // Slice the array to only include the latest 12 ads
-            const latestAds = allCategoryAds.slice(0, 12);
-
-            console.log('Fetched latest 12 category ads:', latestAds); // Log fetched data
-            setAds(latestAds);
-            localStorage.setItem('cachedAds', JSON.stringify(latestAds));
-            localStorage.setItem('cacheTimestamp', now.toString());
-        } catch (error) {
-            console.error('Error fetching ads:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
     useEffect(() => {
-        fetchAllCategoryAds();
-    }, [fetchAllCategoryAds]);
+        const fetchAllCategoryAds = async () => {
+            try {
+                const categories = ['Electronics', 'Fashion', 'Furnitures', 'Mobiles', 'BooksStati', 'Pets', 'Services', 'Spare_Parts', 'Sports_Gyms', 'Vacancies', 'Vehicles'];
+                let allCategoryAds = [];
 
-    const memoizedAds = useMemo(() => ads, [ads]);
+                for (const category of categories) {
+                    const adsCollectionRef = collection(db, 'categories', category, 'ads');
+                    const adsSnapshot = await getDocs(adsCollectionRef);
+                    const categoryAds = adsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    allCategoryAds = [...allCategoryAds, ...categoryAds];
+                }
+
+                allCategoryAds.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
+
+                // Slice the array to only include the latest 12 ads
+                const latestAds = allCategoryAds.slice(0, 12);
+
+                setAds(latestAds);
+            } catch (error) {
+                console.error('Error fetching ads:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllCategoryAds();
+    }, []);
 
     if (loading) {
         return (
@@ -79,8 +62,8 @@ function AllCards() {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-5 xl:gap-6 my-8 w-full sm:w-[95%] sm:m-auto">
-            {memoizedAds.map(ad => (
-                <Link to={`/ad-details/${ad.id}`} key={ad.id}> {/* Correct key usage */}
+            {ads.map(ad => (
+                <Link to={`/ad-details/${ad.id}`} key={ad.id}>
                     <div className="border rounded-md overflow-hidden h-[380px] w-full my-6 sm:my-2 sm:w-[260px] xl:w-[290px] relative">
                         {ad.promoted && (
                             <span className="bg-yellow-500 text-white py-1 px-2 absolute top-0 right-0 rounded-bl-md">
