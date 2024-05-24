@@ -38,6 +38,7 @@ import Chat from "./components/Chat/pages/Chat/Chat";
 import Preloader from './components/common/PreLoader';
 import AllCards from './components/AllCards';
 import { UserProvider } from './components/UserContext';
+import Wishlist from './components/Wishlist';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -89,7 +90,7 @@ function App() {
               <Route path="/ContactUser/:docId" element={<ContactUser isLoggedIn={isLoggedIn} />} />
               <Route path="/form-success" element={<FormSuccess isLoggedIn={isLoggedIn} />} />
               {/* <Route path="/AllCards" element={<AllCards isLoggedIn={isLoggedIn} />} /> */}
-
+              <Route path="/Wishlist" element={<Wishlist isLoggedIn={isLoggedIn}></Wishlist>}/>
 
               {/* Forms Routes For Nav */}
               <Route path="/phones&gadgets" element={<PhonesGadgets />} />

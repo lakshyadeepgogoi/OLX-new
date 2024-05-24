@@ -160,7 +160,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             />
           </div>
 
-          <button className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-full flex items-center justify-center'> <img src={heart} alt='heart' className='' /></button>
+          {/* wishlist */}
+          <a className='w-12 h-12 bg-[#E8F7FF] outline-2 outline-blue-900 rounded-full flex items-center justify-center' href='/wishlist'> <img src={heart} alt='heart' className='' /></a>
 
 
           {/* Country button - only visible on mobile view */}
