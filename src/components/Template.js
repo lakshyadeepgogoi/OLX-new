@@ -55,12 +55,12 @@ const Template = ({ title, image, formtype, setIsLoggedIn }) => {
     };
 
     return (
-        <div className="flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-8 gap-y-0">
-            <div className="relative w-11/12 max-w-[450px] hidden sm:block">
+        <div className="flex justify-between w-full sm:w-11/12 sm:max-w-[1160px] py-12 mx-auto gap-x-8 gap-y-0 ">
+            <div className="relative w-full sm:w-11/12 sm:max-w-[450px] hidden sm:block">
                 <img src={image} alt="Students" width={558} height={490} loading="lazy" className="absolute -top-4 right-4 rounded-lg" />
             </div>
 
-            <div className="w-11/12 max-w-[450px]">
+            <div className="w-full mx-6 sm:mx-0 sm:w-11/12 max-w-[450px]">
                 <h1 className="text-black font-semibold text-[1.875rem] leading-[2.375rem]">{title}</h1>
                 {formtype === 'signup' ? <SignupForm setIsLoggedIn={setIsLoggedIn} /> : <LoginForm setIsLoggedIn={setIsLoggedIn} />}
                 <div className="flex w-full items-center my-4 gap-x-2">

@@ -80,20 +80,16 @@ const Home = ({ isLoggedIn }) => {
             Buy, Sell & Find <br></br>Just About Anything & Everything
           </motion.h1>
 
-          <div className='flex items-stretch w-full mt-4'>
+          <div className='flex  w-full mt-4'>
 
             {/* Input, Search */}
-            <div className='flex flex-wrap w-full'>
-              <input
-                type='text'
-                placeholder='Search in All Categories'
-                className='py-2 px-4 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none flex-grow font-inter bg-transparent'/>
-              <button
-                className='bg-green-600 text-white py-2 px-4  rounded-r-lg border border-l-0 border-gray-300 hover:bg-blue-600 transition duration-300 font-inter '>
+            <div className='flex flex-row w-full'>
+              <input type='text' placeholder='Search in All Categories' className='py-2 px-4 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none flex-grow font-inter bg-transparent'/>
+              <button className='bg-green-600 text-white py-2 px-4  rounded-r-lg border border-l-0 border-gray-300 hover:bg-blue-600 transition duration-300 font-inter '>
                 Search
               </button>
-
             </div>
+
           </div>
         </div>
       </div>
